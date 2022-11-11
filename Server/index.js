@@ -1,12 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-
+const path = require("path");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const authRounte = require("./Routers/auth");
 const userRoute = require("./Routers/user");
+const hotelsRoute = require("./Routers/hotel");
 const app = express();
 dotenv.config();
 
@@ -25,9 +26,21 @@ app.use(bodyParser.urlencoded({ extended: true, limit: "30mb" }));
 app.use(cors());
 // de toan bo du lieu tra ve deu la json
 
+app.use(express.json());
+
+// set view engine
+app.set("view engine", "pug", "ejc");
+// app.set("views",path.resolve(__dirname,"views/ejs"))
+
+//load assets
+app.use("/css", express.static(path.resolve(__dirname, "assets/css")));
+app.use("/img", express.static(path.resolve(__dirname, "assets/img")));
+app.use("/js", express.static(path.resolve(__dirname, "assets/js")));
+
 //ROUTER
-app.use("/v1/auth", authRounte);
-app.use("/v1/user", userRoute);
+app.use("/api/auth", authRounte);
+app.use("/api/user", userRoute);
+app.use("/api/hotels", hotelsRoute);
 app.use(express.json());
 
 //JSON WEB TOKEN

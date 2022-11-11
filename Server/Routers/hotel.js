@@ -1,10 +1,34 @@
+const hotelController = require("../controllers/hotelController.js");
+const middlewareController = require("../controllers/middlewareController.js");
+const Hotel = require("../models/Hotel.js");
+
 const router = require("express").Router();
 
 //CREATE
-router.post("/", (req, res) => {});
-//UPDATE
-//DELETE
-//GET
-//GET ALL
+router.post(
+  "/CreateHotel",
+  middlewareController.verifyTokenAndAminAuth,
+  hotelController.createHotels
+);
 //PUT
+router.put(
+  "/update/:id",
+  middlewareController.verifyTokenAndAminAuth,
+  hotelController.updateHotel
+);
+//DELETE
+router.delete(
+  "/delete/:id",
+  middlewareController.verifyTokenAndAminAuth,
+  hotelController.deleteHotel
+);
+//GET
+router.get(
+  "/:id",
+  middlewareController.verifyTokenAndAminAuth,
+  hotelController.getHotel
+);
+//GET ALL
+router.get("/", hotelController.getAllHotel);
+
 module.exports = router;

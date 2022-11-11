@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 const HotelSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    // required: true,
   },
   type: {
     type: String,
@@ -15,7 +15,7 @@ const HotelSchema = new mongoose.Schema({
     required: true,
   },
   addresss: {
-    type: Sting,
+    type: String,
     required: true,
   },
   distance: {
@@ -24,6 +24,10 @@ const HotelSchema = new mongoose.Schema({
   },
   photos: {
     type: [String],
+  },
+  title: {
+    type: String,
+    required: true,
   },
   desc: {
     type: String,
@@ -37,8 +41,14 @@ const HotelSchema = new mongoose.Schema({
   rooms: {
     type: [String],
   },
-  cheaperstPrice: {
-    type: String,
+  cheapestPrice: {
+    type: Number,
     required: true,
   },
+  featured: {
+    type: Boolean,
+    default: false,
+  },
 });
+
+module.exports = mongoose.model("Hotel", HotelSchema);

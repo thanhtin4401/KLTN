@@ -8,6 +8,7 @@ const cookieParser = require("cookie-parser");
 const authRounte = require("./Routers/auth");
 const userRoute = require("./Routers/user");
 const hotelsRoute = require("./Routers/hotel");
+const roomRoute = require("./Routers/room");
 const app = express();
 dotenv.config();
 
@@ -41,6 +42,7 @@ app.use("/js", express.static(path.resolve(__dirname, "assets/js")));
 app.use("/api/auth", authRounte);
 app.use("/api/user", userRoute);
 app.use("/api/hotels", hotelsRoute);
+app.use("/api/rooms", roomRoute);
 app.use(express.json());
 
 //JSON WEB TOKEN

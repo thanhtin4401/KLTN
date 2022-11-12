@@ -19,7 +19,7 @@ router.put(
 //DELETE
 router.delete(
   "/delete/:id",
-  middlewareController.verifyTokenAndAminAuth,
+  // middlewareController.verifyTokenAndAminAuth,
   hotelController.deleteHotel
 );
 //GET
@@ -30,5 +30,8 @@ router.get(
 );
 //GET ALL
 router.get("/", hotelController.getAllHotel);
+router.get("/countByCity", hotelController.countByCity);
+router.get("/countByType", hotelController.countByType);
+router.get("/room/:id", hotelController.getHotelRooms);
 
 module.exports = router;

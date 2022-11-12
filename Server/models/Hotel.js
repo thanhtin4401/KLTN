@@ -38,6 +38,7 @@ const HotelSchema = new mongoose.Schema({
     min: 0,
     max: 5,
   },
+  //dad
   rooms: {
     type: [String],
   },

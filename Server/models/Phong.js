@@ -43,4 +43,4 @@ const phongSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Room", phongSchema);
+module.exports = mongoose.model("phong", phongSchema);

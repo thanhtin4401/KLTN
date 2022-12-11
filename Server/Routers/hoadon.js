@@ -5,14 +5,23 @@ const middlewareController = require("../controllers/middlewareController");
 const router = require("express").Router();
 
 //GET ALL USERS
-router.get("/", hoaDonController.getAllBill);
+router.get("/api/hoa-don", hoaDonController.getAllBill);
 
-//DELETE USER
+//Create
+router.post("/api/hoa-don", hoaDonController.createBill);
+
+//GET BY ID
+router.get("/api/hoa-don", hoaDonController.getBillById);
+
+// Update
+router.put("/api/hoa-don", hoaDonController.updateBill);
+
+//DELETE Promotion
 //v1/user/2313123
-// router.delete(
-//   "/:id",
-//   middlewareController.verifyTokenAndAminAuth,
-//   userController.deleteUser
-// );
+router.delete(
+  "/api/hoa-don/:id",
+  middlewareController.verifyTokenAndAminAuth,
+  hoaDonController.deleteBill
+);
 
 module.exports = router;

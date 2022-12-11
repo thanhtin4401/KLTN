@@ -1,19 +1,27 @@
-// const khachSanController = require("../controllers/khachSanController");
-// const middlewareController = require("../controllers/middlewareController");
+const middlewareController = require("../controllers/middlewareController");
 
 const khuVucController = require("../controllers/khuVucController");
 
 const router = require("express").Router();
 
 //GET ALL USERS
-router.get("/", khuVucController.getAllLocation);
+router.get("/api/khu-vuc", khuVucController.getAllLocation);
 
-//DELETE USER
+//Create
+router.post("/api/khu-vuc", khuVucController.createLocation);
+
+//GET BY ID
+router.get("/api/khu-vuc", khuVucController.getLocationById);
+
+// Update
+router.put("/api/khu-vuc", khuVucController.updateLocation);
+
+//DELETE Promotion
 //v1/user/2313123
-// router.delete(
-//   "/:id",
-//   middlewareController.verifyTokenAndAminAuth,
-//   userController.deleteUser
-// );
+router.delete(
+  "/api/khu-vuc/:id",
+  middlewareController.verifyTokenAndAminAuth,
+  khuVucController.deleteLocation
+);
 
 module.exports = router;

@@ -1,19 +1,28 @@
 // const khachSanController = require("../controllers/khachSanController");
-// const middlewareController = require("../controllers/middlewareController");
+const middlewareController = require("../controllers/middlewareController");
 
 const khuyenMaiController = require("../controllers/khuyenMaiController");
 
 const router = require("express").Router();
 
-//GET ALL USERS
-router.get("/", khuyenMaiController.getAllPromotion);
+//Create
+router.post("/api/khuyen-mai", khuyenMaiController.createPromotion);
 
-//DELETE USER
+//GET ALL USERS
+router.get("/api/khuyen-mai", khuyenMaiController.getAllPromotion);
+
+//GET BY ID
+router.get("/api/khuyen-mai", khuyenMaiController.getPromotionById);
+
+// Update
+router.put("/api/khuyen-mai", khuyenMaiController.updatePromotion);
+
+//DELETE Promotion
 //v1/user/2313123
-// router.delete(
-//   "/:id",
-//   middlewareController.verifyTokenAndAminAuth,
-//   userController.deleteUser
-// );
+router.delete(
+  "/api/khuyen-mai:id",
+  middlewareController.verifyTokenAndAminAuth,
+  khuyenMaiController.deletePromotion
+);
 
 module.exports = router;

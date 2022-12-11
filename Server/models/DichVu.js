@@ -10,4 +10,4 @@ const dichVuSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("DichVu", dichVuSchema);
+module.exports = mongoose.model("dichvu", dichVuSchema);

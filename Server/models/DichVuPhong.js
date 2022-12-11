@@ -15,4 +15,4 @@ const dichVuPhongSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("DichVuPhong", dichVuPhongSchema);
+module.exports = mongoose.model("dichvuphong", dichVuPhongSchema);

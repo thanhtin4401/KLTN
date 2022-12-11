@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const taiKhoanSchema = new mongoose.Schema(
   {
-    username: {
+    TenTaiKhoan: {
       type: String,
       required: true,
       minlength: 6,
@@ -9,7 +9,7 @@ const taiKhoanSchema = new mongoose.Schema(
       //username ton tai thi ko dc tao nua
       unique: true,
     },
-    email: {
+    TaiKhoan: {
       type: String,
       required: true,
       minlength: 10,
@@ -17,12 +17,16 @@ const taiKhoanSchema = new mongoose.Schema(
       //username ton tai thi ko dc tao nua
       unique: true,
     },
-    password: {
+    MatKhau: {
       type: String,
       require: true,
       minlength: 6,
     },
-    role: {
+    HinhAnh: {
+      type: String,
+      require: true,
+    },
+    QuyenHang: {
       type: String,
       require: true,
       minlength: 3,

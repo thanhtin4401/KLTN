@@ -13,4 +13,10 @@ router.post(
   authController.userLogout
 );
 
+//GET BY ID
+router.get("/api/tai-khoan", authController.updateAccount);
+
+// Update
+router.put("/api/tai-khoan", authController.deleteAccount);
+
 module.exports = router;

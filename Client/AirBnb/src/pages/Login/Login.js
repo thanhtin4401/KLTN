@@ -48,7 +48,7 @@ function Login() {
         <Link className="absolute top-[24px] left-[24px]" to="/">
           <img
             className=" w-[6rem]"
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Airbnb_Logo_B%C3%A9lo.svg/2560px-Airbnb_Logo_B%C3%A9lo.svg.png"
+            src="https://res.cloudinary.com/dvzingci9/image/upload/v1670852163/airBnB/logo/Logo-NovaLand-NVL-OriTe.png_cpm5ot.webp"
             alt=""
           />
         </Link>
@@ -161,7 +161,7 @@ function Login() {
             </div>
           </div>
         </div>
-        <div className="w-2/4 mb:hidden sm:hidden lg:flex relative bg-[#e86f7d] overflow-hidden h-full flex justify-center items-center rounded-[0.5rem]">
+        <div className="w-2/4 mb:hidden sm:hidden lg:flex relative bg-[#1c305e] overflow-hidden h-full flex justify-center items-center rounded-[0.5rem]">
           <div className="glass h-[80%] relative w-[30rem] rouded-[0.5rem] bg-mainColor z-10 animate__delay-1s animate__animated animate__fadeInUp">
             <h1 className="text-white text-[30px] text-left p-5">
               Start your journey by one click, explore beautiful world!

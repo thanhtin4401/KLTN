@@ -6,7 +6,7 @@ import { localStorageService } from '../../services/localStorageService';
 import { userService } from '../../services/userService';
 import { Button, notification } from 'antd';
 import { useTranslation } from 'react-i18next';
-import {BsPersonSquare} from 'react-icons/bs'
+import { BsPersonSquare } from 'react-icons/bs';
 import { Input, message } from 'antd';
 import { Modal } from 'antd';
 import ProfileRight from './ProfileRight';
@@ -76,7 +76,7 @@ export default function ProfilePage() {
         <h1 className="text-base font-bold mb-5">Chọn hình ảnh:</h1>
         <input
           type="file"
-          className="file:bg-[#FF385C] file:border-none file:px-3 file:py-2 file:rounded-full file:text-white file:cursor-pointer rounded-full"
+          className="file:bg-[#1c305e] file:border-none file:px-3 file:py-2 file:rounded-full file:text-white file:cursor-pointer rounded-full"
           name="img"
           onChange={changeHandler}
         />
@@ -109,7 +109,7 @@ export default function ProfilePage() {
                   />
                   <h1
                     onClick={openModalClick}
-                    className="text-[#666] font-bold hover:text-[#FF385C] transition-all duration-300 underline mt-2"
+                    className="text-[#666] font-bold hover:text-[#1c305e] transition-all duration-300 underline mt-2"
                   >
                     {t('Update Avatar')}
                   </h1>
@@ -117,7 +117,7 @@ export default function ProfilePage() {
                 <div className="my-5">
                   <h1 className="flex items-center font-bold text-lg">
                     {' '}
-                    <MdOutlineSecurity className="mr-3 text-[#FF385C]" /> {t('Idenity Verified')}
+                    <MdOutlineSecurity className="mr-3 text-[#1c305e]" /> {t('Idenity Verified')}
                   </h1>
                   <h1 className="text-[#666] text-base">
                     {t('Verify your profile by obtainning Armorials')}
@@ -138,7 +138,7 @@ export default function ProfilePage() {
             </div>
             {/* RIGHT */}
             <div className="lg:col-span-9 md:col-span-12 sm:col-span-12 mb:col-span-12">
-              <ProfileRight/>
+              <ProfileRight />
             </div>
           </div>
         </div>

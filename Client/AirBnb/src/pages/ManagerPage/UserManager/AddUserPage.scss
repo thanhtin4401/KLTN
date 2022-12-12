@@ -1,9 +1,9 @@
 .modal_add-user {
     .ant-modal-header {
         border-radius: 1rem 1rem 0rem 0rem;
-        background-color: #FF385C;
+        background-color: #1c305e;
         .ant-modal-title {
-            color: white
+            color: white;
         }
     }
     .ant-modal-content {
@@ -13,11 +13,11 @@
         display: flex;
         justify-content: flex-end;
         .ant-btn.ant-btn-default {
-            color: black
+            color: black;
         }
         .ant-btn.ant-btn-primary {
-            background-color: #FF385C;
-            display: none!important;
+            background-color: #1c305e;
+            display: none !important;
         }
     }
     .ant-btn {

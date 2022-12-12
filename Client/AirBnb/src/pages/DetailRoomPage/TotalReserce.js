@@ -446,8 +446,7 @@ function TotalReserce({ mobile, handleIsReserve, isReserve, desktop, roomId, tot
         </div>
       </div>
       <button
-        style={{ background: 'linear-gradient(91.46deg, #E61E4F 18.59%, #D70566 94.48%)' }}
-        className="flex mb-[0.75rem] py-[0.75rem] justify-center font-bold text-[1.1rem] text-white w-full rounded-[8px] "
+        className="flex bg-[#1c305e] mb-[0.75rem] py-[0.75rem] justify-center font-bold text-[1.1rem] text-white w-full rounded-[8px] "
         onClick={showModal}
       >
         {t('Reserve')}

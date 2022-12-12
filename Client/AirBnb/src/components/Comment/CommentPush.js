@@ -84,7 +84,7 @@ function CommentPush(props) {
 
           <Form.Item className="mt-2" wrapperCol={{ span: 4 }}>
             <button
-              className="text-black py-[6px] px-[12px] border rounded-lg text-[1rem] font-[600] hover:bg-[#FF385C] hover:text-white transition-all"
+              className="text-black py-[6px] px-[12px] border rounded-lg text-[1rem] font-[600] hover:bg-[#1c305e] hover:text-white transition-all"
               type="primary"
               htmltype="submit"
             >

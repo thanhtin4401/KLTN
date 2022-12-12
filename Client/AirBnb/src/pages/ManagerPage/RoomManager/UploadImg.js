@@ -78,7 +78,7 @@ const UploadImgRoom = ({ ID, imgRoom, handleOnSuccess }) => {
         />
         <input
           type="file"
-          className="file:bg-[#FF385C] file:border-none file:px-3 file:py-2 file:rounded-full file:text-white file:cursor-pointer rounded-full"
+          className="file:bg-[#1c305e] file:border-none file:px-3 file:py-2 file:rounded-full file:text-white file:cursor-pointer rounded-full"
           name="img"
           onChange={handleChangeFile}
         />

@@ -27,7 +27,7 @@ export default function SideBarManager() {
                 <Link to="/">
                   <img
                     className="w-[110px] h-[32px] mb-5 pl-2"
-                    src="https://www.pngkey.com/png/full/60-606021_horizontal-white-transparent-for-web-airbnb-logo-white.png"
+                    src="https://res.cloudinary.com/dvzingci9/image/upload/v1670852163/airBnB/logo/Logo-NovaLand-NVL-OriTe.png_cpm5ot.webp"
                     alt=""
                   />
                 </Link>

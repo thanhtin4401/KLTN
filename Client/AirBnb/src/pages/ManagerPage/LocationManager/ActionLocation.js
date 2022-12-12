@@ -46,14 +46,14 @@ export default function ActionLocation({ ID, locationInfor, handleOnSuccess }) {
     <div className="space-x-5 flex">
       <button
         onClick={showModal}
-        className="border rounded text-black  hover:bg-[#FF385C] hover:text-white transition-all px-2 py-2"
+        className="border rounded text-black  hover:bg-[#1c305e] hover:text-white transition-all px-2 py-2"
       >
         {t('Delete')}
       </button>
 
       <button
         onClick={handleShowModal}
-        className="border rounded text-black  hover:bg-[#FF385C] hover:text-white transition-all px-2 py-2"
+        className="border rounded text-black  hover:bg-[#1c305e] hover:text-white transition-all px-2 py-2"
       >
         {t('Update')}
       </button>

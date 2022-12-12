@@ -194,39 +194,41 @@ const ListUserPage = () => {
   };
   return (
     <>
-      <div className="w-full text-left p-2 bg-[#FF385C]">
-        <h1 className="text-white text-[3rem] font-[700]">{t('LIST USER')}</h1>
+      <div className="w-full text-left p-2 bg-white rounded-[2rem] mb-3">
+        <h1 className="text-[#1c305e] ml-4 text-[1rem] font-[700]">{t('Quản lý tài khoản')}</h1>
       </div>
-      <div className="flex items-center my-4">
-        <Search
-          placeholder={t('Find Account')}
-          onSearch={onSearchUser}
-          enterButton
-          className="search-user"
+      <div className="bg-white rounded-[1rem] p-4">
+        <div className="flex items-center ">
+          <Search
+            placeholder={t('Find Account')}
+            onSearch={onSearchUser}
+            enterButton
+            className="search-user"
+          />
+          <button
+            onClick={handleShowModal}
+            className="py-[6px] px-[12px] bg-black transition-all hover:bg-[#1c305e] text-white font-[600] text-[1rem] h-[3.2rem]"
+          >
+            {t('+ Add Account')}
+          </button>
+        </div>
+        <Table
+          columns={columns}
+          dataSource={dataUser}
+          scroll={{
+            x: 1300,
+          }}
         />
-        <button
-          onClick={handleShowModal}
-          className="py-[6px] px-[12px] bg-black transition-all hover:bg-[#FF385C] text-white font-[600] text-[1rem] h-[3.2rem]"
-        >
-          {t('+ Add Account')}
-        </button>
+        <AddUserPage isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />;
       </div>
       {/* <div className="w-full mt-2 mb-2">
         <button
           onClick={handleShowModal}
-          className="py-[6px] px-[12px] bg-black transition-all hover:bg-[#FF385C] text-white font-[600] text-[1.2rem] "
+          className="py-[6px] px-[12px] bg-black transition-all hover:bg-[#1c305e] text-white font-[600] text-[1.2rem] "
         >
           + Thêm tài khoản
         </button>
       </div> */}
-      <Table
-        columns={columns}
-        dataSource={dataUser}
-        scroll={{
-          x: 1300,
-        }}
-      />
-      <AddUserPage isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />;
     </>
   );
 };

@@ -194,7 +194,7 @@ function ListLocationPage() {
   };
   return (
     <>
-      <div className="w-full text-left p-2 bg-[#FF385C]">
+      <div className="w-full text-left p-2 bg-[#1c305e]">
         <h1 className="text-white text-[3rem] font-[700]">{t('Quản lý danh sách điạ điểm')}</h1>
       </div>
       <div className="flex items-center my-4">
@@ -206,7 +206,7 @@ function ListLocationPage() {
         />
         <button
           onClick={handleShowModal}
-          className="py-[6px] px-[12px] bg-black transition-all hover:bg-[#FF385C] text-white font-[600] text-[1rem] h-[3.2rem]"
+          className="py-[6px] px-[12px] bg-black transition-all hover:bg-[#1c305e] text-white font-[600] text-[1rem] h-[3.2rem]"
         >
           {t('+ Add Location')}
         </button>

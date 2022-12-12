@@ -32,7 +32,7 @@ function NoteFoundPage() {
 
         <Link
           to="/"
-          className=" mt-10 border rounded-[5rem] px-[1.2rem] hover:bg-[#FF385C] transition-all hover:text-white hover:border-white border-black p-2"
+          className=" mt-10 border rounded-[5rem] px-[1.2rem] hover:bg-[#1c305e] transition-all hover:text-white hover:border-white border-black p-2"
         >
           {t('Back Home')}
         </Link>

@@ -265,7 +265,7 @@ function RoomManager() {
   };
   return (
     <>
-      <div className="w-full text-center p-2 bg-[#FF385C]">
+      <div className="w-full text-center p-2 bg-[#1c305e]">
         <h1 className="text-white text-[3rem] text-left font-[700]">{t('Quản Lý Phòng')}</h1>
       </div>
       <div className="flex items-center my-4">
@@ -277,7 +277,7 @@ function RoomManager() {
         />
         <button
           onClick={handleShowModal}
-          className="py-[6px] px-[12px] bg-black transition-all hover:bg-[#FF385C] text-white font-[600] text-[1rem] h-[3.2rem]"
+          className="py-[6px] px-[12px] bg-black transition-all hover:bg-[#1c305e] text-white font-[600] text-[1rem] h-[3.2rem]"
         >
           {t('+ Add Room')}
         </button>

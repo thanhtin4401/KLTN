@@ -66,7 +66,7 @@ export default function ProfileRight() {
     <div className="py-5 lg:px-10 md:px-0 sm:px-0 mb:px-0">
       <div className="flex justify-between m-3">
         <h1 className="font-bold text-xl flex items-center">
-          <BsPersonSquare className="mr-3 text-[#FF385C]" />
+          <BsPersonSquare className="mr-3 text-[#1c305e]" />
           Thông Tin
         </h1>
         <div>
@@ -77,7 +77,7 @@ export default function ProfileRight() {
             }}
             className={`${
               changeBtn ? 'hidden' : ''
-            } px-3 py-2 rounded-lg font-bold text-white bg-[#FF385C] mr-3`}
+            } px-3 py-2 rounded-lg font-bold text-white bg-[#1c305e] mr-3`}
           >
             Cập Nhật
           </button>
@@ -87,7 +87,7 @@ export default function ProfileRight() {
             }}
             className={`${
               changeBtn ? '' : 'hidden'
-            } px-3 py-2 rounded-lg font-bold text-white bg-[#FF385C]`}
+            } px-3 py-2 rounded-lg font-bold text-white bg-[#1c305e]`}
           >
             Lưu Thay Đổi
           </button>

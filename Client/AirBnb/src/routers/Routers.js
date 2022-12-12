@@ -22,15 +22,17 @@ import DetailPageLayout from '../layout/DetailPageLayout';
 import InfoTripPage from '../pages/InfoTripPage/InfoTripPage';
 import Wishlists from '../pages/WishlistsPage/WishlistsPage';
 import InfoTripMobilePage from '../pages/InfoTripMobilePage/InfoTripMobilePage';
-import UserManager from '../pages/UserManager/UserManager';
+
 import ListRoomPage from '../pages/ManagerPage/RoomManager/ListRoomPage';
-import UserAddForm from '../pages/UserManager/UserAdd/UserAddForm';
+
 // import Modal from '../HOC/Modal.js/Modal';
 import PopUpModal from '../pages/PopUpModal/PopUpModal';
 import ProfileManagerPage from '../pages/ProfileManagerPage/ProfileManagerPage';
 import ListUserPage from '../pages/ManagerPage/UserManager/ListUserPage';
 import ListLocationPage from '../pages/ManagerPage/LocationManager/ListLocationPage';
 import RequestPageAdmin from '../components/App/requestPageAdmin';
+import RoomPages from '../pages/RoomPages/RoomPages';
+import RootLayout from '../layout/RootLayout';
 export default function Routers() {
   return (
     <BrowserRouter>
@@ -45,24 +47,21 @@ export default function Routers() {
           <Route path="/Trip" element={<InfoTripPage />}></Route>
           <Route path="/Wishlist" element={<Wishlists />}></Route>
           <Route path="/TripMobile" element={<InfoTripMobilePage />}></Route>
-          {/* <Route path="/Modal" element={<Modal />}></Route> */}
           <Route path="/PopUpModal" element={<PopUpModal />}></Route>
+          <Route path="/RoomPage" element={<RoomPages />}></Route>
         </Route>
         <Route path="/Detail-Room" element={<DetailPageLayout />}>
           <Route path="/Detail-Room/:roomId" element={<DetailRoomPage />}></Route>
         </Route>
-
         <Route
           path="/Manager"
           element={
-            <RequestPageAdmin>
-              <ManagerLayout />
-            </RequestPageAdmin>
+            // <RequestPageAdmin>
+            // <ManagerLayout />
+            <RootLayout />
+            // </RequestPageAdmin>
           }
         >
-          {/* <Route path="/Manager/Home" element={<ManagerPage />} /> */}
-          {/* <Route path="/Manager/User" element={<UserManager />} /> */}
-
           <Route path="/Manager/User" element={<ListUserPage />} />
           <Route path="/Manager/Room" element={<ListRoomPage />} />
           <Route path="/Manager/Location" element={<ListLocationPage />} />

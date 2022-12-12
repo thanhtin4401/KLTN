@@ -89,7 +89,7 @@ export default function InfoTripPage() {
                 setIdRoom(item.id);
                 openModalDelete();
               }}
-              className="px-3 py-1 bg-[#FF385C] font-bold text-white rounded-xl"
+              className="px-3 py-1 bg-[#1c305e] font-bold text-white rounded-xl"
             >
               {t('Cancel')}
             </button>
@@ -115,7 +115,7 @@ export default function InfoTripPage() {
       <div className="mt-24 mb-10 container mx-auto">
         <h1 className="font-bold text-xl flex items-center">
           {' '}
-          <RiMotorbikeFill className="icon-anima mr-3 text-[#FF385C]" /> {t('Trip')}
+          <RiMotorbikeFill className="icon-anima mr-3 text-[#1c305e]" /> {t('Trip')}
         </h1>
         <div className="grid grid-cols-12 my-5 gap-5">
           {bookedRoom.length === 0 ? (
@@ -135,13 +135,13 @@ export default function InfoTripPage() {
           )}
 
           <div className="lg:col-span-3 md:col-span-12 mb:col-span-12 sm:col-span-12 py-6 px-10 bg-[#F7F7F9] rounded-xl">
-            <h1 className="text-[#FF385C] font-bold text-base mb-3">
+            <h1 className="text-[#1c305e] font-bold text-base mb-3">
               {t('Do you want to enjoy this life more than usual ?')}
             </h1>
             <h1 className="text-[#000] text-sm mb-5">{t('Experience new things with us!!!')}</h1>
             <Link
               to="/"
-              className="px-4 py-2 border border-gray-500 font-medium text-base rounded-xl hover:text-[#FF385C]"
+              className="px-4 py-2 border border-gray-500 font-medium text-base rounded-xl hover:text-[#1c305e]"
             >
               Let's go
             </Link>

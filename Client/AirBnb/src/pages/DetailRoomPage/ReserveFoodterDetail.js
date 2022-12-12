@@ -37,7 +37,7 @@ function ReserveFoodterDetail(props) {
             onClick={() => {
               handleIsReserve();
             }}
-            className="py-[6] px-[24px] bg-[#FF385C] text-white rounded-lg"
+            className="py-[6] px-[24px] bg-[#1c305e] text-white rounded-lg"
           >
             Reserce
           </button>

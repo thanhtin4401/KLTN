@@ -158,7 +158,7 @@ function UpdateRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccessUpdate, ro
           >
             <div className="flex w-full justify-between">
               <div className="w-2/4 pr-6 border-r-[1px]">
-                <h2 className="font-[600] text-[1rem] text-[#FF385C] ">Thông tin chung</h2>
+                <h2 className="font-[600] text-[1rem] text-[#1c305e] ">Thông tin chung</h2>
                 <p className="">{t('Location')}</p>
                 <Form.Item
                   className="mb-4"
@@ -245,7 +245,7 @@ function UpdateRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccessUpdate, ro
                 </Form.Item>
               </div>
               <div className="w-2/4 pl-6">
-                <h2 className="font-[600] text-[1rem] text-[#FF385C] ">Thông tin bổ xung</h2>
+                <h2 className="font-[600] text-[1rem] text-[#1c305e] ">Thông tin bổ xung</h2>
                 <Form.Item name="checkbox">
                   <Checkbox.Group>
                     <div className="flex flex-col">
@@ -324,7 +324,7 @@ function UpdateRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccessUpdate, ro
                     </div>
                   </Checkbox.Group>
                 </Form.Item>
-                <h2 className="font-[600] text-[1rem] text-[#FF385C] ">Số lượng</h2>
+                <h2 className="font-[600] text-[1rem] text-[#1c305e] ">Số lượng</h2>
 
                 <div className="w-full">
                   <p className="">{t('Phòng ngũ')}</p>

@@ -150,7 +150,7 @@ export default function UserNav({ bg }) {
                     closeDropDown();
                   }}
                   to="/Profile-person"
-                  className="hover:text-black font-[700] transition duration-100 text-[#FF385C] text-left overflow-hidden w-full"
+                  className="hover:text-black font-[700] transition duration-100 text-[#1c305e] text-left overflow-hidden w-full"
                 >
                   {t('Hello ') + ' ' + userAPI?.name}
                 </Link>

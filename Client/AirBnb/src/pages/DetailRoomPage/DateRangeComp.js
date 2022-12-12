@@ -70,7 +70,7 @@ const DateRangeComp = (props) => {
       <div className="w-full text-right">
         <button
           onClick={handleCloseDateRange}
-          className="hover:bg-[#FF385C] hover:text-white transition-all py-[6px] px-[12px] border border-[#FF385C] rounded-[5rem]"
+          className="hover:bg-[#1c305e] hover:text-white transition-all py-[6px] px-[12px] border border-[#1c305e] rounded-[5rem]"
         >
           Close
         </button>

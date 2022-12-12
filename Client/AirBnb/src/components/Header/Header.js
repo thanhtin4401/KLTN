@@ -109,7 +109,7 @@ export default function Header() {
             <div className="px-5 py-3 hover:bg-gray-200 transition duration-300 rounded-full h-full flex flex-wrap justify-center items-center">
               <button
                 onClick={searchBtn}
-                className="bg-[#FF385C] hover:bg-red-500 transition duration-300 px-5 py-2 rounded font-bold text-white"
+                className="bg-[#1c305e] hover:bg-red-500 transition duration-300 px-5 py-2 rounded font-bold text-white"
               >
                 {t('Search')}
               </button>
@@ -126,11 +126,11 @@ export default function Header() {
         <NavLink to="/">
           <div className="logo lg:block  md:hidden sm:hidden mb:hidden animate__animated animate__fadeInLeft">
             <img
-              className="w-[102px] h-[32px]"
+              className="h-full w-[6rem]"
               src={`${
                 bg
-                  ? ' https://www.pngkey.com/png/full/60-606021_horizontal-white-transparent-for-web-airbnb-logo-white.png'
-                  : 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Airbnb_Logo_B%C3%A9lo.svg/2560px-Airbnb_Logo_B%C3%A9lo.svg.png'
+                  ? ' https://res.cloudinary.com/dvzingci9/image/upload/v1670852163/airBnB/logo/Logo-NovaLand-NVL-OriTe.png_cpm5ot.webp'
+                  : 'https://res.cloudinary.com/dvzingci9/image/upload/v1670852163/airBnB/logo/Logo-NovaLand-NVL-OriTe.png_cpm5ot.webp'
               }`}
               alt=""
             />
@@ -170,7 +170,7 @@ export default function Header() {
                 {t('Add Guest')}
               </h1>
             </div>
-            <div className="p-2 bg-[#FF385C] rounded-3xl">
+            <div className="p-2 bg-[#1c305e] rounded-3xl">
               <FaSearch className="text-white" />
             </div>
           </div>

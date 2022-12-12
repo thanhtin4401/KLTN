@@ -5,17 +5,17 @@
 }
 
 .dropdown-detail {
-    width: 100%!important;
+    width: 100% !important;
     .ant-select-selector {
-        padding-right: 0px!important;
-        padding-left: 0px!important;
+        padding-right: 0px !important;
+        padding-left: 0px !important;
         .ant-select-selection-item {
             font-weight: 400;
             font-size: 1rem;
         }
     }
     .ant-select-arrow {
-        display: none!important;
+        display: none !important;
     }
 }
 
@@ -52,8 +52,8 @@
 .comment-detail {
     .swiper-slide img {
         display: block;
-        max-width: 32px!important;
-        max-height: 32px!important;
+        max-width: 32px !important;
+        max-height: 32px !important;
         object-fit: cover;
     }
 }
@@ -67,10 +67,10 @@
     }
     &:hover {
         h2 {
-            color: #FF385C;
+            color: #1c305e;
         }
         p {
-            color: #FF385C;
+            color: #1c305e;
         }
     }
 }
@@ -84,10 +84,10 @@
     }
     &:hover {
         h2 {
-            color: #FF385C;
+            color: #1c305e;
         }
         p {
-            color: #FF385C;
+            color: #1c305e;
         }
     }
 }

@@ -1,26 +1,26 @@
-const khachHangController = require("../controllers/khachHangController");
-const middlewareController = require("../controllers/middlewareController");
+const khachHangController = require('../controllers/khachHangController')
+const middlewareController = require('../controllers/middlewareController')
 
-const router = require("express").Router();
+const router = require('express').Router()
 
-//GET ALL USERS
-router.get("/api/khach-hang", khachHangController.getAllCustomer);
+router.get('/', khachHangController.getAllCustomers)
+router.get('/:id', khachHangController.getCustomerById)
 
-//Create
-router.post("/api/khach-hang", khachHangController.createCustomer);
-
-//GET BY ID
-router.get("/api/khach-hang", khachHangController.getCustomerById);
-
-// Update
-router.put("/api/khach-hang", khachHangController.updateCustomer);
-
-//DELETE Promotion
-//v1/user/2313123
-router.delete(
-  "/api/khach-hang/:id",
+router.post(
+  '/',
   middlewareController.verifyTokenAndAminAuth,
-  khachHangController.deleteCustomer
-);
+  khachHangController.createCustomer,
+)
+router.put(
+  '/:id',
+  middlewareController.verifyTokenAndAminAuth,
+  khachHangController.updateCustomer,
+)
 
-module.exports = router;
+router.delete(
+  '/:id',
+  middlewareController.verifyTokenAndAminAuth,
+  khachHangController.deleteCustomer,
+)
+
+module.exports = router

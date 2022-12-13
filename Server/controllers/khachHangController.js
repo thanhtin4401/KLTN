@@ -1,66 +1,66 @@
-const KhachHang = require("../models/KhachHang");
+const KhachHang = require('../models/KhachHang')
+const TaiKhoan = require('../models/TaiKhoan')
 
-// const Room = require("../models/Room");
 const khachHangController = {
-  // get room
-  getAllCustomer: async (req, res, next) => {
+  getAllCustomers: async (req, res, next) => {
     try {
-      const KhachHangs = await KhachHang.find();
-      res.status(200).json(KhachHangs);
+      return res.status(200).json(await KhachHang.find())
     } catch (err) {
-      next(err);
-    }
-  },
-  createCustomer: async (req, res) => {
-    try {
-      const newCustomer = await new KhachHang({
-        Ngaylap: req.body.Ngaylap,
-        NgayThue: req.body.NgayThue,
-        NgayTra: req.body.NgayTra,
-        MaKhachHang: req.body.MaKhachHang,
-        PTTT: req.body.PTTT,
-        MaTaiKhoan: req.body.MaTaiKhoan,
-        MaKhuyenMai: req.body.MaKhuyenMai,
-      });
-      //save to DB
-      const Customer = await newCustomer.save();
-      res.status(200).json(Customer);
-    } catch (err) {
-      res.status(500).json(err);
+      return res.status(403).json(err.message)
     }
   },
 
-  // get Customer by id
   getCustomerById: async (req, res, next) => {
     try {
-      const Customer = await KhachHang.findById(req.params.id);
-      res.status(200).json(Customer);
+      const khachhang = await KhachHang.findById(req.params.id)
+
+      if (!khachhang) {
+        return res.status(300).json('Customer not found')
+      }
+
+      return res.status(200).json(khachhang)
     } catch (err) {
-      res.status(500).json(err);
+      return res.status(403).json(err)
     }
   },
 
-  // update Customer
+  createCustomer: async (req, res) => {
+    try {
+      const khachhang = await new KhachHang(req.body).save()
+      return res.status(200).json(khachhang)
+    } catch (err) {
+      return res.status(403).json(err.message)
+    }
+  },
+
   updateCustomer: async (req, res) => {
     try {
-      const updateCustomer = await KhachHang.findByIdAndUpdate(req.params.id, {
+      const khachhang = await KhachHang.findByIdAndUpdate(req.params.id, {
         $set: req.body,
-      });
-      res.status(200).json(updateCustomer);
+      })
+      return res.status(200).json(khachhang)
     } catch (err) {
-      res.status(500).json(err);
+      return res.status(403).json(err.message)
     }
   },
 
-  // delete Customer
   deleteCustomer: async (req, res) => {
     try {
-      res.status(200).json("Delete successfully");
-      const Customer = await KhachHang.findByIdAndDelete(req.params.id);
+      const khachhang = await KhachHang.findById(req.params.id)
+
+      if (!khachhang) {
+        return res.status(300).json('Customer not found')
+      }
+
+      await TaiKhoan.find({ _id: khachhang.MaTaiKhoan }).deleteOne()
+
+      await khachhang.delete()
+
+      return res.status(200).json('Delete successfully')
     } catch (err) {
-      res.status(500).json(err);
+      return res.status(403).json(err.message)
     }
   },
-};
+}
 
-module.exports = khachHangController;
+module.exports = khachHangController

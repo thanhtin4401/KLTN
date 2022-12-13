@@ -28,6 +28,12 @@ const hoaDonController = {
   createBill: async (req, res) => {
     try {
       const hoadon = await new HoaDon(req.body).save()
+
+      // TODO: hoi lai tin thanh
+      await new ChiTietHoaDon({
+        MaHD: hoadon._id,
+      }).save()
+
       return res.status(200).json(hoadon)
     } catch (err) {
       return res.status(500).json(err.message)
@@ -50,6 +56,10 @@ const hoaDonController = {
       const hoadon = await HoaDon.findById(req.params.id)
 
       await ChiTietHoaDon.find({ MaHD: hoadon._id }, (err, arr) => {
+        if (err) {
+          return res.status(300).json(err.message)
+        }
+
         arr.forEach(async (element) => {
           await KhachSan.find({ MaChiTietHoaDon: element._id }).deleteMany()
         })

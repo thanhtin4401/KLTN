@@ -2,23 +2,25 @@ const KhachSan = require('../models/KhachSan')
 const KhuVuc = require('../models/KhuVuc')
 
 const khachSanController = {
-  // get room
-  getAllHotel: async (req, res, next) => {
+  getAllHotels: async (req, res, next) => {
     try {
-      const KhachSans = await KhachSan.find()
-      res.status(200).json(KhachSans)
+      return res.status(200).json(await KhachSan.find())
     } catch (err) {
-      res.status(403).json(err.message)
+      return res.status(403).json(err.message)
     }
   },
 
-  // get Hotel by id
   getHotelById: async (req, res, next) => {
     try {
-      const Hotel = await KhachSan.findById(req.params.id)
-      res.status(200).json(Hotel)
+      const khachSan = await KhachSan.findById(req.params.id)
+
+      if (!khachSan) {
+        return res.status(300).json('No Hotel found')
+      }
+
+      return res.status(200).json(khachSan)
     } catch (err) {
-      res.status(403).json(err.message)
+      return res.status(403).json(err.message)
     }
   },
 
@@ -29,25 +31,23 @@ const khachSanController = {
         $push: { KhachSan: khachSan._id },
       })
 
-      res.status(200).json(khachSan)
+      return res.status(200).json(khachSan)
     } catch (err) {
-      res.status(500).json(err.message)
+      return res.status(500).json(err.message)
     }
   },
 
-  // update Hotel
   updateHotel: async (req, res) => {
     try {
       const updateHotel = await KhachSan.findByIdAndUpdate(req.params.id, {
         $set: req.body,
       })
-      res.status(200).json(updateHotel)
+      return res.status(200).json(updateHotel)
     } catch (err) {
-      res.status(500).json(err.message)
+      return res.status(500).json(err.message)
     }
   },
 
-  // delete Hotel
   deleteHotel: async (req, res) => {
     try {
       const khachSan = await KhachSan.findById(req.params.id)
@@ -58,9 +58,9 @@ const khachSanController = {
 
       await khachSan.delete()
 
-      res.status(200).json('Delete successfully')
+      return res.status(200).json('Delete successfully')
     } catch (err) {
-      res.status(500).json(err.message)
+      return res.status(500).json(err.message)
     }
   },
 }

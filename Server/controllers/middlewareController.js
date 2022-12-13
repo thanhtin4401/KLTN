@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken')
 const TaiKhoan = require('../models/TaiKhoan')
 
 const middlewareController = {
-  //verifyToken
   verifyToken: (req, res, next) => {
     const token = req.headers['token']
 

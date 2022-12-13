@@ -9,15 +9,18 @@ const chiTietHoaDonSchema = new Schema({
   TrangThai: {
     type: String,
     required: true,
+    default: '',
   },
   // ==================== REFERENCES =========================
   MaHD: {
     type: Schema.Types.ObjectId,
     ref: 'hoadon',
+    default: null,
   },
   MaKhachSan: {
     type: Schema.Types.ObjectId,
     ref: 'khachsan',
+    default: null,
   },
 })
 

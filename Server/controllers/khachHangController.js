@@ -52,7 +52,7 @@ const khachHangController = {
         return res.status(300).json('Customer not found')
       }
 
-      await TaiKhoan.find({ _id: khachhang.MaTaiKhoan }).deleteOne()
+      await TaiKhoan.find({ _id: khachhang.MaTaiKhoan }).deleteMany()
 
       await khachhang.delete()
 

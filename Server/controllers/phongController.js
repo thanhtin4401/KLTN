@@ -2,27 +2,28 @@ const Phong = require('../models/Phong')
 const KhachSan = require('../models/KhachSan')
 
 const roomController = {
-  // get room
-  getRoom: async (req, res, next) => {
+  getAllRooms: async (req, res, next) => {
+    try {
+      return res.status(200).json(await Phong.find())
+    } catch (err) {
+      return res.status(403).json(err.message)
+    }
+  },
+
+  getRoomById: async (req, res, next) => {
     try {
       const room = await Phong.findById(req.params.id)
-      res.status(200).json(room)
+      
+      if (!room) {
+        return res.status(300).json("No Room found");
+      }
+
+      return res.status(200).json(room)
     } catch (err) {
-      res.status(403).json(err.message)
+      return res.status(403).json(err.message)
     }
   },
 
-  // get room
-  getRooms: async (req, res, next) => {
-    try {
-      const rooms = await Phong.find()
-      res.status(200).json(rooms)
-    } catch (err) {
-      res.status(403).json(err.message)
-    }
-  },
-
-  // add room
   createRoom: async (req, res, next) => {
     try {
       const phong = await new Phong(req.body).save()
@@ -31,13 +32,12 @@ const roomController = {
         $push: { MaPhong: phong._id },
       })
 
-      res.status(200).json(phong)
+      return res.status(200).json(phong)
     } catch (err) {
-      res.status(403).json(err.message)
+      return res.status(403).json(err.message)
     }
   },
 
-  // update room
   updateRoom: async (req, res, next) => {
     try {
       const updatedRoom = await Phong.findByIdAndUpdate(
@@ -45,9 +45,10 @@ const roomController = {
         { $set: req.body },
         { new: true },
       )
-      res.status(200).json(updatedRoom)
+
+      return res.status(200).json(updatedRoom)
     } catch (err) {
-      res.status(403).json(err.message)
+      return res.status(403).json(err.message)
     }
   },
 
@@ -73,15 +74,19 @@ const roomController = {
     try {
       const phong = await Phong.findById(req.params.id)
 
+      if (!phong) {
+        return res.status(300).json("No Room found");
+      }
+
       await KhachSan.findByIdAndUpdate(phong.MaKhachSan, {
         $pull: { rooms: req.params.id },
       })
 
       phong.delete()
 
-      res.status(200).json('Room has been deleted.')
+      return res.status(200).json('Room has been deleted.')
     } catch (err) {
-      res.status(403).json(err.message)
+      return res.status(403).json(err.message)
     }
   },
 }

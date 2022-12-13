@@ -6,14 +6,14 @@ dotenv.config()
 var jwt = require('jsonwebtoken')
 
 const authController = {
-  // Get user
-  getUsers: async (req, res) => {
-    const users = await TaiKhoan.find({})
-
-    res.status(200).json(users)
+  getAllUsers: async (req, res) => {
+    try {
+      return res.status(200).json(await TaiKhoan.find())
+    } catch (err) {
+      return res.status(403).json(err.message)
+    }
   },
 
-  //REGISTER
   registerUser: async (req, res) => {
     try {
       const salt = await bcrypt.genSalt(10)
@@ -24,30 +24,29 @@ const authController = {
         MatKhau: hashed,
         HinhAnh: req.body.HinhAnh | '',
         QuyenHang: req.body.QuyenHang | '',
-      })
-      //save to DB
-      const account = await newAccount.save()
-      res.status(200).json(account)
+      }).save()
+
+      return res.status(200).json(newAccount)
     } catch (err) {
-      res.status(500).json(err.message)
+      return res.status(500).json(err.message)
     }
   },
 
-  //LOGIN
   loginUser: async (req, res) => {
     try {
-      //find one tim kiem
       const account = await TaiKhoan.findOne({ TaiKhoan: req.body.TaiKhoan })
       if (!account) {
-        res.status(404).json('wrong username')
+        return res.status(404).json('wrong username')
       }
+
       const validPassword = await bcrypt.compare(
         req.body.MatKhau,
         account.MatKhau,
       )
       if (!validPassword) {
-        res.status(404).json('wrong password')
+        return res.status(404).json('wrong password')
       }
+
       if (account && validPassword) {
         const accessToken = jwt.sign(
           {
@@ -59,18 +58,17 @@ const authController = {
         )
         // es6 tra ve het ngoai tru password
         const { MatKhau, ...others } = account._doc
-        res.status(200).json({ ...others, accessToken })
+        return res.status(200).json({ ...others, accessToken })
       }
     } catch (err) {
-      res.status(500).json(err)
+      return res.status(403).json(err.message)
     }
   },
-  //  LOG Out
+
   userLogout: async (req, res) => {
-    res.status(200).json('Logged out successfull')
+    return res.status(200).json('Logged out successfull')
   },
 
-  // update Account
   updateAccount: async (req, res) => {
     try {
       const updateAccount = await TaiKhoan.findOneAndUpdate(
@@ -79,19 +77,18 @@ const authController = {
           $set: req.body,
         },
       )
-      res.status(200).json(updateAccount)
+      return res.status(200).json(updateAccount)
     } catch (err) {
-      res.status(500).json(err)
+      return res.status(403).json(err.message)
     }
   },
 
-  // delete Account
   deleteAccount: async (req, res) => {
     try {
-      res.status(200).json('Delete successfully')
-      const Account = await TaiKhoan.findByIdAndDelete(req.params.id)
+      await TaiKhoan.findByIdAndDelete(req.params.id)
+      return res.status(200).json('Delete successfully')
     } catch (err) {
-      res.status(500).json(err)
+      return res.status(403).json(err.message)
     }
   },
 }

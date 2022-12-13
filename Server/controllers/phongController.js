@@ -1,94 +1,92 @@
-const Room = require("../models/Room");
-const Hotel = require("../models/Hotel");
+const Phong = require('../models/Phong')
+const KhachSan = require('../models/KhachSan')
+
 const roomController = {
-  // add room
-  createRoom: async (req, res, next) => {
-    const hotelId = req.params.hotelid;
-    const newRoom = new Room(req.body);
-
-    try {
-      const savedRoom = await newRoom.save();
-      try {
-        await Hotel.findByIdAndUpdate(hotelId, {
-          $push: { rooms: savedRoom._id },
-        });
-      } catch (err) {
-        next(err);
-      }
-      res.status(200).json(savedRoom);
-    } catch (err) {
-      next(err);
-    }
-  },
-
-  // update room
-  updateRoom: async (req, res, next) => {
-    try {
-      const updatedRoom = await Room.findByIdAndUpdate(
-        req.params.id,
-        { $set: req.body },
-        { new: true }
-      );
-      res.status(200).json(updatedRoom);
-    } catch (err) {
-      next(err);
-    }
-  },
-
-  // updateRoom avilability
-  updateRoomAvailability: async (req, res, next) => {
-    try {
-      await Room.updateOne(
-        { "roomNumbers._id": req.params.id },
-        {
-          $push: {
-            "roomNumbers.$.unavailableDates": req.body.dates,
-          },
-        }
-      );
-      res.status(200).json("Room status has been updated.");
-    } catch (err) {
-      next(err);
-    }
-  },
-
-  // deleteRoom
-  deleteRoom: async (req, res, next) => {
-    const hotelId = req.params.hotelid;
-    try {
-      await Room.findByIdAndDelete(req.params.id);
-      try {
-        await Hotel.findByIdAndUpdate(hotelId, {
-          $pull: { rooms: req.params.id },
-        });
-      } catch (err) {
-        next(err);
-      }
-      res.status(200).json("Room has been deleted.");
-    } catch (err) {
-      next(err);
-    }
-  },
-
   // get room
   getRoom: async (req, res, next) => {
     try {
-      const room = await Room.findById(req.params.id);
-      res.status(200).json(room);
+      const room = await Phong.findById(req.params.id)
+      res.status(200).json(room)
     } catch (err) {
-      next(err);
+      res.status(403).json(err.message)
     }
   },
 
   // get room
   getRooms: async (req, res, next) => {
     try {
-      const rooms = await Room.find();
-      res.status(200).json(rooms);
+      const rooms = await Phong.find()
+      res.status(200).json(rooms)
     } catch (err) {
-      next(err);
+      res.status(403).json(err.message)
     }
   },
-};
 
-module.exports = roomController;
+  // add room
+  createRoom: async (req, res, next) => {
+    const hotelId = req.params.hotelid
+    const newRoom = new Phong(req.body)
+
+    try {
+      const savedRoom = await newRoom.save()
+
+      await KhachSan.findByIdAndUpdate(hotelId, {
+        $push: { rooms: savedRoom._id },
+      })
+
+      res.status(200).json(savedRoom)
+    } catch (err) {
+      res.status(403).json(err.message)
+    }
+  },
+
+  // update room
+  updateRoom: async (req, res, next) => {
+    try {
+      const updatedRoom = await Phong.findByIdAndUpdate(
+        req.params.id,
+        { $set: req.body },
+        { new: true },
+      )
+      res.status(200).json(updatedRoom)
+    } catch (err) {
+      res.status(403).json(err.message)
+    }
+  },
+
+  // updateRoom avilability
+  updateRoomAvailability: async (req, res, next) => {
+    try {
+      await Phong.updateOne(
+        { 'roomNumbers._id': req.params.id },
+        {
+          $push: {
+            'roomNumbers.$.unavailableDates': req.body.dates,
+          },
+        },
+      )
+      res.status(200).json('Room status has been updated.')
+    } catch (err) {
+      res.status(403).json(err.message)
+    }
+  },
+
+  // deleteRoom
+  deleteRoom: async (req, res, next) => {
+    try {
+      const phong = await Phong.findById(req.params.id)
+
+      await KhachSan.findByIdAndUpdate(phong.MaKhachSan, {
+        $pull: { rooms: req.params.id },
+      })
+
+      phong.delete()
+
+      res.status(200).json('Room has been deleted.')
+    } catch (err) {
+      res.status(403).json(err.message)
+    }
+  },
+}
+
+module.exports = roomController

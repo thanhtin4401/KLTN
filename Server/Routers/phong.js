@@ -1,31 +1,31 @@
-const roomController = require("../controllers/roomController");
-const middlewareController = require("../controllers/middlewareController.js");
-const router = require("express").Router();
+const roomController = require('../controllers/roomController')
+const middlewareController = require('../controllers/middlewareController.js')
+const router = require('express').Router()
+
+//GET
+router.get('/:id', roomController.getRoom)
+//GET ALL
+router.get('/', roomController.getRooms)
+
 //CREATE
 router.post(
-  "/createRoom/:hotelid",
-  // middlewareController.verifyTokenAndAminAuth,
-  roomController.createRoom
-);
+  '/create/:maKhachSan',
+  middlewareController.verifyTokenAndAminAuth,
+  roomController.createRoom,
+)
 
 //UPDATE
-router.put("updateRoom/availability/:id");
 router.put(
-  "/:id",
+  '/:id',
   middlewareController.verifyTokenAndAminAuth,
-  roomController.updateRoom
-);
+  roomController.updateRoom,
+)
+
 //DELETE
 router.delete(
-  "/deleteRoom/:id/:hotelid",
-  // middlewareController.verifyTokenAndAminAuth,
-  roomController.deleteRoom
-);
-//GET
+  '/delete/:id',
+  middlewareController.verifyTokenAndAminAuth,
+  roomController.deleteRoom,
+)
 
-router.get("/:id", roomController.getRoom);
-//GET ALL
-
-router.get("/", roomController.getRooms);
-
-module.exports = router;
+module.exports = router

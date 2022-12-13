@@ -1,15 +1,17 @@
 const mongoose = require("mongoose");
-const dichVuPhongSchema = new mongoose.Schema(
+const Schema = mongoose.Schema;
+
+const dichVuPhongSchema = new Schema(
   {
     MaDichVu: {
-      type: mongoose.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       required: true,
-      ref: "DichVu",
+      ref: "dichvu",
     },
     MaPhong: {
-      type: mongoose.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       required: true,
-      ref: "Phong",
+      ref: "phong",
     },
   },
   { timestamps: true }

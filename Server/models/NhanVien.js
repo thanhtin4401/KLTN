@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
-const { Schema } = mongoose;
+const Schema = mongoose.Schema;
 
-const nhanVienSchema = new mongoose.Schema({
+const nhanVienSchema = new Schema({
   TenNV: {
     type: String,
     required: true,
@@ -30,8 +30,9 @@ const nhanVienSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  // ====================== REFERENCES ===========================
   MaTaiKhoan: {
-    type: mongoose.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     required: true,
     ref: "taikhoan",
   },

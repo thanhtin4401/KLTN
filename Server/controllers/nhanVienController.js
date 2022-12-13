@@ -1,69 +1,63 @@
-const NhanVien = require("../models/NhanVien");
+const NhanVien = require('../models/NhanVien')
+const TaiKhoan = require('../models/TaiKhoan')
 
-// const Room = require("../models/Room");
 const nhanVienController = {
-  // get room
-  getAllEmloyee: async (req, res, next) => {
+  getAllEmloyees: async (req, res, next) => {
     try {
-      const NhanViens = await NhanVien.find();
-      res.status(200).json(NhanViens);
+      return res.status(200).json(await NhanVien.find())
     } catch (err) {
-      next(err);
+      return res.status(403).json(err.message)
     }
   },
 
-  // create Employee
-  createEmployee: async (req, res) => {
-    try {
-      const newEmployee = await new NhanVien({
-        TenNV: req.body.TenNV,
-        Phai: req.body.Phai,
-        NgaySinh: req.body.NgaySinh,
-        SDT: req.body.SDT,
-        CMND: req.body.CMND,
-        HinhAnh: req.body.HinhAnh,
-        Email: req.body.Email,
-        MaTaiKhoan: req.body.MaTaiKhoan,
-      });
-      //save to DB
-      const Employee = await newEmployee.save();
-      res.status(200).json(Employee);
-    } catch (err) {
-      res.status(500).json(err);
-    }
-  },
-
-  // get Employee by id
   getEmployeeById: async (req, res, next) => {
     try {
-      const Employee = await NhanVien.findById(req.params.id);
-      res.status(200).json(Employee);
+      const nhanvien = await NhanVien.findById(req.params.id)
+
+      if (!nhanvien) {
+        return res.status(300).json('No Employee found')
+      }
+
+      return res.status(200).json(nhanvien)
     } catch (err) {
-      res.status(500).json(err);
+      return res.status(403).json(err.message)
     }
   },
 
-  // update Employee
+  createEmployee: async (req, res) => {
+    try {
+      const nhanvien = await new NhanVien(req.body).save()
+      return res.status(200).json(nhanvien)
+    } catch (err) {
+      return res.status(403).json(err.message)
+    }
+  },
+
   updateEmployee: async (req, res) => {
     try {
-      const updateEmployee = await NhanVien.findByIdAndUpdate(req.params.id, {
+      const nhanvien = await NhanVien.findByIdAndUpdate(req.params.id, {
         $set: req.body,
-      });
-      res.status(200).json(updateEmployee);
+      })
+
+      return res.status(200).json(nhanvien)
     } catch (err) {
-      res.status(500).json(err);
+      return res.status(403).json(err.message)
     }
   },
 
-  // delete Employee
   deleteEmployee: async (req, res) => {
     try {
-      res.status(200).json("Delete successfully");
-      const Employee = await NhanVien.findByIdAndDelete(req.params.id);
+      const nhanvien = await NhanVien.findById(req.params.id)
+
+      await TaiKhoan.find({ _id: nhanvien.MaTaiKhoan }).deleteOne()
+
+      nhanvien.delete()
+
+      return res.status(200).json('Delete successfully')
     } catch (err) {
-      res.status(500).json(err);
+      return res.status(403).json(err.message)
     }
   },
-};
+}
 
-module.exports = nhanVienController;
+module.exports = nhanVienController

@@ -1,26 +1,35 @@
-const loaiPhongController = require("../controllers/loaiPhongController");
-const middlewareController = require("../controllers/middlewareController");
+const loaiPhongController = require('../controllers/loaiPhongController')
+const middlewareController = require('../controllers/middlewareController')
+const router = require('express').Router()
 
-const router = require("express").Router();
-
-//GET ALL USERS
-router.get("/api/loai-phong", loaiPhongController.getAllTypeRoom);
-
-//GET ALL USERS
-router.get("/api/loai-phong", loaiPhongController.createTypeRoom);
-
-//GET BY ID
-router.get("/api/loai-phong", loaiPhongController.getTypeRoomById);
-
-// Update
-router.put("/api/loai-phong", loaiPhongController.updateTypeRoom);
-
-//DELETE Promotion
-//v1/user/2313123
-router.delete(
-  "/api/khuyen-mai:id",
+router.get(
+  '/loaiphong',
   middlewareController.verifyTokenAndAminAuth,
-  loaiPhongController.deleteTypeRoom
-);
+  loaiPhongController.getAllTypeRooms,
+)
 
-module.exports = router;
+router.get(
+  '/',
+  middlewareController.verifyTokenAndAminAuth,
+  loaiPhongController.createTypeRoom,
+)
+
+router.get(
+  '/:id',
+  middlewareController.verifyTokenAndAminAuth,
+  loaiPhongController.getTypeRoomById,
+)
+
+router.put(
+  '/:id',
+  middlewareController.verifyTokenAndAminAuth,
+  loaiPhongController.updateTypeRoom,
+)
+
+router.delete(
+  '/:id',
+  middlewareController.verifyTokenAndAminAuth,
+  loaiPhongController.deleteTypeRoom,
+)
+
+module.exports = router

@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
-const { Schema } = mongoose;
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
-const hoaDonSchema = new mongoose.Schema({
+const hoaDonSchema = new Schema({
   Ngaylap: {
     type: Date,
     required: true,
@@ -14,26 +14,40 @@ const hoaDonSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  MaKhachHang: {
-    type: mongoose.Types.ObjectId,
-    required: true,
-    ref: "KhachHang",
-  },
   PTTT: {
     type: String,
     required: true,
   },
-
-  MaTaiKhoan: {
-    type: mongoose.Types.ObjectId,
+  TongGiaTien: {
+    type: Number,
     required: true,
-    ref: "TaiKhoan",
   },
+  // ================ REFERENCES =============================
   MaKhuyenMai: {
-    type: mongoose.Types.ObjectId,
-    required: true,
-    ref: "KhuyenMai",
+    type: Schema.Types.ObjectId,
+    ref: 'khuyenmai',
   },
-});
+  MaKhachHang: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: 'khachhang',
+  },
+  MaTaiKhoan: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: 'taikhoan',
+  },
+  MaNhanVien: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: 'nhanvien',
+  },
+  MaChiTietHoaDon: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'chitiethoadon',
+    },
+  ],
+})
 
-module.exports = mongoose.model("hoadon", hoaDonSchema);
+module.exports = mongoose.model('hoadon', hoaDonSchema)

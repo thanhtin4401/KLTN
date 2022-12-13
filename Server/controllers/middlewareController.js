@@ -1,41 +1,37 @@
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken')
+const TaiKhoan = require('../models/TaiKhoan')
+
 const middlewareController = {
-  //verifyToken
   verifyToken: (req, res, next) => {
-    // const token = req.headers["token"];
-    // if (token) {
-    //   //bearer
-    //   const accessToken = token.split(" ")[1];
-    //   jwt.verify(accessToken, "Thanhtin4401", (err, user) => {
-    //     if (err) {
-    //       res.status(403).json("Token is not valid");
-    //     }
-    //     req.user = user;
-    //     //  thoa dieu kien thi di tiep
-    //     next();
-    //   });
-    // } else {
-    //   res.status(401).json("You're not authenticated");
-    // }
-    const authHeader = req.headers["token"];
-    const token = authHeader && authHeader.split(" ")[1];
+    const token = req.headers['token']
 
-    if (token == null) return res.status(403).json("Token is not valid");
+    if (token == null) return res.status(403).json('Access token is required')
 
-    jwt.verify(token, "Thanhtin4401", (err, user) => {
-      if (err) return res.status(401).json("You're not authenticated");
-      req.user = user;
-      next();
-    });
+    jwt.verify(token, 'Thanhtin4401', async (err, tokenInfo) => {
+      if (err) return res.status(401).json("You're not authenticated")
+      req.user = await TaiKhoan.findById(tokenInfo.id)
+      next()
+    })
   },
+
   verifyTokenAndAminAuth: (req, res, next) => {
     middlewareController.verifyToken(req, res, () => {
-      if (req.user.id == req.params.id || req.user.QuyenHang === "admin") {
-        next();
-      } else {
-        res.status(403).json("You're not allowed to delete other");
-      }
-    });
+      const token = req.headers['token']
+
+      jwt.verify(token, 'Thanhtin4401', async (err, tokenInfo) => {
+        if (err) return res.status(401).json("You're not authenticated")
+        const user = await TaiKhoan.findById(tokenInfo.id)
+
+        if (user.QuyenHang === 'admin') {
+          next()
+        } else {
+          res.status(403).json({
+            message: "You're not allowed to do this action",
+            user: user,
+          })
+        }
+      })
+    })
   },
-};
-module.exports = middlewareController;
+}
+module.exports = middlewareController

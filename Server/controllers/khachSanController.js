@@ -1,68 +1,78 @@
-// const Room = require("../models/Room");
-const KhachSan = require("../models/KhachSan");
+const KhachSan = require('../models/KhachSan')
+const KhuVuc = require('../models/KhuVuc')
+
 const khachSanController = {
-  // get room
-  getAllHotel: async (req, res, next) => {
+  getAllHotels: async (req, res, next) => {
     try {
-      const KhachSans = await KhachSan.find();
-      res.status(200).json(KhachSans);
+      return res.status(200).json(await KhachSan.find())
     } catch (err) {
-      next(err);
+      return res.status(403).json(err.message)
+    }
+  },
+
+  getHotelById: async (req, res, next) => {
+    try {
+      const khachSan = await KhachSan.findById(req.params.id)
+
+      if (!khachSan) {
+        return res.status(300).json('No Hotel found')
+      }
+
+      return res.status(200).json(khachSan)
+    } catch (err) {
+      return res.status(403).json(err.message)
     }
   },
 
   createHotel: async (req, res) => {
     try {
-      const newHotel = await new KhachSan({
-        TenKhachSan: req.body.TenKhachSan,
-        TenKhachSan: req.body.TenKhachSan,
-        TieuDe: req.body.TieuDe,
-        DanhGia: req.body.DanhGia,
-        MucGiaPhong: req.body.MucGiaPhong,
-        DiaChi: req.body.DiaChi,
-        HinhAnh: req.body.HinhAnh,
-        MoTa: req.body.MoTa,
-        MaKhuVuc: req.body.MaKhuVuc,
-      });
-      //save to DB
-      const Hotel = await newHotel.save();
-      res.status(200).json(Hotel);
+      const khachSan = new KhachSan(req.body.KhachSan)
+
+      if (req.files) {
+        khachSan.HinhAnh = req.files.map((file) => ({
+          url: file.path,
+          filename: file.filename,
+        }))
+      }
+
+      await khachSan.save()
+
+      await KhuVuc.findByIdAndUpdate(khachSan.MaKhuVuc, {
+        $push: { KhachSan: khachSan._id },
+      })
+
+      return res.status(200).json(khachSan)
     } catch (err) {
-      res.status(500).json(err);
+      return res.status(500).json(err.message)
     }
   },
 
-  // get Hotel by id
-  getHotelById: async (req, res, next) => {
-    try {
-      const Hotel = await KhachSan.findById(req.params.id);
-      res.status(200).json(Hotel);
-    } catch (err) {
-      res.status(500).json(err);
-    }
-  },
-
-  // update Hotel
   updateHotel: async (req, res) => {
     try {
       const updateHotel = await KhachSan.findByIdAndUpdate(req.params.id, {
         $set: req.body,
-      });
-      res.status(200).json(updateHotel);
+      })
+      return res.status(200).json(updateHotel)
     } catch (err) {
-      res.status(500).json(err);
+      return res.status(500).json(err.message)
     }
   },
 
-  // delete Hotel
   deleteHotel: async (req, res) => {
     try {
-      res.status(200).json("Delete successfully");
-      const Hotel = await KhachSan.findByIdAndDelete(req.params.id);
+      const khachSan = await KhachSan.findById(req.params.id)
+
+      await KhuVuc.findByIdAndUpdate(khachSan.MaKhuVuc, {
+        $pull: { KhachSan: khachSan._id },
+      })
+
+      await khachSan.delete()
+
+      return res.status(200).json('Delete successfully')
     } catch (err) {
-      res.status(500).json(err);
+      return res.status(500).json(err.message)
     }
   },
-};
+}
 
-module.exports = khachSanController;
+module.exports = khachSanController

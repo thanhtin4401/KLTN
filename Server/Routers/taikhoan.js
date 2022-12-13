@@ -1,21 +1,20 @@
-const middlewareController = require("../controllers/middlewareController");
-const userController = require("../controllers/userController");
+const authController = require('../controllers/taikhoanController')
+const middlewareController = require('../controllers/middlewareController')
 
-const router = require("express").Router();
+const router = require('express').Router()
+router
+  .get('/', authController.getAllUsers)
+  .put('/', authController.updateAccount)
 
-//GET ALL USERS
-router.get(
-  "/api/tai-khoan",
+router.post('/register', authController.registerUser)
+router.post('/login', authController.loginUser)
+
+router.post(
+  '/logout',
   middlewareController.verifyToken,
-  userController.getAllUsers
-);
+  authController.userLogout,
+)
 
-//DELETE USER
-//v1/user/2313123
-router.delete(
-  "/api/tai-khoan:id",
-  middlewareController.verifyTokenAndAminAuth,
-  userController.deleteUser
-);
+router.delete('/:id', authController.deleteAccount)
 
-module.exports = router;
+module.exports = router

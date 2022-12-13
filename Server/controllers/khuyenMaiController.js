@@ -1,176 +1,65 @@
-// const Room = require("../models/Room");
+const HoaDon = require('../models/HoaDon')
+const KhuyenMai = require('../models/KhuyenMai')
 
-const khuyenMai = require("../models/KhuyenMai");
 const khuyenMaiController = {
-  // create Promotion
-  createPromotion: async (req, res) => {
+  getAllPromotions: async (req, res, next) => {
     try {
-      const newPromotion = await new khuyenMai({
-        type: req.body.type,
-        city: req.body.city,
-        addresss: req.body.address,
-        distance: req.body.distance,
-      });
-      //save to DB
-      const promotion = await newPromotion.save();
-      res.status(200).json(promotion);
+      return res.status(200).json(await KhuyenMai.find())
     } catch (err) {
-      res.status(500).json(err);
+      return res.status(403).json(err.message)
     }
   },
 
-  // get all promotion
-  getAllPromotion: async (req, res, next) => {
-    try {
-      const khuyenMais = await khuyenMai.find();
-      res.status(200).json(khuyenMais);
-    } catch (err) {
-      next(err);
-    }
-  },
-
-  // get promotion by id
   getPromotionById: async (req, res, next) => {
     try {
-      const promotion = await khuyenMai.findById(req.params.id);
-      res.status(200).json(promotion);
+      const khuyenMai = await KhuyenMai.findById(req.params.id)
+
+      if (!khuyenMai) {
+        return res.status(300).json('No promotion found')
+      }
+
+      return res.status(200).json(khuyenMai)
     } catch (err) {
-      res.status(500).json(err);
+      return res.status(403).json(err.message)
     }
   },
 
-  // update promotion
+  createPromotion: async (req, res) => {
+    try {
+      const khuyenMai = await new KhuyenMai(req.body).save()
+      return res.status(200).json(khuyenMai)
+    } catch (err) {
+      return res.status(403).json(err.message)
+    }
+  },
+
   updatePromotion: async (req, res) => {
     try {
-      const updatePromotion = await khuyenMai.findByIdAndUpdate(req.params.id, {
+      const khuyenMai = await KhuyenMai.findByIdAndUpdate(req.params.id, {
         $set: req.body,
-      });
-      res.status(200).json(updatePromotion);
+      })
+      return res.status(200).json(khuyenMai)
     } catch (err) {
-      res.status(500).json(err);
+      return res.status(403).json(err.message)
     }
   },
 
-  // delete Promotion
   deletePromotion: async (req, res) => {
     try {
-      res.status(200).json("Delete successfully");
-      const promotion = await khuyenMai.findByIdAndDelete(req.params.id);
+      const khuyenMai = await KhuyenMai.findById(req.params.id)
+
+      if (!khuyenMai) {
+        return res.status(300).json('No promotion found')
+      }
+
+      await HoaDon.find({ MaKhuyenMai: khuyenMai._id }).deleteMany()
+      await khuyenMai.deleteOne()
+
+      return res.status(200).json('Delete successfully')
     } catch (err) {
-      res.status(500).json(err);
+      return res.status(403).json(err.message)
     }
   },
+}
 
-  // createHotels: async (req, res) => {
-  //   try {
-  //     const newHotel = await new Hotel({
-  //       type: req.body.type,
-  //       city: req.body.city,
-  //       addresss: req.body.address,
-  //       distance: req.body.distance,
-  //       photos: req.body.photos,
-  //       title: req.body.title,
-  //       desc: req.body.desc,
-  //       rating: req.body.rating,
-  //       rooms: req.body.rooms,
-  //       cheapestPrice: req.body.cheapestPrice,
-  //     });
-  //     //save to DB
-  //     const hotel = await newHotel.save();
-  //     res.status(200).json(hotel);
-  //   } catch (err) {
-  //     res.status(500).json(err);
-  //   }
-  // },
-  // //UPDATE HOTEL
-  // updateHotel: async (req, res) => {
-  //   try {
-  //     const updateHotel = await Hotel.findByIdAndUpdate(req.params.id, {
-  //       $set: req.body,
-  //     });
-  //     res.status(200).json(updateHotel);
-  //   } catch (err) {
-  //     res.status(500).json(err);
-  //   }
-  // },
-  // //GET ALL USERS
-  // getAllHotel: async (req, res) => {
-  //   try {
-  //     // find giup tra ve tat ca file cua user
-  //     const hotel = await Hotel.find();
-  //     res.status(200).json(hotel);
-  //   } catch (err) {
-  //     res.status(500).json(err);
-  //   }
-  // },
-  // // DELETE
-  // deleteHotel: async (req, res) => {
-  //   try {
-  //     res.status(200).json("Delete successfully");
-  //     const hotel = await User.findByIdAndDelete(req.params.id);
-  //   } catch (err) {
-  //     res.status(500).json(err);
-  //   }
-  // },
-  // // FIND HOTEL
-  // getHotel: async (req, res) => {
-  //   try {
-  //     const hotel = await Hotel.findById(req.params.id);
-  //     res.status(200).json(hotel);
-  //   } catch (err) {
-  //     res.status(500).json(err);
-  //   }
-  // },
-
-  // // GET ROOM AT HOTEL
-  // getHotelRooms: async (req, res, next) => {
-  //   try {
-  //     const hotel = await Hotel.findById(req.params.id);
-  //     const list = await Promise.all(
-  //       hotel.rooms.map((room) => {
-  //         return Room.findById(room);
-  //       })
-  //     );
-  //     res.status(200).json(list);
-  //   } catch (err) {
-  //     next(err);
-  //   }
-  // },
-
-  // // GET COUNTBYCITY
-  // countByCity: async (req, res, next) => {
-  //   const cities = req.query.cities.split(",");
-  //   try {
-  //     const list = await Promise.all(
-  //       cities.map((city) => {
-  //         return Hotel.countDocuments({ city: city });
-  //       })
-  //     );
-  //     res.status(200).json(list);
-  //   } catch (err) {
-  //     next(err);
-  //   }
-  // },
-  // // GET COUNTBYTYPE
-  // countByType: async (req, res, next) => {
-  //   try {
-  //     const hotelCount = await Hotel.countDocuments({ type: "hotel" });
-  //     const apartmentCount = await Hotel.countDocuments({ type: "apartment" });
-  //     const resortCount = await Hotel.countDocuments({ type: "resort" });
-  //     const villaCount = await Hotel.countDocuments({ type: "villa" });
-  //     const cabinCount = await Hotel.countDocuments({ type: "cabin" });
-
-  //     res.status(200).json([
-  //       { type: "hotel", count: hotelCount },
-  //       { type: "apartments", count: apartmentCount },
-  //       { type: "resorts", count: resortCount },
-  //       { type: "villas", count: villaCount },
-  //       { type: "cabins", count: cabinCount },
-  //     ]);
-  //   } catch (err) {
-  //     next(err);
-  //   }
-  // },
-};
-
-module.exports = khuyenMaiController;
+module.exports = khuyenMaiController

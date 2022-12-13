@@ -1,25 +1,32 @@
-const dichVuController = require("../controllers/dichVuController");
-const middlewareController = require("../controllers/middlewareController");
+const dichVuController = require('../controllers/dichVuController')
+const middlewareController = require('../controllers/middlewareController')
 
-const router = require("express").Router();
+const router = require('express').Router()
 
 //GET ALL USERS
-router.get("/api/dich-vu", dichVuController.getAllService);
-
-//Create
-router.post("/api/dich-vu", dichVuController.createService);
-
+router.get('/', dichVuController.getAllService)
 //GET BY ID
-router.get("/api/dich-vu", dichVuController.getServiceById);
+router.get('/:id', dichVuController.getServiceById)
 
-// Update
-router.put("/api/dich-vu", dichVuController.updateService);
-
-//DELETE Promotion
-//v1/user/2313123
-router.delete(
-  "/api/khuyen-mai:id",
+// CREATE
+router.post(
+  '/',
   middlewareController.verifyTokenAndAminAuth,
-  dichVuController.deleteService
-);
-module.exports = router;
+  dichVuController.createService,
+)
+
+// UPDATE
+router.put(
+  '/:id',
+  middlewareController.verifyTokenAndAminAuth,
+  dichVuController.updateService,
+)
+
+//DELETE
+router.delete(
+  '/:id',
+  middlewareController.verifyTokenAndAminAuth,
+  dichVuController.deleteService,
+)
+
+module.exports = router

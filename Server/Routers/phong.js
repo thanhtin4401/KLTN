@@ -1,31 +1,26 @@
-const roomController = require("../controllers/roomController");
-const middlewareController = require("../controllers/middlewareController.js");
-const router = require("express").Router();
-//CREATE
+const phongController = require('../controllers/phongController')
+const middlewareController = require('../controllers/middlewareController.js')
+const router = require('express').Router()
+
+router.get('/', phongController.getAllRooms)
+router.get('/:id', phongController.getRoomById)
+
 router.post(
-  "/createRoom/:hotelid",
-  // middlewareController.verifyTokenAndAminAuth,
-  roomController.createRoom
-);
-
-//UPDATE
-router.put("updateRoom/availability/:id");
-router.put(
-  "/:id",
+  '/',
   middlewareController.verifyTokenAndAminAuth,
-  roomController.updateRoom
-);
-//DELETE
+  phongController.createRoom,
+)
+
+router.put(
+  '/:id',
+  middlewareController.verifyTokenAndAminAuth,
+  phongController.updateRoom,
+)
+
 router.delete(
-  "/deleteRoom/:id/:hotelid",
-  // middlewareController.verifyTokenAndAminAuth,
-  roomController.deleteRoom
-);
-//GET
+  '/delete/:id',
+  middlewareController.verifyTokenAndAminAuth,
+  phongController.deleteRoom,
+)
 
-router.get("/:id", roomController.getRoom);
-//GET ALL
-
-router.get("/", roomController.getRooms);
-
-module.exports = router;
+module.exports = router

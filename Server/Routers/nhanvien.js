@@ -1,26 +1,27 @@
-const middlewareController = require("../controllers/middlewareController");
-const nhanVienController = require("../controllers/nhanVienController");
+const middlewareController = require('../controllers/middlewareController')
+const nhanVienController = require('../controllers/nhanVienController')
 
-const router = require("express").Router();
+const router = require('express').Router()
 
-//GET ALL USERS
-router.get("/api/nhan-vien", nhanVienController.getAllEmloyee);
+router.get('/', nhanVienController.getAllEmloyees)
+router.get('/:id', nhanVienController.getEmployeeById)
 
-//Create
-router.post("/api/nhan-vien", nhanVienController.createEmployee);
-
-//GET BY ID
-router.get("/api/nhan-vien", nhanVienController.getEmployeeById);
-
-// Update
-router.put("/api/nhan-vien", nhanVienController.updateEmployee);
-
-//DELETE Promotion
-//v1/user/2313123
-router.delete(
-  "/api/khuyen-mai:id",
+router.post(
+  '/:id',
   middlewareController.verifyTokenAndAminAuth,
-  nhanVienController.deleteEmployee
-);
+  nhanVienController.createEmployee,
+)
 
-module.exports = router;
+router.put(
+  '/',
+  middlewareController.verifyTokenAndAminAuth,
+  nhanVienController.updateEmployee,
+)
+
+router.delete(
+  '/:id',
+  middlewareController.verifyTokenAndAminAuth,
+  nhanVienController.deleteEmployee,
+)
+
+module.exports = router

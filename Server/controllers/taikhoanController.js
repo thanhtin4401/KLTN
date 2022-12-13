@@ -18,15 +18,16 @@ const authController = {
     try {
       const salt = await bcrypt.genSalt(10)
       const hashed = await bcrypt.hash(req.body.MatKhau, salt)
-      const newAccount = new TaiKhoan({
+
+      const taiKhoan = await new TaiKhoan({
         TenTaiKhoan: req.body.TenTaiKhoan,
         TaiKhoan: req.body.TaiKhoan,
         MatKhau: hashed,
-        HinhAnh: req.body.HinhAnh | '',
-        QuyenHang: req.body.QuyenHang | '',
+        HinhAnh: req.body.HinhAnh,
+        QuyenHang: req.body.QuyenHang,
       }).save()
 
-      return res.status(200).json(newAccount)
+      return res.status(200).json(taiKhoan)
     } catch (err) {
       return res.status(500).json(err.message)
     }
@@ -39,10 +40,7 @@ const authController = {
         return res.status(404).json('wrong username')
       }
 
-      const validPassword = await bcrypt.compare(
-        req.body.MatKhau,
-        account.MatKhau,
-      )
+      const validPassword = bcrypt.compare(req.body.MatKhau, account.MatKhau)
       if (!validPassword) {
         return res.status(404).json('wrong password')
       }

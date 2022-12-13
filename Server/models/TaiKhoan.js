@@ -8,7 +8,6 @@ const taiKhoanSchema = new Schema(
       required: true,
       minlength: 6,
       maxlength: 20,
-      //username ton tai thi ko dc tao nua
       unique: true,
     },
     TaiKhoan: {
@@ -16,7 +15,6 @@ const taiKhoanSchema = new Schema(
       required: true,
       minlength: 10,
       maxlength: 50,
-      //username ton tai thi ko dc tao nua
       unique: true,
     },
     MatKhau: {

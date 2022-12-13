@@ -1,5 +1,7 @@
-const mongoose = require("mongoose");
-const taiKhoanSchema = new mongoose.Schema(
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+
+const taiKhoanSchema = new Schema(
   {
     TenTaiKhoan: {
       type: String,
@@ -24,16 +26,23 @@ const taiKhoanSchema = new mongoose.Schema(
     },
     HinhAnh: {
       type: String,
-      require: true,
     },
     QuyenHang: {
       type: String,
-      require: true,
       minlength: 3,
-      default: "user",
+      default: 'user',
     },
+    // ====================== REFERENCES ============================
+    MaHoaDon: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'hoadon',
+      },
+    ],
   },
-  { timestamps: true }
-);
+  {
+    timestamps: true,
+  },
+)
 
-module.exports = mongoose.model("TaiKhoan", taiKhoanSchema);
+module.exports = mongoose.model('TaiKhoan', taiKhoanSchema)

@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
-const { Schema } = mongoose;
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
-const khuyenMaiSchema = new mongoose.Schema({
+const khuyenMaiSchema = new Schema({
   TenKhuyenMai: {
     type: String,
     required: true,
@@ -13,6 +13,13 @@ const khuyenMaiSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-});
+  // ==================== REFERENCES ====================
+  MaHoaDon: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'hoadon',
+    },
+  ],
+})
 
-module.exports = mongoose.model("khuyenmai", khuyenMaiSchema);
+module.exports = mongoose.model('khuyenmai', khuyenMaiSchema)

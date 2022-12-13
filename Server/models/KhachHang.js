@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
-const { Schema } = mongoose;
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
-const khachHangSchema = new mongoose.Schema({
+const khachHangSchema = new Schema({
   TenKH: {
     type: String,
     required: true,
@@ -30,11 +30,12 @@ const khachHangSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  // =================== REFERENCES ===========================
   MaTaiKhoan: {
-    type: mongoose.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     required: true,
-    ref: "taikhoan",
+    ref: 'taikhoan',
   },
-});
+})
 
-module.exports = mongoose.model("khachhang", khachHangSchema);
+module.exports = mongoose.model('khachhang', khachHangSchema)

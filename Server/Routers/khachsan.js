@@ -1,26 +1,42 @@
-const khachSanController = require("../controllers/khachSanController");
-const middlewareController = require("../controllers/middlewareController");
+const khachSanController = require('../controllers/khachSanController')
+const middlewareController = require('../controllers/middlewareController')
 
-const router = require("express").Router();
+const router = require('express').Router()
 
 //GET ALL USERS
-router.get("/api/khach-san", khachSanController.getAllHotel);
-
-//Create
-router.post("/api/khach-san", khachSanController.createHotel);
+router.get(
+  '/',
+  middlewareController.verifyTokenAndAminAuth,
+  khachSanController.getAllHotel,
+)
 
 //GET BY ID
-router.get("/api/khach-san", khachSanController.getAllHotel);
+router.get(
+  '/:id',
+  middlewareController.verifyTokenAndAminAuth,
+  khachSanController.getAllHotel,
+)
+
+//Create
+router.post(
+  '/',
+  middlewareController.verifyTokenAndAminAuth,
+  khachSanController.createHotel,
+)
 
 // Update
-router.put("/api/khach-san", khachSanController.updateHotel);
+router.put(
+  '/:id',
+  middlewareController.verifyTokenAndAminAuth,
+  khachSanController.updateHotel,
+)
 
 //DELETE Promotion
 //v1/user/2313123
 router.delete(
-  "/api/khuyen-mai:id",
+  '/:id',
   middlewareController.verifyTokenAndAminAuth,
-  khachSanController.deleteHotel
-);
+  khachSanController.deleteHotel,
+)
 
-module.exports = router;
+module.exports = router

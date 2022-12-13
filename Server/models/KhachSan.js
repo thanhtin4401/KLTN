@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
-const { Schema } = mongoose;
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
-const khachSanSchema = new mongoose.Schema({
+const khachSanSchema = new Schema({
   TenKhachSan: {
     type: String,
     required: true,
@@ -26,14 +26,26 @@ const khachSanSchema = new mongoose.Schema({
     required: true,
   },
   MoTa: {
-    type: Boolean,
+    type: String,
     default: false,
   },
+  // ================ REFERENCES ===========================
   MaKhuVuc: {
-    type: mongoose.Types.ObjectId,
-    required: true,
-    ref: "khuvuc",
+    type: Schema.Types.ObjectId,
+    ref: 'khuvuc',
   },
-});
+  MaPhong: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'phong',
+    },
+  ],
+  MaChiTietHoaDon: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'chitiethoadon',
+    },
+  ],
+})
 
-module.exports = mongoose.model("KhachSan", khachSanSchema);
+module.exports = mongoose.model('khachsan', khachSanSchema)

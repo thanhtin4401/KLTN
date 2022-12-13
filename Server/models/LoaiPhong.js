@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
-const { Schema } = mongoose;
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
-const loaiPhongSchema = new mongoose.Schema({
+const loaiPhongSchema = new Schema({
   TenLoaiPhong: {
     type: String,
     required: true,
@@ -18,6 +18,12 @@ const loaiPhongSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-});
+  Phong: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'phong',
+    },
+  ],
+})
 
-module.exports = mongoose.model("loaiphong", loaiPhongSchema);
+module.exports = mongoose.model('loaiphong', loaiPhongSchema)

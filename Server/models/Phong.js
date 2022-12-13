@@ -1,5 +1,7 @@
-const mongoose = require("mongoose");
-const phongSchema = new mongoose.Schema(
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+
+const phongSchema = new Schema(
   {
     TenPhong: {
       type: String,
@@ -29,18 +31,25 @@ const phongSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    // ================== REFERENCES =====================
     MaLoaiPhong: {
-      type: mongoose.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       required: true,
-      ref: "loaiphong",
+      ref: 'loaiphong',
     },
     MaKhachSan: {
-      type: mongoose.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       required: true,
-      ref: "khachsan",
+      ref: 'khachsan',
     },
+    MaDichVuPhong: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'dichvuphong',
+      },
+    ],
   },
-  { timestamps: true }
-);
+  { timestamps: true },
+)
 
-module.exports = mongoose.model("phong", phongSchema);
+module.exports = mongoose.model('phong', phongSchema)

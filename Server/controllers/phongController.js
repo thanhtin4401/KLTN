@@ -31,7 +31,7 @@ const roomController = {
       const savedRoom = await newRoom.save()
 
       await KhachSan.findByIdAndUpdate(hotelId, {
-        $push: { rooms: savedRoom._id },
+        $push: { MaPhong: savedRoom._id },
       })
 
       res.status(200).json(savedRoom)

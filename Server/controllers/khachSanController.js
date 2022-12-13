@@ -1,5 +1,5 @@
-// const Room = require("../models/Room");
 const KhachSan = require('../models/KhachSan')
+const KhuVuc = require('../models/KhuVuc')
 
 const khachSanController = {
   // get room
@@ -8,27 +8,7 @@ const khachSanController = {
       const KhachSans = await KhachSan.find()
       res.status(200).json(KhachSans)
     } catch (err) {
-      next(err)
-    }
-  },
-
-  createHotel: async (req, res) => {
-    try {
-      const newHotel = new KhachSan({
-        TenKhachSan: req.body.TenKhachSan,
-        TieuDe: req.body.TieuDe,
-        DanhGia: req.body.DanhGia,
-        MucGiaPhong: req.body.MucGiaPhong,
-        DiaChi: req.body.DiaChi,
-        HinhAnh: req.body.HinhAnh,
-        MoTa: req.body.MoTa,
-        MaKhuVuc: req.body.MaKhuVuc,
-      })
-      //save to DB
-      const Hotel = await newHotel.save()
-      res.status(200).json(Hotel)
-    } catch (err) {
-      res.status(500).json(err)
+      res.status(403).json(err.message)
     }
   },
 
@@ -38,7 +18,20 @@ const khachSanController = {
       const Hotel = await KhachSan.findById(req.params.id)
       res.status(200).json(Hotel)
     } catch (err) {
-      res.status(500).json(err)
+      res.status(403).json(err.message)
+    }
+  },
+
+  createHotel: async (req, res) => {
+    try {
+      const khachSan = await new KhachSan(req.body).save()
+      await KhuVuc.findByIdAndUpdate(khachSan.MaKhuVuc, {
+        $push: { KhachSan: khachSan._id },
+      })
+
+      res.status(200).json(khachSan)
+    } catch (err) {
+      res.status(500).json(err.message)
     }
   },
 
@@ -50,17 +43,24 @@ const khachSanController = {
       })
       res.status(200).json(updateHotel)
     } catch (err) {
-      res.status(500).json(err)
+      res.status(500).json(err.message)
     }
   },
 
   // delete Hotel
   deleteHotel: async (req, res) => {
     try {
+      const khachSan = await KhachSan.findById(req.params.id)
+
+      await KhuVuc.findByIdAndUpdate(khachSan.MaKhuVuc, {
+        $pull: { KhachSan: khachSan._id },
+      })
+
+      await khachSan.delete()
+
       res.status(200).json('Delete successfully')
-      const Hotel = await KhachSan.findByIdAndDelete(req.params.id)
     } catch (err) {
-      res.status(500).json(err)
+      res.status(500).json(err.message)
     }
   },
 }

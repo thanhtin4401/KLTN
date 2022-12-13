@@ -117,9 +117,8 @@ function Register() {
                 ]}
               >
                 <Input.Password
-                  style={{ width: '100%' }}
-                  className="border password px-[14px] py-[14px] rounded-[0.5rem] 
-                  "
+                  size="large"
+                  className="border password px-[14px] py-[14px] rounded-[0.5rem]"
                   placeholder={t('Password')}
                 />
               </Form.Item>
@@ -156,7 +155,10 @@ function Register() {
                     wrapperCol={{ sm: 24 }}
                     style={{ width: '100%', marginRight: '1rem' }}
                   >
-                    <DatePicker className="datepicker-register w-full " format={'DD/MM/YYYY'} />
+                    <DatePicker
+                      className="datepicker-register w-full p-[8.2px]"
+                      format={'DD/MM/YYYY'}
+                    />
                   </Form.Item>
                 </Col>
                 <Col span={12}>
@@ -167,7 +169,11 @@ function Register() {
                     style={{ width: '100%', borderRadius: 'none', marginRight: 0 }}
                     name="gender"
                   >
-                    <Select className="w-full dropdowregister " placeholder={t('Gender')}>
+                    <Select
+                      size="large"
+                      className="w-full dropdowregister "
+                      placeholder={t('Gender')}
+                    >
                       <Select.Option value="true">{t('male')}</Select.Option>
                       <Select.Option value="false">{t('female')}</Select.Option>
                     </Select>
@@ -214,7 +220,7 @@ function Register() {
             </div>
           </div>
         </div>
-        <div className="w-2/4  mb:hidden sm:hidden lg:flex relative bg-[#1c305ep-] overflow-hidden h-full flex justify-center items-center rounded-[0.5rem]">
+        <div className="w-2/4 bg-[#8cc542] mb:hidden sm:hidden lg:flex relative bg-[#1c305ep-] overflow-hidden h-full flex justify-center items-center rounded-[0.5rem]">
           <div className="glass h-[80%] relative w-[30rem] rouded-[0.5rem] bg-mainColor z-10 animate__delay-1s animate__animated animate__fadeInUp">
             <h1 className="text-white text-[30px] text-left p-5">
               Start your journey by one click, explore beautiful world!

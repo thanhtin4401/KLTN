@@ -92,10 +92,9 @@ function AddUserPage({ setIsModalOpen, isModalOpen }) {
                 },
               ]}
             >
-              <Input.Password
-                style={{ width: '100%' }}
-                className="border password px-[14px] py-[14px] rounded-[0.5rem] 
-                  "
+              <Input
+                type="password"
+                className="border password px-[14px] py-[14px] rounded-[0.5rem] "
                 placeholder={t('Password')}
               />
             </Form.Item>
@@ -127,7 +126,10 @@ function AddUserPage({ setIsModalOpen, isModalOpen }) {
                   wrapperCol={{ sm: 24 }}
                   style={{ width: '100%', marginRight: '1rem' }}
                 >
-                  <DatePicker className="datepicker-register w-full " format={'DD/MM/YYYY'} />
+                  <DatePicker
+                    className="datepicker-register w-full p-[8.3px]"
+                    format={'DD/MM/YYYY'}
+                  />
                 </Form.Item>
               </Col>
               <Col span={12}>
@@ -138,7 +140,11 @@ function AddUserPage({ setIsModalOpen, isModalOpen }) {
                   style={{ width: '100%', borderRadius: 'none', marginRight: 0 }}
                   name="gender"
                 >
-                  <Select className="w-full dropdowregister " placeholder={t('Gender')}>
+                  <Select
+                    size="large"
+                    className="w-full dropdowregister "
+                    placeholder={t('Gender')}
+                  >
                     <Select.Option value="true">{t('male')}</Select.Option>
                     <Select.Option value="false">{t('female')}</Select.Option>
                   </Select>
@@ -169,7 +175,7 @@ function AddUserPage({ setIsModalOpen, isModalOpen }) {
               style={{ width: '100%', borderRadius: 'none', marginRight: 0 }}
               name="role"
             >
-              <Select className="w-full dropdowregister " placeholder={t('Role')}>
+              <Select size="large" className="w-full dropdowregister " placeholder={t('Role')}>
                 <Select.Option value="User">{t('User')}</Select.Option>
                 <Select.Option value="Admin">{t('Amin')}</Select.Option>
               </Select>
@@ -179,7 +185,7 @@ function AddUserPage({ setIsModalOpen, isModalOpen }) {
               <button
                 type="primary"
                 htmlType="submit"
-                className="hover:blacks rounded-[0.5rem] bg-slate-500 btn-login text-white py-[1rem] px-[0.5rem]"
+                className="hover:blacks rounded-[0.5rem] bg-slate-700 hover:bg-slate-500 btn-login text-white py-[0.7rem] font-[700] w-full px-[0.5rem]"
               >
                 {t('Register')}
               </button>

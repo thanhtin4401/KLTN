@@ -33,6 +33,8 @@ import ListLocationPage from '../pages/ManagerPage/LocationManager/ListLocationP
 import RequestPageAdmin from '../components/App/requestPageAdmin';
 import RoomPages from '../pages/RoomPages/RoomPages';
 import RootLayout from '../layout/RootLayout';
+import StatisticalPage from '../pages/ManagerPage/StatisticalManager/StatisticalPage';
+import ListHotelManager from '../pages/ManagerPage/HotelManager/ListHotelPage';
 export default function Routers() {
   return (
     <BrowserRouter>
@@ -62,8 +64,10 @@ export default function Routers() {
             // </RequestPageAdmin>
           }
         >
+          <Route path="/Manager/Statistical" element={<StatisticalPage />} />
           <Route path="/Manager/User" element={<ListUserPage />} />
           <Route path="/Manager/Room" element={<ListRoomPage />} />
+          <Route path="/Manager/Hotel" element={<ListHotelManager />} />
           <Route path="/Manager/Location" element={<ListLocationPage />} />
           <Route path="/Manager/profile" element={<ProfileManagerPage />} />
         </Route>

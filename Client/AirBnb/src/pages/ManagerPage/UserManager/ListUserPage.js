@@ -68,9 +68,17 @@ const ListUserPage = () => {
       key: 'role',
       render: (text, record) => {
         if (record.role === 'ADMIN') {
-          return <Tag color={'red'}>{t('Admin')}</Tag>;
+          return (
+            <p className="p-[0.2rem] text-[0.6rem] rounded-[0.2rem] bg-[#f96d77] inline-block text-white">
+              {t('Admin')}
+            </p>
+          );
         } else {
-          return <Tag color={'blue'}>{t('Guest')}</Tag>;
+          return (
+            <p className="p-[0.2rem] text-[0.6rem] rounded-[0.2rem] bg-[#3098fe] inline-block text-white">
+              {t('Guest')}
+            </p>
+          );
         }
       },
     },
@@ -165,49 +173,28 @@ const ListUserPage = () => {
       fetchListUser();
     }
   }, [searchUser, isDeleteSuccess, isRegisterAccountSuccess, isUpdateSuccess]);
-  // useEffect(() => {
-  //   dispatch(getSearchUser(searchUser));
-  //   const userList = allUserList?.map((user, index) => {
-  //     return {
-  //       key: index,
-  //       ...user,
-  //       action: <ActionUser ID={user.id} />,
-  //     };
-  //   });
-  //   setDataUser(userList);
-  // }, [searchUser]);
 
-  // useEffect(() => {
-  //   dispatch(getUserList());
-  //   const userList = allUserList?.map((user, index) => {
-  //     return {
-  //       key: index,
-  //       ...user,
-  //       action: <ActionUser ID={user.id} />,
-  //     };
-  //   });
-  //   setDataUser(userList);
-  // }, []);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleShowModal = () => {
     setIsModalOpen(true);
   };
+
   return (
     <>
       <div className="w-full text-left p-2 bg-white rounded-[2rem] mb-3">
         <h1 className="text-[#1c305e] ml-4 text-[1rem] font-[700]">{t('Quản lý tài khoản')}</h1>
       </div>
-      <div className="bg-white rounded-[1rem] p-4">
-        <div className="flex items-center ">
+      <div className="bg-white rounded-[1rem] p-4 h-[91.5%]">
+        <div className="flex items-center mb-2">
           <Search
             placeholder={t('Find Account')}
             onSearch={onSearchUser}
             enterButton
-            className="search-user"
+            className="search-manager"
           />
           <button
             onClick={handleShowModal}
-            className="py-[6px] px-[12px] bg-black transition-all hover:bg-[#1c305e] text-white font-[600] text-[1rem] h-[3.2rem]"
+            className="py-[0.4rem] px-[0.5rem] bg-[#8cc63f] transition-all hover:bg-[#b2da7f] text-white font-[600]  text-[0.8rem] rounded-[2rem]  ml-2"
           >
             {t('+ Add Account')}
           </button>
@@ -215,11 +202,15 @@ const ListUserPage = () => {
         <Table
           columns={columns}
           dataSource={dataUser}
+          className="table-manger"
+          pagination={{
+            pageSize: 20,
+          }}
           scroll={{
-            x: 1300,
+            y: 520,
           }}
         />
-        <AddUserPage isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />;
+        <AddUserPage isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
       </div>
       {/* <div className="w-full mt-2 mb-2">
         <button

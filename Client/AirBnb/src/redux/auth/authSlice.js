@@ -14,13 +14,14 @@ const initialState = {
 //LOGIN
 export const loginUser = createAsyncThunk('auth/loginUser', async (user, thunkAPI) => {
   try {
-    const res = await https.post('/api/auth/signin', user);
+    const res = await https.post('/api/taikhoan/login', user);
 
-    localStorageService.set('accessToken', res.data.content.token);
-    localStorageService.set('USER', res.data.content);
+    localStorageService.set('accessToken', res.data.accessToken);
+    // localStorageService.set('USER', res.data.content);
+    console.log('res', res.data);
     message.success('login success');
 
-    return res.data;
+    return res;
   } catch (error) {
     message.error(error.response.data);
     return thunkAPI.rejectWithValue(error.response.data);
@@ -79,7 +80,7 @@ const authSlice = createSlice({
         return {
           ...state,
           isLoading: false,
-          accessToken: payload.token,
+          // accessToken: payload.token,
           isLoggedIn: false,
         };
       })

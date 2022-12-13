@@ -66,59 +66,85 @@
         transition: all 0.3s ease;
         border: transparent;
         min-width: 7.6rem;
-        padding: 0.5rem 1rem 0.5rem 0.8rem;
+     
         img {
             width: 7rem;
         }
     }
 }
-
-.nav-links-item {
-    .nav-links-content {
-        display: flex;
-        padding: 0.5rem 0;
-        align-items: center;
-        transition: all 0.3s ease;
-        height: 60px;
-        svg {
-            color: black;
-            min-width: 55px;
-            min-height: 30px;
+.nav{
+    .nav-links-item {
+       
+        .nav-links-content {
+            display: flex;
+            padding: 0.5rem 0;
+            align-items: center;
             transition: all 0.3s ease;
-        }
-        span {
-            color: black;
-            font-size: 16px;
-            font-weight: 400;
-            transition: all 0.3s ease;
-            min-width: 180px;
-            overflow: hidden;
-            text-align: left;
-        }
-    }
-    &:hover {
-        a {
-            background-color: black;
+            height: 60px;
             svg {
-                color: white;
+                color: black;
+                min-width: 55px;
+                min-height: 30px;
+                transition: all 0.3s ease;
             }
             span {
-                color: white;
+                color: black;
+                font-size: 16px;
+                font-weight: 400;
+                transition: all 0.3s ease;
+                min-width: 180px;
+                overflow: hidden;
+                text-align: left;
+            }
+           
+        }
+        &.active{
+            .nav-links-content{
+                background-color: #e8ffca;
+                svg {
+                    color: #ae7d46;
+                    font-weight: 600;
+                }
+                span {
+                    color: #ae7d46;
+                    font-weight: 600;
+                }
+                border-left: 3px solid #8cc63f;
+                border-radius: 1rem 0 0 1rem
+            } 
+           
+       
+    }
+   
+        &:hover {
+            a {
+                background-color: #e8ffca;
+                svg {
+                    color: #ae7d46;
+                    font-weight: 600;
+                }
+                span {
+                    color: #ae7d46;
+                    font-weight: 600;
+                }
+                border-left: 3px solid #8cc63f;
+                border-radius: 1rem 0 0 1rem
             }
         }
+        
+       
     }
 }
+
 
 .sidebar {
     &.active {
         @extend .sidebar;
         width: 55px;
         background: white;
-        border-right: 1px solid black;
+      
         overflow: hidden;
-        .logo-detail {
-            border-bottom: 1px solid black;
-        }
+        
         &~.home-section {
             width: calc(100% - 55px);
             left: 55px;
@@ -152,9 +178,10 @@
             max-width: 7.6rem;
             min-width: 7.6rem;
         }
-        padding: 0.5rem 1rem 0.5rem 0.8rem;
+      
     }
 }
+
 
 .home-section {
     background-color: white;

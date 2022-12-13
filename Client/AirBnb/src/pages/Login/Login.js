@@ -76,7 +76,7 @@ function Login() {
               autoComplete="off"
             >
               <Form.Item
-                name="email"
+                name="TaiKhoan"
                 rules={[
                   {
                     required: true,
@@ -89,9 +89,8 @@ function Login() {
                   placeholder={t('Input your email/phone number')}
                 />
               </Form.Item>
-
               <Form.Item
-                name="password"
+                name="MatKhau"
                 rules={[
                   {
                     required: true,

@@ -18,6 +18,10 @@ const hoaDonSchema = new Schema({
     type: String,
     required: true,
   },
+  TongGiaTien: {
+    type: Number,
+    required: true,
+  },
   // ================ REFERENCES =============================
   MaKhuyenMai: {
     type: Schema.Types.ObjectId,

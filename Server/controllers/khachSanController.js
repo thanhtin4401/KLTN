@@ -26,7 +26,17 @@ const khachSanController = {
 
   createHotel: async (req, res) => {
     try {
-      const khachSan = await new KhachSan(req.body).save()
+      const khachSan = new KhachSan(req.body.KhachSan)
+
+      if (req.files) {
+        khachSan.HinhAnh = req.files.map((file) => ({
+          url: file.path,
+          filename: file.filename,
+        }))
+      }
+
+      await khachSan.save()
+
       await KhuVuc.findByIdAndUpdate(khachSan.MaKhuVuc, {
         $push: { KhachSan: khachSan._id },
       })

@@ -1,36 +1,47 @@
 const khachSanController = require('../controllers/khachSanController')
 const middlewareController = require('../controllers/middlewareController')
-
 const router = require('express').Router()
+const multer = require('multer')
 
-router.get(
-  '/',
-  middlewareController.verifyTokenAndAminAuth,
-  khachSanController.getAllHotels,
-)
+const storage = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, 'uploads')
+  },
+  filename: (req, file, callback) => {
+    callback(null, Date.now() + file.originalname)
+  },
+})
 
-router.get(
-  '/:id',
-  middlewareController.verifyTokenAndAminAuth,
-  khachSanController.getHotelById,
-)
+const upload = multer({ storage: storage })
 
-router.post(
-  '/',
-  middlewareController.verifyTokenAndAminAuth,
-  khachSanController.createHotel,
-)
+router
+  .get(
+    '/',
+    middlewareController.verifyTokenAndAminAuth,
+    khachSanController.getAllHotels,
+  )
+  .post(
+    '/',
+    upload.array('image[]'),
+    middlewareController.verifyTokenAndAminAuth,
+    khachSanController.createHotel,
+  )
 
-router.put(
-  '/:id',
-  middlewareController.verifyTokenAndAminAuth,
-  khachSanController.updateHotel,
-)
-
-router.delete(
-  '/:id',
-  middlewareController.verifyTokenAndAminAuth,
-  khachSanController.deleteHotel,
-)
+router
+  .get(
+    '/:id',
+    middlewareController.verifyTokenAndAminAuth,
+    khachSanController.getHotelById,
+  )
+  .put(
+    '/:id',
+    middlewareController.verifyTokenAndAminAuth,
+    khachSanController.updateHotel,
+  )
+  .delete(
+    '/:id',
+    middlewareController.verifyTokenAndAminAuth,
+    khachSanController.deleteHotel,
+  )
 
 module.exports = router

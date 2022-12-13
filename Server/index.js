@@ -25,11 +25,8 @@ app.listen(PORT, () => {
   console.log(`server is running on port ${PORT}`)
 })
 app.use(express.urlencoded({ extended: true }))
-app.use(cors())
 app.use(cookieParser())
-//Ngan chan loi
 app.use(cors())
-// de toan bo du lieu tra ve deu la json
 
 app.use(express.json())
 
@@ -54,6 +51,6 @@ app.use('/api/phong', phongRoute)
 app.use('/api/loaiphong', loaiPhongRoute)
 app.use('/api/hoaDon', hoaDonRoute)
 
-app.use(express.json())
+// app.use(express.json())
 
 //JSON WEB TOKEN

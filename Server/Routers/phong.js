@@ -2,26 +2,21 @@ const phongController = require('../controllers/phongController')
 const middlewareController = require('../controllers/middlewareController.js')
 const router = require('express').Router()
 
-//GET
-router.get('/:id', phongController.getRoom)
-//GET ALL
-router.get('/', phongController.getRooms)
+router.get('/', phongController.getAllRooms)
+router.get('/:id', phongController.getRoomById)
 
-//CREATE
 router.post(
   '/',
   middlewareController.verifyTokenAndAminAuth,
   phongController.createRoom,
 )
 
-//UPDATE
 router.put(
   '/:id',
   middlewareController.verifyTokenAndAminAuth,
   phongController.updateRoom,
 )
 
-//DELETE
 router.delete(
   '/delete/:id',
   middlewareController.verifyTokenAndAminAuth,

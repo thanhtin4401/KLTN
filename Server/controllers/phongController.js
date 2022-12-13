@@ -24,17 +24,14 @@ const roomController = {
 
   // add room
   createRoom: async (req, res, next) => {
-    const hotelId = req.params.hotelid
-    const newRoom = new Phong(req.body)
-
     try {
-      const savedRoom = await newRoom.save()
+      const phong = await new Phong(req.body).save()
 
-      await KhachSan.findByIdAndUpdate(hotelId, {
-        $push: { MaPhong: savedRoom._id },
+      await KhachSan.findByIdAndUpdate(phong.MaKhachSan, {
+        $push: { MaPhong: phong._id },
       })
 
-      res.status(200).json(savedRoom)
+      res.status(200).json(phong)
     } catch (err) {
       res.status(403).json(err.message)
     }

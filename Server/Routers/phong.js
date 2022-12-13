@@ -1,31 +1,31 @@
-const roomController = require('../controllers/roomController')
+const phongController = require('../controllers/phongController')
 const middlewareController = require('../controllers/middlewareController.js')
 const router = require('express').Router()
 
 //GET
-router.get('/:id', roomController.getRoom)
+router.get('/:id', phongController.getRoom)
 //GET ALL
-router.get('/', roomController.getRooms)
+router.get('/', phongController.getRooms)
 
 //CREATE
 router.post(
-  '/create/:maKhachSan',
+  '/',
   middlewareController.verifyTokenAndAminAuth,
-  roomController.createRoom,
+  phongController.createRoom,
 )
 
 //UPDATE
 router.put(
   '/:id',
   middlewareController.verifyTokenAndAminAuth,
-  roomController.updateRoom,
+  phongController.updateRoom,
 )
 
 //DELETE
 router.delete(
   '/delete/:id',
   middlewareController.verifyTokenAndAminAuth,
-  roomController.deleteRoom,
+  phongController.deleteRoom,
 )
 
 module.exports = router

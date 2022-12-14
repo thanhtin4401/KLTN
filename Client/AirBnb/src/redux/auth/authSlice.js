@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { message } from 'antd';
 import { https } from '../../services/axiosClient';
+import { httpsKLTN } from '../../services/axiosClientKLTN';
 import { localStorageService } from '../../services/localStorageService';
 
 const initialState = {
@@ -14,14 +15,13 @@ const initialState = {
 //LOGIN
 export const loginUser = createAsyncThunk('auth/loginUser', async (user, thunkAPI) => {
   try {
-    const res = await https.post('/api/taikhoan/login', user);
+    const res = await httpsKLTN.post('/api/taikhoan/login', user);
 
     localStorageService.set('accessToken', res.data.accessToken);
     // localStorageService.set('USER', res.data.content);
     console.log('res', res.data);
     message.success('login success');
-
-    return res;
+    return res.data;
   } catch (error) {
     message.error(error.response.data);
     return thunkAPI.rejectWithValue(error.response.data);
@@ -80,7 +80,7 @@ const authSlice = createSlice({
         return {
           ...state,
           isLoading: false,
-          // accessToken: payload.token,
+
           isLoggedIn: false,
         };
       })
@@ -94,6 +94,7 @@ const authSlice = createSlice({
         return {
           ...state,
           isLoading: false,
+
           isLoggedIn: false,
         };
       })

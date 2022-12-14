@@ -7,7 +7,9 @@ import { deleteUser } from '../../../redux/manager/user';
 import UpdateHotelPage from './UpdateHotelPage';
 import { useTranslation } from 'react-i18next';
 import { roomService } from '../../../services/RoomService';
-export default function ActionRoom({ ID, roomInfor, handleOnSuccess }) {
+import { hotelService } from '../../../services/HotelService';
+import { Link } from 'react-router-dom';
+export default function ActionRoom({ ID, hotelInfor, handleOnSuccess }) {
   const { t } = useTranslation();
 
   let handleUserDelete = () => {
@@ -23,8 +25,8 @@ export default function ActionRoom({ ID, roomInfor, handleOnSuccess }) {
   };
   const handleComfirm = (id) => {
     setOpen(false);
-    roomService
-      .deleteRoom(id)
+    hotelService
+      .deleteHotel(id)
       .then((res) => {
         message.success('xoa thanh cong');
         handleOnSuccess();
@@ -35,15 +37,14 @@ export default function ActionRoom({ ID, roomInfor, handleOnSuccess }) {
         console.log(err);
       });
   };
-  console.log('roomInforaction', roomInfor);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleShowModal = () => {
     setIsModalOpen(true);
   };
   return (
     <div className="space-x-2 flex justify-center ">
-      <button
-        onClick={showModal}
+      <Link
+        to={`/manager/hotel/${hotelInfor._id}`}
         className="border rounded text-white  bg-[#3098fe] hover:bg-[#8bbff3] transition-all p-[0.5rem]"
       >
         <svg
@@ -65,7 +66,7 @@ export default function ActionRoom({ ID, roomInfor, handleOnSuccess }) {
             d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
           />
         </svg>
-      </button>
+      </Link>
       <button
         onClick={handleShowModal}
         className="border rounded text-white  bg-[#1aa293] hover:bg-[#84f1e5] transition-all p-[0.5rem]"
@@ -111,12 +112,13 @@ export default function ActionRoom({ ID, roomInfor, handleOnSuccess }) {
       >
         <h1 className="">{'Are you sure you want to delete account: '}</h1>
       </Modal>
-      <UpdateHotelPage
+      {/* <UpdateHotelPage
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
         ID={ID}
+        hotelInfor={hotelInfor}
         handleOnSuccessUpdate={handleOnSuccess}
-      />
+      /> */}
     </div>
   );
 }

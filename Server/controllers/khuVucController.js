@@ -1,5 +1,7 @@
 const KhuVuc = require('../models/KhuVuc')
 
+const imageBasePath = "img/khuvuc/";
+
 const khuVucController = {
   getAllLocation: async (req, res, next) => {
     try {
@@ -25,7 +27,17 @@ const khuVucController = {
 
   createLocation: async (req, res) => {
     try {
-      const khuVuc = await new KhuVuc(req.body).save()
+      const khuVuc = new KhuVuc(req.body.KhuVuc)
+
+      if (req.files) {
+        khuVuc.HinhAnh = req.files.map((file) => ({
+          url: imageBasePath + file.filename,
+          filename: file.path,
+        }))
+      }
+
+      await khuVuc.save();
+
       return res.status(200).json(khuVuc)
     } catch (err) {
       return res.status(403).json(err.message)
@@ -53,6 +65,11 @@ const khuVucController = {
       return res.status(403).json(err.message)
     }
   },
+
+  seedLocation: async (req, res) => {
+
+  }
+
 }
 
 module.exports = khuVucController

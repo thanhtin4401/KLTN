@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const hoaDonSchema = new Schema({
-  Ngaylap: {
+  NgayLap: {
     type: Date,
     required: true,
   },
@@ -22,7 +22,15 @@ const hoaDonSchema = new Schema({
     type: Number,
     required: true,
   },
+  SoLuongKhach: {
+    type: Number,
+    required: true,
+  },
   // ================ REFERENCES =============================
+  MaPhong: {
+    type: Schema.Types.ObjectId,
+    ref: 'phong',
+  },
   MaKhuyenMai: {
     type: Schema.Types.ObjectId,
     ref: 'khuyenmai',

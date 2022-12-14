@@ -2,16 +2,16 @@ import React, { useEffect } from 'react';
 import { Table, Tooltip } from 'antd';
 import { Input } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { getRoomList } from '../../../redux/manager/room';
+import { gethotelList } from '../../../redux/manager/room';
 import RoomForm from './HotelForm';
 import './ListHotelPage.scss';
-import { roomService } from '../../../services/RoomService';
+import { hotelService } from '../../../services/HotelService';
 import ActionHotel from './ActionHotel';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import AddHotelPage from './AddHotelPage';
-import UploadImgRoom from './UploadImg';
+import UploadImgHotel from './UploadImg';
 function ListHotelManager() {
   const isDeleteSuccess = useSelector((state) => state.manager.room.isDeleteSuccess);
   const { t } = useTranslation();
@@ -42,7 +42,7 @@ function ListHotelManager() {
     {
       title: 'ID',
       width: 100,
-      dataIndex: 'id',
+      dataIndex: 'ID',
       key: 'ID',
       fixed: 'left',
       width: 50,
@@ -53,68 +53,34 @@ function ListHotelManager() {
       key: '3',
     },
     {
-      title: t('Room Name'),
-      width: 100,
-      dataIndex: 'tenPhong',
-      key: 'tenPhong',
-      fixed: 'left',
-      width: 200,
+      title: 'Tên khách sạn',
+
+      key: '7',
+
       render: (_, record, index) => (
         <div>
-          <Tooltip placement="top" title={record?.tenPhong}>
-            {record?.tenPhong.length < 20
-              ? record?.tenPhong
-              : record?.tenPhong.slice(0, 20) + '...'}
+          <Tooltip placement="top" title={record?.TenKhachSan}>
+            {record?.TenKhachSan.length < 30
+              ? record?.TenKhachSan
+              : record?.TenKhachSan.slice(0, 30) + '...'}
           </Tooltip>
         </div>
       ),
     },
     {
-      title: t('Guest'),
-      dataIndex: 'khach',
+      title: t('Đánh giá'),
+      dataIndex: 'DanhGia',
       key: '1',
-      width: 100,
-    },
-    {
-      title: t('Bedroom'),
-      dataIndex: 'phongNgu',
-      key: '2',
-      width: 100,
-    },
-    {
-      title: t('Bed'),
-      dataIndex: 'giuong',
-      key: '3',
-      width: 100,
-    },
-    {
-      title: t('Bathroom'),
-      dataIndex: 'phongTam',
-      key: '4',
       width: 100,
     },
 
     {
       title: t('Price'),
-      dataIndex: 'giaTien',
+      dataIndex: 'MucGiaPhong',
       key: '6',
       width: 100,
     },
 
-    {
-      title: 'Dich Vụ khác',
-      // dataIndex: 'dichVuKhac',
-      key: '15',
-      render: (_, record, index) => (
-        <div>
-          <Tooltip placement="top" title={record?.dichVuKhac}>
-            {record?.dichVuKhac.length < 10
-              ? record?.dichVuKhac
-              : record?.dichVuKhac.slice(0, 10) + '...'}
-          </Tooltip>
-        </div>
-      ),
-    },
     {
       title: 'Mô tả',
 
@@ -122,8 +88,21 @@ function ListHotelManager() {
 
       render: (_, record, index) => (
         <div>
-          <Tooltip placement="top" title={record?.moTa}>
-            {record?.moTa.length < 30 ? record?.moTa : record?.moTa.slice(0, 30) + '...'}
+          <Tooltip placement="top" title={record?.MoTa}>
+            {record?.MoTa.length < 30 ? record?.MoTa : record?.MoTa.slice(0, 30) + '...'}
+          </Tooltip>
+        </div>
+      ),
+    },
+    {
+      title: 'Địa chỉ',
+
+      key: '7',
+
+      render: (_, record, index) => (
+        <div>
+          <Tooltip placement="top" title={record?.DiaChi}>
+            {record?.DiaChi.length < 30 ? record?.DiaChi : record?.DiaChi.slice(0, 30) + '...'}
           </Tooltip>
         </div>
       ),
@@ -136,128 +115,109 @@ function ListHotelManager() {
     },
   ];
   const { Search } = Input;
-  const [searchRoom, setsearchRoom] = useState(null);
-  const onSearchRoom = (value) => {
-    setsearchRoom(value);
+  const [searchHotel, setsearchHotel] = useState(null);
+  const onSearchHotel = (value) => {
+    setsearchHotel(value);
   };
-  const [dataRoom, setDataRoom] = useState([]);
-  let fetchListRoom = () => {
-    roomService
-      .getRoomList()
+  const [dataHotel, setDataHotel] = useState([]);
+  let fetchListHotel = () => {
+    hotelService
+      .getAllHotel()
       .then((res) => {
-        let roomList = res.data.content.map((room, index) => {
-          const dichVu =
-            `${room.mayGiat ? 'Máy Giặt' : ''}` +
-            `${room.banLa ? ', Bàn là' : ''}` +
-            `${room.tivi ? ', Tivi' : ''}` +
-            `${room.wifi ? ', Wifi' : ''}` +
-            `${room.bep ? ', Bếp' : ''}` +
-            `${room.doXe ? ', Đổ xe' : ''}` +
-            `${room.hoBoi ? ', Hồ bơi' : ''}` +
-            `${room.banUi ? ', Bàn Ủi' : ''}`;
+        console.log(res);
+        let hotelList = res.data.map((hotel, index) => {
           return {
             key: index,
-            ...room,
-            dichVuKhac: dichVu,
+            ID: index,
+            ...hotel,
             hinhAnh: (
-              <UploadImgRoom
-                handleOnSuccess={fetchListRoom}
-                imgRoom={room.hinhAnh}
+              <UploadImgHotel
+                handleOnSuccess={fetchListHotel}
+                imgRoom={hotel.HinhAnh}
                 key={index}
-                ID={room.id}
+                ID={hotel._id}
               />
             ),
             action: (
               <ActionHotel
-                roomInfor={room}
+                hotelInfor={hotel}
                 key={index}
-                ID={room.id}
-                handleOnSuccess={fetchListRoom}
+                ID={hotel._id}
+                handleOnSuccess={fetchListHotel}
               />
             ),
           };
         });
-        console.log('roomList: ', roomList);
-        setDataRoom(roomList);
+        setDataHotel(hotelList);
       })
       .catch((err) => {
         console.log(err);
       });
   };
   useEffect(() => {
-    fetchListRoom();
+    fetchListHotel();
   }, []);
 
   useEffect(() => {
-    if (searchRoom == '' || searchRoom == null) {
-      let fetchListRoom = () => {
-        roomService
-          .getRoomList()
+    if (searchHotel == '' || searchHotel == null) {
+      let fetchListHotel = () => {
+        hotelService
+          .getAllHotel()
           .then((res) => {
-            let roomList = res.data.content.map((room, index) => {
-              const dichVu =
-                `${room.mayGiat ? 'Máy Giặt' : ''}` +
-                `${room.banLa ? ', Bàn là' : ''}` +
-                `${room.tivi ? ', Tivi' : ''}` +
-                `${room.wifi ? ', Wifi' : ''}` +
-                `${room.bep ? ', Bếp' : ''}` +
-                `${room.doXe ? ', Đổ xe' : ''}` +
-                `${room.hoBoi ? ', Hồ bơi' : ''}` +
-                `${room.banUi ? ', Bàn Ủi' : ''}`;
+            let hotelList = res.data.content.map((hotel, index) => {
               return {
                 key: index,
-                ...room,
-                dichVuKhac: dichVu,
+                ...hotel,
                 hinhAnh: (
-                  <UploadImgRoom
-                    handleOnSuccess={fetchListRoom}
-                    imgRoom={room.hinhAnh}
+                  <UploadImgHotel
+                    handleOnSuccess={fetchListHotel}
+                    imgRoom={hotel.hinhAnh}
                     key={index}
-                    ID={room.id}
+                    ID={hotel._id}
                   />
                 ),
                 action: (
-                  <ActionRoom
-                    roomInfor={room}
+                  <ActionHotel
+                    hotelInfor={hotel}
                     key={index}
-                    ID={room.id}
-                    handleOnSuccess={fetchListRoom}
+                    ID={hotel._id}
+                    handleOnSuccess={fetchListHotel}
                   />
                 ),
               };
             });
 
-            setDataRoom(roomList);
+            setDataHotel(hotelList);
           })
           .catch((err) => {
             console.log(err);
           });
       };
 
-      fetchListRoom();
+      fetchListHotel();
     } else {
-      let fetchListRoom = () => {
-        let roomRes = dataRoom.filter((loca) => {
-          return convertString(loca.tenPhong) === convertString(searchRoom);
+      let fetchListHotel = () => {
+        let roomRes = dataHotel.filter((loca) => {
+          return convertString(loca.tenPhong) === convertString(searchHotel);
         });
-        const roomList = [
+        const hotelList = [
           {
             ...roomRes[0],
             action: (
-              <ActionRoom
-                roomInfor={roomRes[0]}
+              <ActionHotel
+                hotelInfor={roomRes[0]}
                 ID={roomRes[0]?.id}
-                handleOnSuccess={fetchListRoom}
+                handleOnSuccess={fetchListHotel}
               />
             ),
           },
         ];
-        setDataRoom(roomList);
+        setDataHotel(hotelList);
       };
 
-      fetchListRoom();
+      fetchListHotel();
     }
-  }, [searchRoom, isDeleteSuccess, isRegisterAccountSuccess]);
+  }, [searchHotel, isDeleteSuccess, isRegisterAccountSuccess]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleShowModal = () => {
@@ -272,7 +232,7 @@ function ListHotelManager() {
         <div className="flex items-center mb-4">
           <Search
             placeholder={t('Find Room')}
-            onSearch={onSearchRoom}
+            onSearch={onSearchHotel}
             enterButton
             className="search-manager"
           />
@@ -285,7 +245,7 @@ function ListHotelManager() {
         </div>
         <Table
           columns={columns}
-          dataSource={dataRoom}
+          dataSource={dataHotel}
           scroll={{
             y: 520,
           }}

@@ -1,6 +1,8 @@
 const KhachSan = require('../models/KhachSan')
 const KhuVuc = require('../models/KhuVuc')
 
+const imageBasePath = "img/khachsan/";
+
 const khachSanController = {
   getAllHotels: async (req, res, next) => {
     try {
@@ -18,6 +20,8 @@ const khachSanController = {
         return res.status(300).json('No Hotel found')
       }
 
+      // TODO: lay phong cua khach san
+
       return res.status(200).json(khachSan)
     } catch (err) {
       return res.status(403).json(err.message)
@@ -30,8 +34,8 @@ const khachSanController = {
 
       if (req.files) {
         khachSan.HinhAnh = req.files.map((file) => ({
-          url: file.path,
-          filename: file.filename,
+          url: imageBasePath + file.filename,
+          filename: file.path,
         }))
       }
 

@@ -5,6 +5,8 @@ const dotenv = require('dotenv')
 dotenv.config()
 var jwt = require('jsonwebtoken')
 
+const imageBasePath = "img/taikhoan/";
+
 const authController = {
   getAllUsers: async (req, res) => {
     try {
@@ -69,13 +71,18 @@ const authController = {
 
   updateAccount: async (req, res) => {
     try {
-      const updateAccount = await TaiKhoan.findOneAndUpdate(
-        { TaiKhoan: req.body.TaiKhoan },
-        {
-          $set: req.body,
-        },
-      )
-      return res.status(200).json(updateAccount)
+      const taikhoan = await TaiKhoan.findOne({ TaiKhoan: req.params.taiKhoan })
+
+      if (req.files) {
+        taikhoan.HinhAnh = req.files.map((file) => ({
+          url: imageBasePath + file.filename,
+          filename: file.path,
+        }))[0];
+      }
+
+      await taikhoan.update();
+
+      return res.status(200).json(taikhoan)
     } catch (err) {
       return res.status(403).json(err.message)
     }

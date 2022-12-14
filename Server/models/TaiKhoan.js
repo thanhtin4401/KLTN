@@ -1,6 +1,11 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
+const hinhAnhSchema = new Schema({
+  url: String,
+  filename: String,
+})
+
 const taiKhoanSchema = new Schema(
   {
     TenTaiKhoan: {
@@ -22,9 +27,7 @@ const taiKhoanSchema = new Schema(
       require: true,
       minlength: 6,
     },
-    HinhAnh: {
-      type: String,
-    },
+    HinhAnh: hinhAnhSchema,
     QuyenHang: {
       type: String,
       minlength: 3,

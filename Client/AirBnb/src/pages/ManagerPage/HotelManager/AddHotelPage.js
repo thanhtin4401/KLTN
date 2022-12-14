@@ -16,7 +16,6 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../../../redux/auth/authSlice';
 import { useTranslation } from 'react-i18next';
-
 import moment from 'moment';
 import './AddHotelPage.scss';
 import { locationService } from '../../../services/locationService';
@@ -134,11 +133,7 @@ function AddRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccess }) {
                   style={{ width: '100%', borderRadius: 'none', marginRight: 0 }}
                   name="maViTri"
                 >
-                  <Select
-                    size="large"
-                    className="w-full dropdowregister "
-                    placeholder={t('Vị Trí')}
-                  >
+                  <Select className="w-full dropdowregister " placeholder={t('Vị Trí')}>
                     {locationList.map((item) => {
                       return <Select.Option value={item.id}>{item.tenViTri}</Select.Option>;
                     })}

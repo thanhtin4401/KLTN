@@ -112,8 +112,12 @@ export default function RootLayout() {
                   <span className="link-name">{t('Quản lý khách sạn')}</span>
                 </Link>
               </li>
-              <li className="nav-links-item">
-                <Link to="/detail-page" className="nav-links-content">
+              <li
+                className={
+                  splitLocation[2] === 'Location' ? 'active nav-links-item' : 'nav-links-item'
+                }
+              >
+                <Link to="/Manager/Location" className="nav-links-content">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -137,8 +141,12 @@ export default function RootLayout() {
                   <span className="link-name">{t('Quản lý khu vực')}</span>
                 </Link>
               </li>
-              <li className="nav-links-item">
-                <Link to="/detail-page" className="nav-links-content">
+              <li
+                className={
+                  splitLocation[2] === 'Promotion' ? 'active nav-links-item' : 'nav-links-item'
+                }
+              >
+                <Link to="/Manager/Promotion" className="nav-links-content">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -179,8 +187,12 @@ export default function RootLayout() {
                   <span className="link-name">{t('Quản lý tài khoản')}</span>
                 </Link>
               </li>
-              <li className="nav-links-item">
-                <Link to="/detail-page" className="nav-links-content">
+              <li
+                className={
+                  splitLocation[2] === 'Employee' ? 'active nav-links-item' : 'nav-links-item'
+                }
+              >
+                <Link to="/Manager/Employee" className="nav-links-content">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-6 w-6"
@@ -199,7 +211,9 @@ export default function RootLayout() {
                   <span className="link-name">{t('Quản lý nhân viên')}</span>
                 </Link>
               </li>
-              <li className="nav-links-item">
+              <li
+                className={splitLocation[2] === 'bill' ? 'active nav-links-item' : 'nav-links-item'}
+              >
                 <Link to="/manager/bill" className="nav-links-content">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -219,8 +233,12 @@ export default function RootLayout() {
                   <span className="link-name">{t('Quản lý hoá đơn')}</span>
                 </Link>
               </li>
-              <li className="nav-links-item">
-                <Link to="/detail-page" className="nav-links-content">
+              <li
+                className={
+                  splitLocation[2] === 'Service' ? 'active nav-links-item' : 'nav-links-item'
+                }
+              >
+                <Link to="/Manager/Service" className="nav-links-content">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"

@@ -1,47 +1,58 @@
-import { Modal, message } from 'antd';
+import { Modal } from 'antd';
 import React, { useState } from 'react';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-import './ActionRoom.scss';
+import './ActionPromotion.scss';
 import { useDispatch } from 'react-redux';
 import { deleteUser } from '../../../redux/manager/user';
-import UpdateRoomPage from './UpdateRoomPage';
+import UpdateUserPage from './UpdatePromotionPage';
+import { userService } from '../../../services/userService';
 import { useTranslation } from 'react-i18next';
-import { roomService } from '../../../services/RoomService';
-export default function ActionRoom({ ID, roomInfor, handleOnSuccess }) {
+export default function ActionUser({ ID, userInfor, handleOnSuccess }) {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
-
   let handleUserDelete = () => {
+    // dispatch(deleteMovieActionService(movieID, handleOnSuccess));
+
     Modal.destroyAll();
   };
 
+  // const confirm = () => {
+  //   Modal.confirm({
+  //     title: 'Xác nhận',
+  //     icon: <ExclamationCircleOutlined />,
+  //     content: 'Bạn có chắc muốn xoá phim này',
+  //     okText: 'Xác nhận',
+  //     cancelText: 'Huỷ',
+  //     onOk: handleUserDelete,
+  //   });
+  // };
   const [open, setOpen] = useState(false);
   const showModal = () => {
     setOpen(true);
   };
+
   const hideModal = () => {
     setOpen(false);
   };
   const handleComfirm = (id) => {
     setOpen(false);
-    roomService
-      .deleteRoom(id)
+    userService
+      .deleteUser(id)
       .then((res) => {
-        message.success('xoa thanh cong');
         handleOnSuccess();
-        setIsModalOpen(false);
         return res;
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  console.log('roomInforaction', roomInfor);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleShowModal = () => {
     setIsModalOpen(true);
   };
   return (
-    <div className="space-x-2 flex justify-center">
+    <div className="space-x-2 flex justify-center ">
       <button
         onClick={handleShowModal}
         className="border rounded text-white  bg-[#1aa293] hover:bg-[#84f1e5] transition-all p-[0.5rem]"
@@ -86,15 +97,13 @@ export default function ActionRoom({ ID, roomInfor, handleOnSuccess }) {
         cancelText="cancle"
       >
         <h1 className="">
-          {t('Are you sure you want to delete room: ')}
-          {roomInfor?.room}
+          {'Are you sure you want to delete account: '} {userInfor?.name}
         </h1>
       </Modal>
-      <UpdateRoomPage
+      <UpdateUserPage
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
         ID={ID}
-        roomInfor={roomInfor}
         handleOnSuccessUpdate={handleOnSuccess}
       />
     </div>

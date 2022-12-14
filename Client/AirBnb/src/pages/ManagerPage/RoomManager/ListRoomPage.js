@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 
 import AddRoomPage from './AddRoomPage';
 import UploadImgRoom from './UploadImg';
+import { useNavigate } from 'react-router-dom';
 function RoomManager() {
   const isDeleteSuccess = useSelector((state) => state.manager.room.isDeleteSuccess);
   const { t } = useTranslation();
@@ -263,40 +264,63 @@ function RoomManager() {
   const handleShowModal = () => {
     setIsModalOpen(true);
   };
+  const navigate = useNavigate();
+  const handleBack = () => {
+    navigate('/Manager/Hotel');
+  };
   return (
     <>
-      <div className="w-full text-center p-2 bg-[#1c305e]">
-        <h1 className="text-white text-[3rem] text-left font-[700]">{t('Quản Lý Phòng')}</h1>
-      </div>
-      <div className="flex items-center my-4">
-        <Search
-          placeholder={t('Find Room')}
-          onSearch={onSearchRoom}
-          enterButton
-          className="search-location"
-        />
+      <div className="w-full text-left p-4 bg-white rounded-[2rem] mb-3 flex justify-between">
         <button
-          onClick={handleShowModal}
-          className="py-[6px] px-[12px] bg-black transition-all hover:bg-[#1c305e] text-white font-[600] text-[1rem] h-[3.2rem]"
+          className="flex items-center"
+          onClick={() => {
+            handleBack();
+          }}
         >
-          {t('+ Add Room')}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            className="w-5 h-5"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+          </svg>
+          <p className="text-black text-[1rem] font-[600]">Back</p>
         </button>
+        <h1 className="text-[#1c305e] ml-4 text-[1rem] font-[700]">{t('Quản lý phòng')}</h1>
       </div>
-      <Table
-        columns={columns}
-        dataSource={dataRoom}
-        scroll={{
-          x: 1300,
-        }}
-      />
-      <AddRoomPage
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
-        handleOnSuccess={() => {
-          fetchListLocation();
-        }}
-      />
-      ;
+      <div className="bg-white rounded-[1rem] p-4 h-[91.5%]">
+        <div className="flex items-center my-4">
+          <Search
+            placeholder={t('Find Room')}
+            onSearch={onSearchRoom}
+            enterButton
+            className="search-manager"
+          />
+          <button
+            onClick={handleShowModal}
+            className="py-[0.4rem] px-[0.5rem] bg-[#8cc63f] transition-all hover:bg-[#b2da7f] text-white font-[600]  text-[0.8rem] rounded-[2rem]  ml-2"
+          >
+            {t('+ Add Room')}
+          </button>
+        </div>
+        <Table
+          columns={columns}
+          dataSource={dataRoom}
+          scroll={{
+            y: 520,
+          }}
+        />
+        <AddRoomPage
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          handleOnSuccess={() => {
+            fetchListLocation();
+          }}
+        />
+      </div>
     </>
   );
 }

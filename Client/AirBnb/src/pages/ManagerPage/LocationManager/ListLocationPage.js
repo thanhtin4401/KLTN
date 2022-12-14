@@ -194,38 +194,39 @@ function ListLocationPage() {
   };
   return (
     <>
-      <div className="w-full text-left p-2 bg-[#1c305e]">
-        <h1 className="text-white text-[3rem] font-[700]">{t('Quản lý danh sách điạ điểm')}</h1>
+      <div className="w-full text-left p-2 bg-white rounded-[2rem] mb-3">
+        <h1 className="text-[#1c305e] ml-4 text-[1rem] font-[700]">{t('Quản lý khu vực')}</h1>
       </div>
-      <div className="flex items-center my-4">
-        <Search
-          placeholder={t('Find Location')}
-          onSearch={onSearchLocation}
-          enterButton
-          className="search-location"
+      <div className="bg-white rounded-[1rem] p-4 h-[91.5%]">
+        <div className="flex items-center mb-4">
+          <Search
+            placeholder={t('Find Location')}
+            onSearch={onSearchLocation}
+            enterButton
+            className="search-manager"
+          />
+          <button
+            onClick={handleShowModal}
+            className="py-[0.4rem] px-[0.5rem] bg-[#8cc63f] transition-all hover:bg-[#b2da7f] text-white font-[600]  text-[0.8rem] rounded-[2rem]  ml-2"
+          >
+            {t('+ Add Location')}
+          </button>
+        </div>
+        <Table
+          columns={columns}
+          dataSource={dataLocation}
+          scroll={{
+            y: 520,
+          }}
         />
-        <button
-          onClick={handleShowModal}
-          className="py-[6px] px-[12px] bg-black transition-all hover:bg-[#1c305e] text-white font-[600] text-[1rem] h-[3.2rem]"
-        >
-          {t('+ Add Location')}
-        </button>
+        <AddLocationPage
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          handleOnSuccess={() => {
+            fetchListLocation();
+          }}
+        />
       </div>
-      <Table
-        columns={columns}
-        dataSource={dataLocation}
-        scroll={{
-          x: 1300,
-        }}
-      />
-      <AddLocationPage
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
-        handleOnSuccess={() => {
-          fetchListLocation();
-        }}
-      />
-      ;
     </>
   );
 }

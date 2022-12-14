@@ -35,6 +35,10 @@ import RoomPages from '../pages/RoomPages/RoomPages';
 import RootLayout from '../layout/RootLayout';
 import StatisticalPage from '../pages/ManagerPage/StatisticalManager/StatisticalPage';
 import ListHotelManager from '../pages/ManagerPage/HotelManager/ListHotelPage';
+import ListPromotionPage from '../pages/ManagerPage/PromotionManager/ListPromotionPage';
+import BillManger from '../pages/ManagerPage/BillManager/BillManger';
+import ServiceManager from '../pages/ManagerPage/ServiceManager/ServiceManger';
+import EmployeeManger from '../pages/ManagerPage/EmployeeManager/EmployeeManger';
 export default function Routers() {
   return (
     <BrowserRouter>
@@ -66,10 +70,14 @@ export default function Routers() {
         >
           <Route path="/Manager/Statistical" element={<StatisticalPage />} />
           <Route path="/Manager/User" element={<ListUserPage />} />
-          <Route path="/Manager/Room" element={<ListRoomPage />} />
+          <Route path="/Manager/Hotel/Room" element={<ListRoomPage />} />
           <Route path="/Manager/Hotel" element={<ListHotelManager />} />
           <Route path="/Manager/Location" element={<ListLocationPage />} />
           <Route path="/Manager/profile" element={<ProfileManagerPage />} />
+          <Route path="/Manager/promotion" element={<ListPromotionPage />} />
+          <Route path="/Manager/Employee" element={<EmployeeManger />} />
+          <Route path="/Manager/Service" element={<ServiceManager />} />
+          <Route path="/Manager/Bill" element={<BillManger />} />
         </Route>
 
         <Route

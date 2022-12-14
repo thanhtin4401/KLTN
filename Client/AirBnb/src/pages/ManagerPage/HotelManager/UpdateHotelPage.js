@@ -20,117 +20,117 @@ import moment from 'moment';
 import './AddHotelPage.scss';
 import { locationService } from '../../../services/locationService';
 import { roomService } from '../../../services/RoomService';
-function UpdateRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccessUpdate, roomInfor, ID }) {
+function UpdateHotelPage({ setIsModalOpen, isModalOpen, handleOnSuccessUpdate, roomInfor, ID }) {
   const [form] = Form.useForm();
   const [roomApi, setRoomApi] = useState({});
   const [checkInfor, setCheckInfor] = useState([]);
   const { TextArea } = Input;
-  const onFinish = (values) => {
-    const infor = {
-      tenPhong: values.tenPhong,
-      khach: values.khach,
-      phongNgu: values.phongNgu,
-      giuong: values.giuong,
-      moTa: values.moTa,
-      phongTam: values.phongTam,
-      giaTien: values.giaTien,
-      mayGiac: values.checkbox.indexOf('mayGiac') >= 1 ? true : false,
-      banLa: values.checkbox.indexOf('banLa') >= 1 ? true : false,
-      tivi: values.checkbox.indexOf('tivi') >= 1 ? true : false,
-      wifi: values.checkbox.indexOf('wifi') >= 1 ? true : false,
-      bep: values.checkbox.indexOf('bep') >= 1 ? true : false,
-      doXe: values.checkbox.indexOf('doXe') >= 1 ? true : false,
-      hoBoi: values.checkbox.indexOf('hoBoi') >= 1 ? true : false,
-      banUi: values.checkbox.indexOf('banUi') >= 1 ? true : false,
-      maViTri: values.maViTri,
-      hinhAnh: values.hinhAnh,
-    };
+  // const onFinish = (values) => {
+  //   const infor = {
+  //     tenPhong: values.tenPhong,
+  //     khach: values.khach,
+  //     phongNgu: values.phongNgu,
+  //     giuong: values.giuong,
+  //     moTa: values.moTa,
+  //     phongTam: values.phongTam,
+  //     giaTien: values.giaTien,
+  //     mayGiac: values.checkbox.indexOf('mayGiac') >= 1 ? true : false,
+  //     banLa: values.checkbox.indexOf('banLa') >= 1 ? true : false,
+  //     tivi: values.checkbox.indexOf('tivi') >= 1 ? true : false,
+  //     wifi: values.checkbox.indexOf('wifi') >= 1 ? true : false,
+  //     bep: values.checkbox.indexOf('bep') >= 1 ? true : false,
+  //     doXe: values.checkbox.indexOf('doXe') >= 1 ? true : false,
+  //     hoBoi: values.checkbox.indexOf('hoBoi') >= 1 ? true : false,
+  //     banUi: values.checkbox.indexOf('banUi') >= 1 ? true : false,
+  //     maViTri: values.maViTri,
+  //     hinhAnh: values.hinhAnh,
+  //   };
 
-    roomService
-      .putRoom(ID, infor)
-      .then((res) => {
-        message.success('cap nhat thanh cong');
-        handleOnSuccessUpdate();
-        setIsModalOpen(false);
-        return res;
-      })
-      .catch((err) => {
-        message.success('them thanh cong');
-        console.log(err);
-      });
-  };
-  useEffect(() => {
-    locationService
-      .getLocation(ID)
-      .then((res) => {
-        setRoomApi(res.data.content);
-      })
-      .catch((err) => {
-        // message.error(err.response.data.content);
-      });
-  }, []);
+  //   roomService
+  //     .putRoom(ID, infor)
+  //     .then((res) => {
+  //       message.success('cap nhat thanh cong');
+  //       handleOnSuccessUpdate();
+  //       setIsModalOpen(false);
+  //       return res;
+  //     })
+  //     .catch((err) => {
+  //       message.success('them thanh cong');
+  //       console.log(err);
+  //     });
+  // };
+  // useEffect(() => {
+  //   locationService
+  //     .getLocation(ID)
+  //     .then((res) => {
+  //       setRoomApi(res.data.content);
+  //     })
+  //     .catch((err) => {
+  //       // message.error(err.response.data.content);
+  //     });
+  // }, []);
 
-  useEffect(() => {
-    const checkInfor = [
-      roomInfor.mayGiac ? 'mayGiac' : '',
-      roomInfor.banLa ? 'banLa' : '',
-      roomInfor.tivi ? 'tivi' : '',
-      roomInfor.wifi ? 'wifi' : '',
-      roomInfor.bep ? 'bep' : '',
-      roomInfor.doXe ? 'doXe' : '',
-      roomInfor.hoBoi ? 'hoBoi' : '',
-      roomInfor.banUi ? 'banUi' : '',
-    ];
-    roomApi &&
-      form.setFieldsValue({
-        tenPhong: roomInfor.tenPhong,
-        Khach: roomInfor.khach,
-        phongNgu: roomInfor.phongNgu,
-        giuong: roomInfor.giuong,
-        moTa: roomInfor.moTa,
-        phongTam: roomInfor.phongTam,
-        giaTien: roomInfor.giaTien,
-        mayGiac: 'mayGiac',
-        checkbox: checkInfor,
-        maViTri: roomInfor.maViTri,
-        hinhAnh: roomInfor.hinhAnh,
-      });
-  }, [form, roomApi, roomInfor]);
-  const [imgSRC, setimgSRC] = useState([]);
-  const onFinishFailed = (errorInfo) => {};
+  // useEffect(() => {
+  //   const checkInfor = [
+  //     roomInfor.mayGiac ? 'mayGiac' : '',
+  //     roomInfor.banLa ? 'banLa' : '',
+  //     roomInfor.tivi ? 'tivi' : '',
+  //     roomInfor.wifi ? 'wifi' : '',
+  //     roomInfor.bep ? 'bep' : '',
+  //     roomInfor.doXe ? 'doXe' : '',
+  //     roomInfor.hoBoi ? 'hoBoi' : '',
+  //     roomInfor.banUi ? 'banUi' : '',
+  //   ];
+  //   roomApi &&
+  //     form.setFieldsValue({
+  //       tenPhong: roomInfor.tenPhong,
+  //       Khach: roomInfor.khach,
+  //       phongNgu: roomInfor.phongNgu,
+  //       giuong: roomInfor.giuong,
+  //       moTa: roomInfor.moTa,
+  //       phongTam: roomInfor.phongTam,
+  //       giaTien: roomInfor.giaTien,
+  //       mayGiac: 'mayGiac',
+  //       checkbox: checkInfor,
+  //       maViTri: roomInfor.maViTri,
+  //       hinhAnh: roomInfor.hinhAnh,
+  //     });
+  // }, [form, roomApi, roomInfor]);
+  // const [imgSRC, setimgSRC] = useState([]);
+  // const onFinishFailed = (errorInfo) => {};
 
   const { t } = useTranslation();
 
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  const handleChangeFile = async (e) => {
-    let file = e.target.files[0];
-    if (
-      file.type === 'image/jpeg' ||
-      file.type === 'image/png' ||
-      file.type === 'image/gif' ||
-      file.type === 'image/jpg'
-    ) {
-      await setfile(file);
-      let reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = (e) => {
-        setimgSRC(e.target.result);
-      };
-    }
-  };
-  const [locationList, setLocationList] = useState([]);
-  useEffect(() => {
-    locationService
-      .getLocationList()
-      .then((res) => {
-        setLocationList(res.data.content);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  // const handleChangeFile = async (e) => {
+  //   let file = e.target.files[0];
+  //   if (
+  //     file.type === 'image/jpeg' ||
+  //     file.type === 'image/png' ||
+  //     file.type === 'image/gif' ||
+  //     file.type === 'image/jpg'
+  //   ) {
+  //     await setfile(file);
+  //     let reader = new FileReader();
+  //     reader.readAsDataURL(file);
+  //     reader.onload = (e) => {
+  //       setimgSRC(e.target.result);
+  //     };
+  //   }
+  // };
+  // const [locationList, setLocationList] = useState([]);
+  // useEffect(() => {
+  //   locationService
+  //     .getLocationList()
+  //     .then((res) => {
+  //       setLocationList(res.data.content);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
   return (
     <Modal
       title={t('Cập nhật thông tin phòng')}
@@ -138,7 +138,7 @@ function UpdateRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccessUpdate, ro
       className="modal_add-room"
       onCancel={handleCancel}
     >
-      <div className=" w-full flex justify-center items-center">
+      {/* <div className=" w-full flex justify-center items-center">
         <div className="w-full ">
           <Form
             form={form}
@@ -419,9 +419,9 @@ function UpdateRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccessUpdate, ro
             </Form.Item>
           </Form>
         </div>
-      </div>
+      </div> */}
     </Modal>
   );
 }
 
-export default UpdateRoomPage;
+export default UpdateHotelPage;

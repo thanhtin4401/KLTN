@@ -4,7 +4,7 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 import './ActionHotel.scss';
 import { useDispatch } from 'react-redux';
 import { deleteUser } from '../../../redux/manager/user';
-import UpdateRoomPage from './UpdateHotelPage';
+import UpdateHotelPage from './UpdateHotelPage';
 import { useTranslation } from 'react-i18next';
 import { roomService } from '../../../services/RoomService';
 export default function ActionRoom({ ID, roomInfor, handleOnSuccess }) {

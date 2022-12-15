@@ -18,12 +18,6 @@ const loaiPhongSchema = new Schema({
     type: Number,
     required: true,
   },
-  Phong: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'phong',
-    },
-  ],
 })
 
 module.exports = mongoose.model('loaiphong', loaiPhongSchema)

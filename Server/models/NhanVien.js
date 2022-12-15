@@ -24,16 +24,19 @@ const nhanVienSchema = new Schema({
   },
   HinhAnh: {
     type: String,
-    required: true,
+    default: '',
   },
   Email: {
+    type: String,
+    required: true,
+  },
+  DiaChi: {
     type: String,
     required: true,
   },
   // ====================== REFERENCES ===========================
   MaTaiKhoan: {
     type: Schema.Types.ObjectId,
-    required: true,
     ref: "taikhoan",
   },
 });

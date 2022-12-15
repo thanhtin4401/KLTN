@@ -24,7 +24,6 @@ const khachHangSchema = new Schema({
   },
   HinhAnh: {
     type: String,
-    required: true,
   },
   Email: {
     type: String,
@@ -33,7 +32,6 @@ const khachHangSchema = new Schema({
   // =================== REFERENCES ===========================
   MaTaiKhoan: {
     type: Schema.Types.ObjectId,
-    required: true,
     ref: 'taikhoan',
   },
 })

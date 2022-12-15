@@ -1,5 +1,10 @@
 const Phong = require('../models/Phong')
 const KhachSan = require('../models/KhachSan')
+const DichVu = require('../models/DichVu');
+const DichVuPhong = require('../models/DichVuPhong');
+const LoaiPhong = require('../models/LoaiPhong');
+
+const imageBasePath = "img/phong/";
 
 const roomController = {
   getAllRooms: async (req, res, next) => {
@@ -12,13 +17,18 @@ const roomController = {
 
   getRoomById: async (req, res, next) => {
     try {
-      const room = await Phong.findById(req.params.id)
+      const phong = await Phong.findById(req.params.id)
       
-      if (!room) {
+      if (!phong) {
         return res.status(300).json("No Room found");
       }
 
-      return res.status(200).json(room)
+      const loaiPhong = await LoaiPhong.findById(phong.MaLoaiPhong);
+
+      return res.status(200).json({
+        phong: phong,
+        loaiPhong: loaiPhong,
+      })
     } catch (err) {
       return res.status(403).json(err.message)
     }
@@ -26,13 +36,32 @@ const roomController = {
 
   createRoom: async (req, res, next) => {
     try {
-      const phong = await new Phong(req.body).save()
+      const phong = new Phong(req.body.Phong);
 
+      if (req.files) {
+        phong.HinhAnh = req.files.map((file) => ({
+          url: imageBasePath + file.filename,
+          filename: file.path,
+        }))
+      }
+      await phong.save();
+
+      const dichVu = await DichVu.find({TenDichVu: {$in: req.body.Phong.TenDichVu}});
+      dichVu.forEach(async (dv) => {
+        const dvp = await new DichVuPhong({
+          MaDichVu: dv._id,
+          MaPhong: phong._id,
+        }).save();
+        
+        await dv.updateOne({$push: {MaDichVuPhong: dvp._id}});
+        await phong.updateOne({$push: {MaDichVuPhong: dvp._id}});
+      })
+      
       await KhachSan.findByIdAndUpdate(phong.MaKhachSan, {
         $push: { MaPhong: phong._id },
       })
 
-      return res.status(200).json(phong)
+      return res.status(200).json(await Phong.findById(phong._id));
     } catch (err) {
       return res.status(403).json(err.message)
     }
@@ -42,7 +71,7 @@ const roomController = {
     try {
       const updatedRoom = await Phong.findByIdAndUpdate(
         req.params.id,
-        { $set: req.body },
+        { $set: req.body.Phong },
         { new: true },
       )
 

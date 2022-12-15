@@ -8,7 +8,7 @@ router.get(
   loaiPhongController.getAllTypeRooms,
 )
 
-router.get(
+router.post(
   '/',
   middlewareController.verifyTokenAndAminAuth,
   loaiPhongController.createTypeRoom,

@@ -1,5 +1,6 @@
 const KhachSan = require('../models/KhachSan')
-const KhuVuc = require('../models/KhuVuc')
+const KhuVuc = require('../models/KhuVuc');
+const Phong = require('../models/Phong');
 
 const imageBasePath = "img/khachsan/";
 
@@ -20,9 +21,23 @@ const khachSanController = {
         return res.status(300).json('No Hotel found')
       }
 
-      // TODO: lay phong cua khach san
-
       return res.status(200).json(khachSan)
+    } catch (err) {
+      return res.status(403).json(err.message)
+    }
+  },
+
+  getHotelRooms: async (req, res, next) => {
+    try {
+      const khachSan = await KhachSan.findById(req.params.id)
+
+      if (!khachSan) {
+        return res.status(300).json('No Hotel found')
+      }
+
+      const phong = await Phong.find({MaKhachSan: khachSan._id});
+
+      return res.status(200).json({khachSan: khachSan, phong: phong });
     } catch (err) {
       return res.status(403).json(err.message)
     }

@@ -18,7 +18,7 @@ export const loginUser = createAsyncThunk('auth/loginUser', async (user, thunkAP
     const res = await httpsKLTN.post('/api/taikhoan/login', user);
 
     localStorageService.set('accessToken', res.data.accessToken);
-    // localStorageService.set('USER', res.data.content);
+    localStorageService.set('USER', res.data);
     console.log('res', res.data);
     message.success('login success');
     return res.data;

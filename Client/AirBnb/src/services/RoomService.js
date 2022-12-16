@@ -1,4 +1,5 @@
 import { https } from './axiosClient';
+import { httpsKLTN } from './axiosClientKLTN';
 
 export let roomService = {
   getRoomLocation: (id) => {
@@ -25,20 +26,29 @@ export let roomService = {
     );
   },
 
-  deleteRoom: (id) => {
-    return https.delete(`api/phong-thue/${id}`);
-  },
+  // deleteRoom: (id) => {
+  //   return https.delete(`api/phong-thue/${id}`);
+  // },
 
-  deleteRoom: (roomId) => {
-    return https.delete(`api/phong-thue/${roomId}`);
+  // deleteRoom: (roomId) => {
+  //   return https.delete(`api/phong-thue/${roomId}`);
+  // },
+  // putRoom: (roomId, data) => {
+  //   return https.put(`/api/phong-thue/${roomId}`, data);
+  // },
+  // postRoom: (data) => {
+  //   return https.post(`/api/phong-thue`, data);
+  // },
+  // uploadImgRoom: (roomId, formData) => {
+  //   return https.post(`/api/phong-thue/upload-hinh-phong?maPhong=${roomId}`, formData);
+  // },
+  getALlRoom: (id) => {
+    return httpsKLTN.get(`/api/khachsan/${id}/phong`);
   },
-  putRoom: (roomId, data) => {
-    return https.put(`/api/phong-thue/${roomId}`, data);
+  deleteRoom: (id) => {
+    return httpsKLTN.delete(`/api/phong/${id}`);
   },
-  postRoom: (data) => {
-    return https.post(`/api/phong-thue`, data);
-  },
-  uploadImgRoom: (roomId, formData) => {
-    return https.post(`/api/phong-thue/upload-hinh-phong?maPhong=${roomId}`, formData);
+  postRoom: (roomData) => {
+    return httpsKLTN.post(`/api/phong/`, roomData);
   },
 };

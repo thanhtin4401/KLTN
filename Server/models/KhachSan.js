@@ -12,7 +12,7 @@ const khachSanSchema = new Schema({
     required: true,
   },
   TieuDe: {
-    type: [String],
+    type: String,
   },
   DanhGia: {
     type: Number,

@@ -32,6 +32,7 @@ router
     middlewareController.verifyTokenAndAminAuth,
     khachSanController.getHotelById,
   )
+  .get('/:id/phong', khachSanController.getHotelRooms)
   .put(
     '/:id',
     middlewareController.verifyTokenAndAminAuth,
@@ -42,5 +43,6 @@ router
     middlewareController.verifyTokenAndAminAuth,
     khachSanController.deleteHotel,
   )
+
 
 module.exports = router

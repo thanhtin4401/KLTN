@@ -26,7 +26,7 @@ const khuyenMaiController = {
 
   createPromotion: async (req, res) => {
     try {
-      const khuyenMai = await new KhuyenMai(req.body).save()
+      const khuyenMai = await new KhuyenMai(req.body.KhuyenMai).save()
       return res.status(200).json(khuyenMai)
     } catch (err) {
       return res.status(403).json(err.message)

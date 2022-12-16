@@ -1,6 +1,11 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
+const hinhAnhSchema = new Schema({
+  url: String,
+  filename: String,
+})
+
 const phongSchema = new Schema(
   {
     TenPhong: {
@@ -23,23 +28,22 @@ const phongSchema = new Schema(
       type: Number,
       required: true,
     },
-    HinhAnh: {
-      type: String,
-      required: true,
-    },
+    HinhAnh: [hinhAnhSchema],
     MoTa: {
       type: String,
       required: true,
     },
+    TrangThai: {
+      type: Boolean,
+      default: 0,
+    },
     // ================== REFERENCES =====================
     MaLoaiPhong: {
       type: Schema.Types.ObjectId,
-      required: true,
       ref: 'loaiphong',
     },
     MaKhachSan: {
       type: Schema.Types.ObjectId,
-      required: true,
       ref: 'khachsan',
     },
     MaDichVuPhong: [

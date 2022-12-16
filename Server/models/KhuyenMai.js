@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const khuyenMaiSchema = new Schema({
   TenKhuyenMai: {
@@ -9,17 +9,24 @@ const khuyenMaiSchema = new Schema({
   ChiecKhau: {
     type: Number,
   },
+  NgayBatDau: {
+    type: Date,
+  },
+  NgayKetThuc: {
+    type: Date,
+  },
   MoTa: {
     type: String,
     required: true,
   },
+
   // ==================== REFERENCES ====================
   MaHoaDon: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'hoadon',
+      ref: "hoadon",
     },
   ],
-})
+});
 
-module.exports = mongoose.model('khuyenmai', khuyenMaiSchema)
+module.exports = mongoose.model("khuyenmai", khuyenMaiSchema);

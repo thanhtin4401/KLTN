@@ -25,7 +25,7 @@ const loaiPhongController = {
 
   createTypeRoom: async (req, res) => {
     try {
-      const loaiPhong = new LoaiPhong(req.body).save()
+      const loaiPhong = await new LoaiPhong(req.body).save()
       return res.status(200).json(loaiPhong)
     } catch (err) {
       return res.status(500).json(err.message)

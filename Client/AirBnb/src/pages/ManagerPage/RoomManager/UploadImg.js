@@ -57,8 +57,8 @@ const UploadImgRoom = ({ ID, imgRoom, handleOnSuccess }) => {
         <img
           className="w-full h-[100px] rounded-[0.5rem] object-cover"
           src={
-            imgRoom
-              ? imgRoom
+            imgRoom[0].url
+              ? `http://localhost:8000/${imgRoom[0].url} `
               : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYk517l_JVMrV2jf042ozAGKNehKJjjEHyQtS7bB3PUp_UUWofpG8qdylOOOgmjuxHzB4&usqp=CAU'
           }
         />

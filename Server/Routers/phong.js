@@ -1,26 +1,40 @@
-const phongController = require('../controllers/phongController')
-const middlewareController = require('../controllers/middlewareController.js')
-const router = require('express').Router()
+const phongController = require("../controllers/phongController");
+const middlewareController = require("../controllers/middlewareController.js");
+const router = require("express").Router();
+const multer = require("multer");
 
-router.get('/', phongController.getAllRooms)
-router.get('/:id', phongController.getRoomById)
+const storage = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, "assets/img/phong");
+  },
+  filename: (req, file, callback) => {
+    callback(null, Date.now() + file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
+
+router.get("/", phongController.getAllRooms);
+router.get("/:id", phongController.getRoomById);
 
 router.post(
-  '/',
+  "/",
+  upload.array("image[]"),
   middlewareController.verifyTokenAndAminAuth,
-  phongController.createRoom,
-)
+  phongController.createRoom
+);
 
 router.put(
-  '/:id',
+  "/:id",
+  upload.array("image[]"),
   middlewareController.verifyTokenAndAminAuth,
-  phongController.updateRoom,
-)
+  phongController.updateRoom
+);
 
 router.delete(
-  '/delete/:id',
+  "/:id",
   middlewareController.verifyTokenAndAminAuth,
-  phongController.deleteRoom,
-)
+  phongController.deleteRoom
+);
 
-module.exports = router
+module.exports = router;

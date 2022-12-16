@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 
 import AddRoomPage from './AddRoomPage';
 import UploadImgRoom from './UploadImg';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 function RoomManager() {
   const isDeleteSuccess = useSelector((state) => state.manager.room.isDeleteSuccess);
   const { t } = useTranslation();
@@ -56,66 +56,52 @@ function RoomManager() {
     {
       title: t('Room Name'),
       width: 100,
-      dataIndex: 'tenPhong',
-      key: 'tenPhong',
+      dataIndex: 'TenPhong',
+      key: 'TenPhong',
       fixed: 'left',
       width: 200,
       render: (_, record, index) => (
         <div>
-          <Tooltip placement="top" title={record?.tenPhong}>
-            {record?.tenPhong.length < 20
-              ? record?.tenPhong
-              : record?.tenPhong.slice(0, 20) + '...'}
+          <Tooltip placement="top" title={record?.TenPhong}>
+            {record?.TenPhong.length < 20
+              ? record?.TenPhong
+              : record?.TenPhong.slice(0, 20) + '...'}
           </Tooltip>
         </div>
       ),
     },
     {
-      title: t('Guest'),
-      dataIndex: 'khach',
+      title: t('Số lượng giường'),
+      dataIndex: 'SoLuongGiuong',
       key: '1',
       width: 100,
     },
     {
-      title: t('Bedroom'),
-      dataIndex: 'phongNgu',
+      title: t('Số Lượng phòng'),
+      dataIndex: 'SoLuongPhong',
       key: '2',
       width: 100,
     },
     {
-      title: t('Bed'),
-      dataIndex: 'giuong',
+      title: t('Số lượng khách'),
+      dataIndex: 'SoLuongKhach',
       key: '3',
-      width: 100,
-    },
-    {
-      title: t('Bathroom'),
-      dataIndex: 'phongTam',
-      key: '4',
       width: 100,
     },
 
     {
-      title: t('Price'),
-      dataIndex: 'giaTien',
+      title: t('Gía Phòng'),
+      dataIndex: 'GiaPhong',
+      key: 'TrangThai',
+      width: 100,
+    },
+    {
+      title: t('TrangThai'),
+      dataIndex: 'TrangThai',
       key: '6',
       width: 100,
     },
 
-    {
-      title: 'Dich Vụ khác',
-      // dataIndex: 'dichVuKhac',
-      key: '15',
-      render: (_, record, index) => (
-        <div>
-          <Tooltip placement="top" title={record?.dichVuKhac}>
-            {record?.dichVuKhac.length < 10
-              ? record?.dichVuKhac
-              : record?.dichVuKhac.slice(0, 10) + '...'}
-          </Tooltip>
-        </div>
-      ),
-    },
     {
       title: 'Mô tả',
 
@@ -123,8 +109,8 @@ function RoomManager() {
 
       render: (_, record, index) => (
         <div>
-          <Tooltip placement="top" title={record?.moTa}>
-            {record?.moTa.length < 30 ? record?.moTa : record?.moTa.slice(0, 30) + '...'}
+          <Tooltip placement="top" title={record?.MoTa}>
+            {record?.MoTa.length < 30 ? record?.MoTa : record?.MoTa.slice(0, 30) + '...'}
           </Tooltip>
         </div>
       ),
@@ -142,43 +128,36 @@ function RoomManager() {
     setsearchRoom(value);
   };
   const [dataRoom, setDataRoom] = useState([]);
+  const { hotelId } = useParams();
+  console.log('hotelId', hotelId);
   let fetchListRoom = () => {
     roomService
-      .getRoomList()
+      .getALlRoom(hotelId)
       .then((res) => {
-        let roomList = res.data.content.map((room, index) => {
-          const dichVu =
-            `${room.mayGiat ? 'Máy Giặt' : ''}` +
-            `${room.banLa ? ', Bàn là' : ''}` +
-            `${room.tivi ? ', Tivi' : ''}` +
-            `${room.wifi ? ', Wifi' : ''}` +
-            `${room.bep ? ', Bếp' : ''}` +
-            `${room.doXe ? ', Đổ xe' : ''}` +
-            `${room.hoBoi ? ', Hồ bơi' : ''}` +
-            `${room.banUi ? ', Bàn Ủi' : ''}`;
+        let roomList = res.data.phong.map((room, index) => {
           return {
             key: index,
             ...room,
-            dichVuKhac: dichVu,
+            TrangThai: `${room.TranThai ? 'Đã đặt' : 'Còn trống'}`,
             hinhAnh: (
               <UploadImgRoom
                 handleOnSuccess={fetchListRoom}
-                imgRoom={room.hinhAnh}
+                imgRoom={room.HinhAnh}
                 key={index}
-                ID={room.id}
+                ID={room._id}
               />
             ),
             action: (
               <ActionRoom
                 roomInfor={room}
                 key={index}
-                ID={room.id}
+                ID={room._id}
                 handleOnSuccess={fetchListRoom}
               />
             ),
           };
         });
-        console.log('roomList: ', roomList);
+        console.log('roomList32323:', roomList);
         setDataRoom(roomList);
       })
       .catch((err) => {
@@ -193,41 +172,32 @@ function RoomManager() {
     if (searchRoom == '' || searchRoom == null) {
       let fetchListRoom = () => {
         roomService
-          .getRoomList()
+          .getALlRoom(hotelId)
           .then((res) => {
-            let roomList = res.data.content.map((room, index) => {
-              const dichVu =
-                `${room.mayGiat ? 'Máy Giặt' : ''}` +
-                `${room.banLa ? ', Bàn là' : ''}` +
-                `${room.tivi ? ', Tivi' : ''}` +
-                `${room.wifi ? ', Wifi' : ''}` +
-                `${room.bep ? ', Bếp' : ''}` +
-                `${room.doXe ? ', Đổ xe' : ''}` +
-                `${room.hoBoi ? ', Hồ bơi' : ''}` +
-                `${room.banUi ? ', Bàn Ủi' : ''}`;
+            let roomList = res.data.phong.map((room, index) => {
               return {
                 key: index,
                 ...room,
-                dichVuKhac: dichVu,
+                TrangThai: `${room.TranThai ? 'Đã đặt' : 'Còn trống'}`,
                 hinhAnh: (
                   <UploadImgRoom
                     handleOnSuccess={fetchListRoom}
-                    imgRoom={room.hinhAnh}
+                    imgRoom={room.HinhAnh}
                     key={index}
-                    ID={room.id}
+                    ID={room._id}
                   />
                 ),
                 action: (
                   <ActionRoom
                     roomInfor={room}
                     key={index}
-                    ID={room.id}
+                    ID={room._id}
                     handleOnSuccess={fetchListRoom}
                   />
                 ),
               };
             });
-
+            console.log('roomList32323:', res.data);
             setDataRoom(roomList);
           })
           .catch((err) => {

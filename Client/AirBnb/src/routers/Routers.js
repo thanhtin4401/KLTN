@@ -70,7 +70,7 @@ export default function Routers() {
         >
           <Route path="/Manager/Statistical" element={<StatisticalPage />} />
           <Route path="/Manager/User" element={<ListUserPage />} />
-          <Route path="/Manager/Hotel/:id" element={<ListRoomPage />} />
+          <Route path="/Manager/Hotel/:hotelId" element={<ListRoomPage />} />
           <Route path="/Manager/Hotel" element={<ListHotelManager />} />
           <Route path="/Manager/Location" element={<ListLocationPage />} />
           <Route path="/Manager/profile" element={<ProfileManagerPage />} />

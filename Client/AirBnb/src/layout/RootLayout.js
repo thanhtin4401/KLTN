@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import './RootLayout.scss';
 // import Spinner from '../../component/UI/Spinner';
@@ -10,6 +10,8 @@ import './RootLayout.scss';
 // import DropdownLanguages from '../UI/DropdownLanguages';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { localStorageService } from '../services/localStorageService';
+import { logoutUser } from '../redux/auth/authSlice';
 export default function RootLayout() {
   const [isOpenSidebar, setisOpenSidebar] = useState(false);
   const [isOpenMenuProfile, setisOpenMenuProfile] = useState(false);
@@ -26,9 +28,12 @@ export default function RootLayout() {
   const handleMenuProfile = () => {
     setisOpenMenuProfile((current) => !current);
   };
-
+  const navigate = useNavigate();
   const handleLogout = () => {
-    // dispatch(logoutUser());
+    dispatch(logoutUser());
+    localStorageService.remove('USER');
+    localStorageService.remove('accessToken');
+    navigate('/login');
   };
   const { t } = useTranslation();
   const location = useLocation();

@@ -5,9 +5,13 @@ import { localStorageService } from '../../services/localStorageService';
 
 function RequestPage() {
   const auth = useSelector((state) => state.auth.isLoggedIn);
+  const role = localStorageService.get('USER')?.QuyenHang;
+
   const navigate = useNavigate();
   useEffect(() => {
-    if (auth) {
+    if (auth && role == 'admin') {
+      navigate('/Manager/Statistical');
+    } else if (auth) {
       navigate('/');
     }
   }, [auth]);

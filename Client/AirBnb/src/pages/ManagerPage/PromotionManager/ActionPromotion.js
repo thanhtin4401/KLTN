@@ -4,9 +4,10 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 import './ActionPromotion.scss';
 import { useDispatch } from 'react-redux';
 import { deleteUser } from '../../../redux/manager/user';
-import UpdateUserPage from './UpdatePromotionPage';
-import { userService } from '../../../services/userService';
+import UpdatePromotionPage from './UpdatePromotionPage';
+// import { userService } from '../../../services/userService';
 import { useTranslation } from 'react-i18next';
+import { promotionService } from '../../../services/promotionService';
 export default function ActionUser({ ID, userInfor, handleOnSuccess }) {
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -16,16 +17,16 @@ export default function ActionUser({ ID, userInfor, handleOnSuccess }) {
     Modal.destroyAll();
   };
 
-  // const confirm = () => {
-  //   Modal.confirm({
-  //     title: 'Xác nhận',
-  //     icon: <ExclamationCircleOutlined />,
-  //     content: 'Bạn có chắc muốn xoá phim này',
-  //     okText: 'Xác nhận',
-  //     cancelText: 'Huỷ',
-  //     onOk: handleUserDelete,
-  //   });
-  // };
+  const confirm = () => {
+    Modal.confirm({
+      title: 'Xác nhận',
+      icon: <ExclamationCircleOutlined />,
+      content: 'Bạn có chắc muốn xoá phim này',
+      okText: 'Xác nhận',
+      cancelText: 'Huỷ',
+      onOk: handleUserDelete,
+    });
+  };
   const [open, setOpen] = useState(false);
   const showModal = () => {
     setOpen(true);
@@ -36,8 +37,8 @@ export default function ActionUser({ ID, userInfor, handleOnSuccess }) {
   };
   const handleComfirm = (id) => {
     setOpen(false);
-    userService
-      .deleteUser(id)
+    promotionService
+      .deletePromotion(id)
       .then((res) => {
         handleOnSuccess();
         return res;
@@ -96,11 +97,9 @@ export default function ActionUser({ ID, userInfor, handleOnSuccess }) {
         okText="comfirm"
         cancelText="cancle"
       >
-        <h1 className="">
-          {'Are you sure you want to delete account: '} {userInfor?.name}
-        </h1>
+        <h1 className="">{'Are you sure you want to delete account: '}</h1>
       </Modal>
-      <UpdateUserPage
+      <UpdatePromotionPage
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
         ID={ID}

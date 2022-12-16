@@ -1,5 +1,5 @@
 import { https } from './axiosClient';
-import { httpsKLTN } from './axiosClientKLTN';
+import { httpsKLTN, formDataRequest } from './axiosClientKLTN';
 
 export let roomService = {
   getRoomLocation: (id) => {
@@ -25,23 +25,6 @@ export let roomService = {
       `api/phong-thue/phan-trang-tim-kiem?pageIndex=1&pageSize=1&keyword=${tenPhong}`
     );
   },
-
-  // deleteRoom: (id) => {
-  //   return https.delete(`api/phong-thue/${id}`);
-  // },
-
-  // deleteRoom: (roomId) => {
-  //   return https.delete(`api/phong-thue/${roomId}`);
-  // },
-  // putRoom: (roomId, data) => {
-  //   return https.put(`/api/phong-thue/${roomId}`, data);
-  // },
-  // postRoom: (data) => {
-  //   return https.post(`/api/phong-thue`, data);
-  // },
-  // uploadImgRoom: (roomId, formData) => {
-  //   return https.post(`/api/phong-thue/upload-hinh-phong?maPhong=${roomId}`, formData);
-  // },
   getALlRoom: (id) => {
     return httpsKLTN.get(`/api/khachsan/${id}/phong`);
   },
@@ -51,4 +34,7 @@ export let roomService = {
   postRoom: (roomData) => {
     return httpsKLTN.post(`/api/phong/`, roomData);
   },
+  postImage: (data) => {
+    return formDataRequest.post('/api/phong/image/create', data);
+  }
 };

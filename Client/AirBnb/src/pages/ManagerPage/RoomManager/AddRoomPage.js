@@ -36,18 +36,29 @@ function AddRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccess }) {
       TrangThai: false,
       MaKhachSan: params.hotelId,
     };
+
+    const imageData = {
+      "image[]": values.HinhAnh.fileList,
+    }
+
     roomService
       .postRoom(roomInfor)
       .then((res) => {
-        message.success('them thanh cong');
+        message.success('Thêm phòng thành công');
         handleOnSuccess();
         setIsModalOpen(false);
-        return res;
       })
       .catch((err) => {
-        message.success('them thanh cong');
+        message.error('Thêm phòng thất bại');
         console.log(err);
       });
+
+      roomService.postImage(imageData).then(res => {
+        message.success("Thêm ảnh thành công");
+      }).catch(err => {
+        message.err('Thêm ảnh thất bại');
+        console.log(err);
+      })
   };
 
   const [serviceList, setserviceList] = useState([]);
@@ -159,7 +170,7 @@ function AddRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccess }) {
                     },
                   ]}
                 >
-                  <Upload action="/upload.do" listType="picture-card">
+                  <Upload action="" listType="picture-card">
                     <div>
                       <PlusOutlined />
                       <div style={{ marginTop: 8 }}>Upload</div>
@@ -176,7 +187,7 @@ function AddRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccess }) {
                   rules={[
                     {
                       required: true,
-                      message: t('Please input your image!'),
+                      message: t('Hãy nhập số lượng giường'),
                     },
                   ]}
                 >
@@ -184,7 +195,7 @@ function AddRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccess }) {
                     style={{ width: '100%' }}
                     className="input border px-[14px] py-[14px] rounded-[0.5rem] 
                   "
-                    placeholder={t('Link hinh anh')}
+                    placeholder={t('Số giường')}
                   />
                 </Form.Item>
                 <p className="">{t('Số lượng phòng')}</p>
@@ -194,7 +205,7 @@ function AddRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccess }) {
                   rules={[
                     {
                       required: true,
-                      message: t('Please input your image!'),
+                      message: t('Hãy nhập số lượng phòng'),
                     },
                   ]}
                 >
@@ -202,7 +213,7 @@ function AddRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccess }) {
                     style={{ width: '100%' }}
                     className="input border px-[14px] py-[14px] rounded-[0.5rem] 
                   "
-                    placeholder={t('Link hinh anh')}
+                    placeholder={t('Số lượng phòng')}
                   />
                 </Form.Item>
                 <p className="">{t('Số lượng khách')}</p>
@@ -212,7 +223,7 @@ function AddRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccess }) {
                   rules={[
                     {
                       required: true,
-                      message: t('Please input your image!'),
+                      message: t('Hãy nhập số lượng khách'),
                     },
                   ]}
                 >
@@ -220,7 +231,7 @@ function AddRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccess }) {
                     style={{ width: '100%' }}
                     className="input border px-[14px] py-[14px] rounded-[0.5rem] 
                   "
-                    placeholder={t('Link hinh anh')}
+                    placeholder={t('Số lượng khách')}
                   />
                 </Form.Item>
               </div>

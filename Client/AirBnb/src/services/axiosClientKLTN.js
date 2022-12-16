@@ -6,13 +6,19 @@ export const TOKEN = process.env.REACT_APP_TOKEN;
 export const httpsKLTN = axios.create({
   baseURL: process.env.REACT_APP_API_KLTN,
   headers: {
-    // TokenCybersoft: TOKEN,
     Token: localStorageService.get('accessToken'),
     "Content-Type": 'application/json',
   },
 });
 
-// Add a request interceptor
+export const formDataRequest = axios.create({
+  baseURL: process.env.REACT_APP_API_KLTN,
+  headers: {
+    Token: localStorageService.get('accessToken'),
+    "Content-Type": 'multipart/form-data',
+  },
+});
+
 httpsKLTN.interceptors.request.use(
   function (config) {
     return config;
@@ -22,8 +28,25 @@ httpsKLTN.interceptors.request.use(
   }
 );
 
-// Add a response interceptor
 httpsKLTN.interceptors.response.use(
+  function (response) {
+    return response;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
+);
+
+formDataRequest.interceptors.request.use(
+  function (config) {
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
+);
+
+formDataRequest.interceptors.response.use(
   function (response) {
     return response;
   },

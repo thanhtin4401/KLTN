@@ -38,13 +38,6 @@ const roomController = {
     try {
       const phong = new Phong(req.body);
 
-      if (req.files) {
-        phong.HinhAnh = req.files.map((file) => ({
-          url: imageBasePath + file.filename,
-          filename: file.path,
-        }));
-        return res.status(200).json(req.files);
-      }
       await phong.save();
 
       const dichVu = await DichVu.find({
@@ -68,6 +61,10 @@ const roomController = {
     } catch (err) {
       return res.status(403).json(err.message);
     }
+  },
+
+  uploadImages: async(req, res) => {
+    return res.status(200).json(req.body.image);
   },
 
   updateRoom: async (req, res, next) => {

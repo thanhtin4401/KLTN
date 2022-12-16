@@ -283,9 +283,7 @@ function RoomManager() {
         <AddRoomPage
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
-          handleOnSuccess={() => {
-            fetchListLocation();
-          }}
+          handleOnSuccess={fetchListRoom}
         />
       </div>
     </>

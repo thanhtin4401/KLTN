@@ -9,7 +9,8 @@ import './ListPromotionPage.scss';
 import AddPromotionPage from './AddPromotion';
 import ActionPromotion from './ActionPromotion';
 import { setDate } from 'date-fns';
-import { userService } from '../../../services/userService';
+
+import { promotionService } from '../../../services/promotionService';
 const ListPromotionPage = () => {
   const isDeleteSuccess = useSelector((state) => state.manager.user.isDeleteSuccess);
   const isUpdateSuccess = useSelector((state) => state.manager.user.isUpdateSuccess);
@@ -22,7 +23,7 @@ const ListPromotionPage = () => {
   const columns = [
     {
       title: 'ID',
-      dataIndex: 'id',
+      dataIndex: 'ID',
       key: 'ID',
     },
     {
@@ -32,15 +33,24 @@ const ListPromotionPage = () => {
     },
     {
       title: t('Chiếc khấu'),
-      dataIndex: 'ChietKhau',
+      dataIndex: 'ChiecKhau',
       key: 'ChiecKhau',
     },
     {
       title: t('Ngày bắt đầu'),
       dataIndex: 'NgayBatDau',
+      key: 'NgayBatDau',
+    },
+    {
+      title: t('Ngày kết thúc'),
+      dataIndex: 'NgayKetThuc',
       key: 'NgayKetThuc',
     },
-
+    {
+      title: t('Mô tả'),
+      dataIndex: 'MoTa',
+      key: 'MoTa',
+    },
     {
       title: 'Thao tác',
       dataIndex: 'action',
@@ -52,84 +62,118 @@ const ListPromotionPage = () => {
   const onSearchUser = (value) => {
     setsearchUser(value);
   };
-  const [dataUser, setDataUser] = useState([]);
-
+  const [dataPromotion, setDataPromotion] = useState([]);
   useEffect(() => {
-    let fetchListUser = () => {
-      userService
-        .getUserList()
+    let fetchListPromotion = () => {
+      promotionService
+        .getAllPromotion()
         .then((res) => {
-          let userList = res.data.content.map((user, index) => {
+          let promotionList = res.data.map((promotion, index) => {
             return {
               key: index,
-              ...user,
+              ID: index,
+              ...promotion,
               action: (
                 <ActionPromotion
-                  handleOnSuccess={fetchListUser}
+                  handleOnSuccess={fetchListPromotion}
                   key={index}
-                  ID={user.id}
+                  ID={promotion._id}
                   setIsUpdatePromotionSuccess={setIsUpdatePromotionSuccess}
                 />
               ),
             };
           });
-
-          setDataUser(userList);
+          console.log('promotionList', promotionList);
+          setDataPromotion(promotionList);
         })
         .catch((err) => {});
     };
-    fetchListUser();
+    fetchListPromotion();
   }, []);
+  let fetchListPromotion = () => {
+    promotionService
+      .getAllPromotion()
+      .then((res) => {
+        let promotionList = res.data.map((promotion, index) => {
+          return {
+            key: index,
+            ID: index,
+            ...promotion,
+            action: (
+              <ActionPromotion
+                key={index}
+                ID={promotion._id}
+                handleOnSuccess={fetchListPromotion}
+              />
+            ),
+          };
+        });
 
+        setDataPromotion(promotionList);
+        console.log(promotionList);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   useEffect(() => {
     if (searchUser == '' || searchUser == null) {
-      let fetchListUser = () => {
-        userService
-          .getUserList()
+      let fetchListPromotion = () => {
+        promotionService
+          .getAllPromotion()
           .then((res) => {
-            let userList = res.data.content.map((user, index) => {
+            let promotionList = res.data.map((promotion, index) => {
               return {
                 key: index,
-                ...user,
-                action: <ActionUser key={index} ID={user.id} handleOnSuccess={fetchListUser} />,
-              };
-            });
-
-            setDataUser(userList);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      };
-
-      fetchListUser();
-    } else {
-      let fetchListUser = () => {
-        userService
-          .getSearchUser(searchUser)
-          .then((res) => {
-            let userList = res.data.content.map((user, index) => {
-              return {
-                key: index,
-                ...user,
+                ID: index,
+                ...promotion,
                 action: (
-                  <ActionUser
-                    userInfor={user}
+                  <ActionPromotion
                     key={index}
-                    ID={user.id}
-                    handleOnSuccess={fetchListUser}
+                    ID={promotion._id}
+                    handleOnSuccess={fetchListPromotion}
                   />
                 ),
               };
             });
-            setDataUser(userList);
+
+            setDataPromotion(promotionList);
+            console.log(promotionList);
           })
           .catch((err) => {
             console.log(err);
           });
       };
 
-      fetchListUser();
+      fetchListPromotion();
+    } else {
+      let fetchListPromotion = () => {
+        promotionService
+          .getAllPromotion()
+          .then((res) => {
+            let promotionList = res.data.map((promotion, index) => {
+              return {
+                key: index,
+                ID: index,
+                ...promotion,
+                action: (
+                  <ActionPromotion
+                    key={index}
+                    ID={promotion._id}
+                    handleOnSuccess={fetchListPromotion}
+                  />
+                ),
+              };
+            });
+
+            setDataPromotion(promotionList);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      };
+
+      fetchListPromotion();
     }
   }, [searchUser, isDeleteSuccess, isRegisterAccountSuccess, isUpdateSuccess]);
 
@@ -160,7 +204,7 @@ const ListPromotionPage = () => {
         </div>
         <Table
           columns={columns}
-          dataSource={dataUser}
+          dataSource={dataPromotion}
           className="table-manger"
           pagination={{
             pageSize: 20,
@@ -169,7 +213,13 @@ const ListPromotionPage = () => {
             y: 520,
           }}
         />
-        <AddPromotionPage isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+        <AddPromotionPage
+          handleOnSuccess={() => {
+            fetchListPromotion();
+          }}
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+        />
       </div>
     </>
   );

@@ -6,23 +6,34 @@ import { registerUser } from '../../../redux/auth/authSlice';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 import './AddPromotionPage.scss';
-function AddUserPage({ setIsModalOpen, isModalOpen }) {
+import { promotionService } from '../../../services/promotionService';
+import { localStorageService } from '../../../services/localStorageService';
+function AddUserPage({ setIsModalOpen, isModalOpen, handleOnSuccess }) {
   const dispatch = useDispatch();
 
   const onFinish = (values) => {
-    let birthday = moment(values.birthday).format('dd / mm / yyyy');
+    // let birthday = moment(values.birthday).format('dd / mm / yyyy');
 
     const infor = {
-      name: values.name,
-      email: values.email,
-      password: values.password,
-      phone: values.phone,
-      birthday: birthday,
-      gender: values.gender,
-      role: 'USER',
+      TenKhuyenMai: values.TenKhuyenMai,
+      ChiecKhau: values.ChiecKhau,
+      NgayBatDau: values.NgayBatDau,
+      NgayKetThuc: values.NgayKetThuc,
+      MoTa: values.MoTa,
     };
-
-    dispatch(registerUser(infor));
+    console.log('localStorageService.get', localStorageService.get('accessToken'));
+    promotionService
+      .postPromotion(infor)
+      .then((res) => {
+        message.success('them thanh cong');
+        handleOnSuccess();
+        setIsModalOpen(false);
+        return res;
+      })
+      .catch((err) => {
+        message.success('them thanh cong');
+        console.log(err);
+      });
   };
 
   const onFinishFailed = (errorInfo) => {};
@@ -67,7 +78,7 @@ function AddUserPage({ setIsModalOpen, isModalOpen }) {
             <p className="">{t('Tên khuyến mãi:')}</p>
             <Form.Item
               className="mb-4"
-              name="name"
+              name="TenKhuyenMai"
               rules={[
                 {
                   required: true,
@@ -85,7 +96,7 @@ function AddUserPage({ setIsModalOpen, isModalOpen }) {
             <p className="">{t('Ngày bắt đầu:')}</p>
             <Form.Item
               className="mb-4"
-              name="birthday"
+              name="NgayBatDau"
               wrapperCol={{ sm: 24 }}
               style={{ width: '100%', marginRight: '1rem' }}
             >
@@ -94,7 +105,7 @@ function AddUserPage({ setIsModalOpen, isModalOpen }) {
             <p className="">{t('Ngày kết thúc:')}</p>
             <Form.Item
               className="mb-4"
-              name="birthday"
+              name="NgayKetThuc"
               wrapperCol={{ sm: 24 }}
               style={{ width: '100%', marginRight: '1rem' }}
             >
@@ -103,7 +114,7 @@ function AddUserPage({ setIsModalOpen, isModalOpen }) {
             <p className="">{t('chiếc khấu')}</p>
             <Form.Item
               className="mb-4"
-              name="phone"
+              name="ChiecKhau"
               rules={[
                 {
                   required: true,
@@ -115,6 +126,23 @@ function AddUserPage({ setIsModalOpen, isModalOpen }) {
                 style={{ width: '100%' }}
                 className="input border px-[14px] py-[14px] rounded-[0.5rem]"
                 placeholder={t('%')}
+              />
+            </Form.Item>
+            <p className="">{t('Mô tả')}</p>
+            <Form.Item
+              className="mb-4"
+              name="Mota"
+              rules={[
+                {
+                  required: true,
+                  message: t('Please input your username!'),
+                },
+              ]}
+            >
+              <Input
+                style={{ width: '100%' }}
+                className="input border px-[14px] py-[14px] rounded-[0.5rem]"
+                placeholder={t('Mô tả')}
               />
             </Form.Item>
 

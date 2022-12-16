@@ -129,7 +129,6 @@ function RoomManager() {
   };
   const [dataRoom, setDataRoom] = useState([]);
   const { hotelId } = useParams();
-  console.log('hotelId', hotelId);
   let fetchListRoom = () => {
     roomService
       .getALlRoom(hotelId)
@@ -157,7 +156,6 @@ function RoomManager() {
             ),
           };
         });
-        console.log('roomList32323:', roomList);
         setDataRoom(roomList);
       })
       .catch((err) => {
@@ -197,7 +195,6 @@ function RoomManager() {
                 ),
               };
             });
-            console.log('roomList32323:', res.data);
             setDataRoom(roomList);
           })
           .catch((err) => {

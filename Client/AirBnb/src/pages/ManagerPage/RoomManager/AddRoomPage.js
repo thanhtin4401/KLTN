@@ -14,30 +14,28 @@ import {
   message,
   Upload,
 } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
-import { registerUser } from '../../../redux/auth/authSlice';
 import { useTranslation } from 'react-i18next';
 import './AddRoomPage.scss';
-import moment from 'moment';
 import './AddRoomPage.scss';
-import { locationService } from '../../../services/locationService';
 import { roomService } from '../../../services/RoomService';
 import { serviceRoomSv } from '../../../services/serviceRoomSv';
+import { useParams } from 'react-router-dom';
+
 function AddRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccess }) {
-  const dispatch = useDispatch();
   const { TextArea } = Input;
+  const params = useParams();
+
   const onFinish = (values) => {
     const roomInfor = {
       TenPhong: values.TenPhong,
-      GiaTien: values.GiaTien,
-      image: values.HinhAnh.fileList,
+      GiaPhong: values.GiaTien,
       MoTa: values.MoTa,
       SoLuongGiuong: values.SoLuongGiuong,
       SoLuongKhach: values.SoLuongKhach,
       SoLuongPhong: values.SoLuongPhong,
       TrangThai: false,
+      MaKhachSan: params.hotelId,
     };
-    console.log('roomInfor', roomInfor);
     roomService
       .postRoom(roomInfor)
       .then((res) => {
@@ -63,18 +61,9 @@ function AddRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccess }) {
         console.log(err);
       });
   }, []);
-  console.log('serviceLists', serviceList);
   const onFinishFailed = (errorInfo) => {};
 
-  const { Option } = Select;
-
   const { t } = useTranslation();
-
-  const auth = useSelector((state) => state.auth);
-
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
 
   const handleCancel = () => {
     setIsModalOpen(false);

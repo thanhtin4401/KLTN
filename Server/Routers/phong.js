@@ -19,14 +19,14 @@ router.get("/:id", phongController.getRoomById);
 
 router.post(
   "/",
-  upload.array("image[]"),
+  // multer().none(),
   middlewareController.verifyTokenAndAminAuth,
   phongController.createRoom
 );
 
 router.put(
   "/:id",
-  upload.array("image[]"),
+  upload.array("images"),
   middlewareController.verifyTokenAndAminAuth,
   phongController.updateRoom
 );

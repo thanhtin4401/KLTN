@@ -35,7 +35,6 @@ export default function ActionRoom({ ID, roomInfor, handleOnSuccess }) {
         console.log(err);
       });
   };
-  console.log('roomInforaction', roomInfor);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleShowModal = () => {
     setIsModalOpen(true);

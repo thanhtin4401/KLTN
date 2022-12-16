@@ -1,16 +1,16 @@
-import { useSelect, Search } from '@material-tailwind/react';
-import React, { useEffect, koutEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Table, Input, Button, Tag, message, Modal } from 'antd';
-import { getSearchUser, getUserList } from '../../../redux/manager/user';
-import { useTranslation } from 'react-i18next';
+import React from 'react';
+import { message, Modal } from 'antd';
 import { useState } from 'react';
-import { locationService } from '../../../services/locationService';
 import { roomService } from '../../../services/RoomService';
-const UploadImgRoom = ({ ID, imgRoom, handleOnSuccess }) => {
-  const dispatch = useDispatch();
 
-  const [hinhAnh, sethinhAnh] = useState({});
+const defaultImagePath = "img/phong/16710964908161670943139002blake-wisz-TcgASSD5G04-unsplash.jpg";
+
+const UploadImgRoom = ({ ID, imgRoom, handleOnSuccess }) => {
+  let imageUrl = defaultImagePath;
+  if (imgRoom && imgRoom.length) {
+    imageUrl = imgRoom[0].url;
+  }
+
   const [imgSRC, setimgSRC] = useState('');
   const [file, setfile] = useState({});
   const [openModal, setOpenModal] = useState(false);
@@ -43,7 +43,7 @@ const UploadImgRoom = ({ ID, imgRoom, handleOnSuccess }) => {
       file.type === 'image/gif' ||
       file.type === 'image/jpg'
     ) {
-      await setfile(file);
+      setfile(file);
       let reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (e) => {
@@ -51,16 +51,13 @@ const UploadImgRoom = ({ ID, imgRoom, handleOnSuccess }) => {
       };
     }
   };
+
   return (
     <>
       <div className="space-5 flex relative">
         <img
           className="w-full h-[100px] rounded-[0.5rem] object-cover"
-          src={
-            imgRoom[0].url
-              ? `http://localhost:8000/${imgRoom[0].url} `
-              : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYk517l_JVMrV2jf042ozAGKNehKJjjEHyQtS7bB3PUp_UUWofpG8qdylOOOgmjuxHzB4&usqp=CAU'
-          }
+          src={`http://localhost:8000/${imageUrl}`}
         />
         <button
           onClick={openModalClick}
@@ -82,16 +79,6 @@ const UploadImgRoom = ({ ID, imgRoom, handleOnSuccess }) => {
           name="img"
           onChange={handleChangeFile}
         />
-
-        {/* {imgSrc == undefined ? (
-          ''
-        ) : (
-          <img
-            src={imgSrc}
-            className="w-[150px] h-[150px] mx-auto my-3 object-cover"
-            alt="IMG UPLOAD"
-          />
-        )} */}
       </Modal>
     </>
   );

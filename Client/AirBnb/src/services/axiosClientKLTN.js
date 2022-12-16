@@ -8,7 +8,7 @@ export const httpsKLTN = axios.create({
   headers: {
     // TokenCybersoft: TOKEN,
     Token: localStorageService.get('accessToken'),
-    // Accept: 'multipart/form-data',
+    "Content-Type": 'application/json',
   },
 });
 

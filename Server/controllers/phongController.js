@@ -43,11 +43,12 @@ const roomController = {
           url: imageBasePath + file.filename,
           filename: file.path,
         }));
+        return res.status(200).json(req.files);
       }
       await phong.save();
 
       const dichVu = await DichVu.find({
-        TenDichVu: { $in: req.body.Phong.TenDichVu },
+        TenDichVu: { $in: req.body.TenDichVu },
       });
       dichVu.forEach(async (dv) => {
         const dvp = await new DichVuPhong({

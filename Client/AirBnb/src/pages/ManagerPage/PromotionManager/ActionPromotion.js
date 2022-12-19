@@ -1,4 +1,4 @@
-import { Modal } from 'antd';
+import { Modal, message } from 'antd';
 import React, { useState } from 'react';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import './ActionPromotion.scss';
@@ -41,6 +41,7 @@ export default function ActionUser({ ID, userInfor, handleOnSuccess }) {
       .deletePromotion(id)
       .then((res) => {
         handleOnSuccess();
+        message.success('Xoa Thanh Cong');
         return res;
       })
       .catch((err) => {

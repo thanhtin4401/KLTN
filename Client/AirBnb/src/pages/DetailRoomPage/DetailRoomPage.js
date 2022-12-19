@@ -556,9 +556,7 @@ function DetailRoomPage() {
               <div className="mb:hidden sm:hidden md:grid  comment w-full grid-cols-2 gap-y-4  gap-x-16 ">
                 {handleRenderComment()}
               </div>
-              <div className="w-full mt-6">
-                <CommentPush roomId={roomId} />
-              </div>
+              <div className="w-full mt-6">{/* <CommentPush roomId={roomId} /> */}</div>
             </div>
             <div className="reviews"></div>
             <div className="map w-full mt-5">

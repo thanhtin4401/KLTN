@@ -18,10 +18,14 @@ import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 import './AddPromotionPage.scss';
 import { userService } from '../../../services/userService';
+
 import { updateInforUser } from '../../../redux/manager/user';
+import { promotionService } from '../../../services/promotionService';
+
 function UpdateUserPage({ setIsModalOpen, isModalOpen, ID, handleOnSuccessUpdate }) {
   const dispatch = useDispatch();
-  const [userApi, setUserApi] = useState({});
+
+  const [promotionApi, setPromotionApi] = useState({});
   const [Avatar, setAvatar] = useState({});
   const [form] = Form.useForm();
   const openNotificationWithIcon = (type, mess, description) => {
@@ -30,47 +34,41 @@ function UpdateUserPage({ setIsModalOpen, isModalOpen, ID, handleOnSuccessUpdate
       description: description,
     });
   };
-  // useEffect(() => {
-  //   userService
-  //     .getUser(ID)
-  //     .then((res) => {
-  //       setUserApi(res.data.content);
-  //       setAvatar(res.data.content.avatar);
-  //     })
-  //     .catch((err) => {
-  //       message.error(err.response.data.content);
-  //     });
-  // }, []);
   useEffect(() => {
-    userApi &&
-      form.setFieldsValue({
-        // name: userApi.name,
-        // email: userApi.email,
-        // password: userApi.password,
-        // phone: userApi.phone,
-        // birthday: moment(userApi.birthday),
-        // gender: userApi.gender,
-        // role: userApi.role,
-        // TenKhuyenMai: values.TenKhuyenMai,
-        // ChiecKhau: values.ChiecKhau,
-        // NgayBatDau: values.NgayBatDau,
-        // NgayKetThuc: values.NgayKetThuc,
-        // MoTa: values.MoTa,
+    promotionService
+      .getPromotionById(ID)
+      .then((res) => {
+        setPromotionApi(res.data);
+      })
+      .catch((err) => {
+        // message.error(err.response.data.content);
       });
-  }, [form, userApi]);
+  }, []);
 
+  useEffect(() => {
+    console.log('promotionApi.TenKhuyenMai', promotionApi.TenKhuyenMai);
+    const NgayBatDau = moment(promotionApi.NgatBatDau).format('dd / mm / yyyy');
+    const NgayKetThuc = moment(promotionApi.NgayKetThuc).format('dd / mm / yyyy');
+    promotionApi &&
+      form.setFieldsValue({
+        TenKhuyenMai: promotionApi.TenKhuyenMai,
+        ChiecKhau: promotionApi.ChiecKhau,
+        NgayBatDau: moment(promotionApi.NgayBatDau),
+        NgayKetThuc: moment(promotionApi.NgayKetThuc),
+        MoTa: promotionApi.MoTa,
+      });
+  }, [form, promotionApi, ID]);
+  console.log('promotionApi.TenKhuyenMai1', promotionApi.TenKhuyenMai);
   const onFinish = (values) => {
-    let birthday = moment(values.birthday).format('dd / mm / yyyy');
-
     const infor = {
       TenKhuyenMai: values.TenKhuyenMai,
       ChiecKhau: values.ChiecKhau,
-      NgayBatDau: values.NgayBatDau,
-      NgayKetThuc: values.NgayKetThuc,
+      NgayBatDau: values.NgayKetThuc,
+      NgayKetThuc: values.NgayBatDau,
       MoTa: values.MoTa,
     };
-    userService
-      .putUser(ID, infor)
+    promotionService
+      .putPromotion(ID, infor)
       .then((res) => {
         openNotificationWithIcon('success', 'Hoàn tất', 'Bạn vừa cập nhật thông tin thành công!');
         handleOnSuccessUpdate();
@@ -79,7 +77,7 @@ function UpdateUserPage({ setIsModalOpen, isModalOpen, ID, handleOnSuccessUpdate
         openNotificationWithIcon('error', 'Thất bại');
       });
 
-    // setIsModalOpen(false);
+    setIsModalOpen(false);
   };
 
   const onFinishFailed = (errorInfo) => {};
@@ -100,6 +98,7 @@ function UpdateUserPage({ setIsModalOpen, isModalOpen, ID, handleOnSuccessUpdate
       <div className=" w-full flex justify-center items-center">
         <div className="w-full">
           <Form
+            form={form}
             name="basic"
             labelCol={{
               span: 8,
@@ -117,7 +116,7 @@ function UpdateUserPage({ setIsModalOpen, isModalOpen, ID, handleOnSuccessUpdate
             <p className="">{t('Tên khuyến mãi:')}</p>
             <Form.Item
               className="mb-4"
-              name="name"
+              name="TenKhuyenMai"
               rules={[
                 {
                   required: true,
@@ -135,7 +134,7 @@ function UpdateUserPage({ setIsModalOpen, isModalOpen, ID, handleOnSuccessUpdate
             <p className="">{t('Ngày bắt đầu:')}</p>
             <Form.Item
               className="mb-4"
-              name="birthday"
+              name="NgayBatDau"
               wrapperCol={{ sm: 24 }}
               style={{ width: '100%', marginRight: '1rem' }}
             >
@@ -144,7 +143,7 @@ function UpdateUserPage({ setIsModalOpen, isModalOpen, ID, handleOnSuccessUpdate
             <p className="">{t('Ngày kết thúc:')}</p>
             <Form.Item
               className="mb-4"
-              name="birthday"
+              name="NgayKetThuc"
               wrapperCol={{ sm: 24 }}
               style={{ width: '100%', marginRight: '1rem' }}
             >
@@ -153,7 +152,7 @@ function UpdateUserPage({ setIsModalOpen, isModalOpen, ID, handleOnSuccessUpdate
             <p className="">{t('chiếc khấu')}</p>
             <Form.Item
               className="mb-4"
-              name="phone"
+              name="ChiecKhau"
               rules={[
                 {
                   required: true,
@@ -170,7 +169,7 @@ function UpdateUserPage({ setIsModalOpen, isModalOpen, ID, handleOnSuccessUpdate
             <p className="">{t('Mô tả')}</p>
             <Form.Item
               className="mb-4"
-              name="Mota"
+              name="MoTa"
               rules={[
                 {
                   required: true,

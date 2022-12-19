@@ -32,7 +32,7 @@ export let roomService = {
     return httpsKLTN.delete(`/api/phong/${id}`);
   },
   postRoom: (roomData) => {
-    return httpsKLTN.post(`/api/phong/`, roomData);
+    return formDataRequest.post(`/api/phong/`, roomData);
   },
   postImage: (data) => {
     return formDataRequest.post('/api/phong/image/create', data);

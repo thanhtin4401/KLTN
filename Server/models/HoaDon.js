@@ -26,6 +26,11 @@ const hoaDonSchema = new Schema({
     type: Number,
     required: true,
   },
+  TrangThai: {
+    type: Boolean,
+    // Huy: 0, Da Thanh Toan: 1
+    default: 1,
+  },
   // ================ REFERENCES =============================
   MaPhong: {
     type: Schema.Types.ObjectId,

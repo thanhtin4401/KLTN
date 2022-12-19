@@ -31,6 +31,7 @@ const phongSchema = new Schema(
     },
     TrangThai: {
       type: Boolean,
+      // Trong: 0, Da dat: 1
       default: 0,
     },
     // ================== REFERENCES =====================

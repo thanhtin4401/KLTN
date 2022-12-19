@@ -65,7 +65,8 @@ const hoaDonController = {
         })
       }).deleteMany()
 
-      await hoadon.delete()
+      // Update Huy hoa don
+      await hoadon.updateOne({TrangThai: 0});
 
       return res.status(200).json('Delete successfully')
     } catch (err) {

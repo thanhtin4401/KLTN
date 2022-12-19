@@ -8,7 +8,7 @@ router.get('/:id', hoaDonController.getBillById)
 
 router.post(
   '/',
-  middlewareController.verifyTokenAndAminAuth,
+  middlewareController.verifyTokenAndUserAuth,
   hoaDonController.createBill,
 )
 

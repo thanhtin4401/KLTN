@@ -36,7 +36,17 @@ const roomController = {
 
   createRoom: async (req, res, next) => {
     try {
-      const phong = await new Phong(req.body).save();
+      const phong = new Phong(req.body);
+
+      if (req.file) {
+        phong.HinhAnh = {
+            url: imageBasePath + req.file.filename,
+            filename: req.file.path,
+        } 
+      }
+
+      await phong.save();
+
       // Add dichvu to phong
       const dichVu = await DichVu.find({
         TenDichVu: { $in: req.body.TenDichVu },

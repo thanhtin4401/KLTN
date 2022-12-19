@@ -7,8 +7,8 @@ const defaultImagePath = "img/phong/16710964908161670943139002blake-wisz-TcgASSD
 
 const UploadImgRoom = ({ ID, imgRoom, handleOnSuccess }) => {
   let imageUrl = defaultImagePath;
-  if (imgRoom && imgRoom.length) {
-    imageUrl = imgRoom[0].url;
+  if (imgRoom) {
+    imageUrl = imgRoom.url;
   }
 
   const [imgSRC, setimgSRC] = useState('');

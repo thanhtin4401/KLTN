@@ -24,7 +24,7 @@ const phongSchema = new Schema(
       type: Number,
       required: true,
     },
-    HinhAnh: [hinhAnhSchema],
+    HinhAnh: hinhAnhSchema,
     MoTa: {
       type: String,
       required: true,

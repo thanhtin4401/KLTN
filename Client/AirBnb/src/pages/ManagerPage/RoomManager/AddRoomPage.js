@@ -24,25 +24,33 @@ import { useParams } from 'react-router-dom';
 function AddRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccess }) {
   const { TextArea } = Input;
   const params = useParams();
-
+  const [image, setImage] = useState({})
+  
   const onFinish = (values) => {
-    const roomInfor = {
-      TenPhong: values.TenPhong,
-      GiaPhong: values.GiaTien,
-      MoTa: values.MoTa,
-      SoLuongGiuong: values.SoLuongGiuong,
-      SoLuongKhach: values.SoLuongKhach,
-      SoLuongPhong: values.SoLuongPhong,
-      TrangThai: false,
-      MaKhachSan: params.hotelId,
-    };
+    // const roomInfor = {
+    //   TenPhong: values.TenPhong,
+    //   GiaPhong: values.GiaTien,
+    //   MoTa: values.MoTa,
+    //   SoLuongGiuong: values.SoLuongGiuong,
+    //   SoLuongKhach: values.SoLuongKhach,
+    //   SoLuongPhong: values.SoLuongPhong,
+    //   TrangThai: false,
+    //   MaKhachSan: params.hotelId,
+    // };
 
-    const imageData = {
-      "image[]": values.HinhAnh.fileList,
-    }
+    const formData = new FormData();
+    formData.append("TenPhong", values.TenPhong);
+    formData.append("GiaPhong", values.GiaTien);
+    formData.append("MoTa", values.MoTa);
+    formData.append("SoLuongGiuong", values.SoLuongGiuong);
+    formData.append("SoLuongKhach", values.SoLuongKhach);
+    formData.append("SoLuongPhong", values.SoLuongPhong);
+    formData.append("TrangThai", false);
+    formData.append("MaKhachSan", params.hotelId);
+    formData.append("image", image);
 
     roomService
-      .postRoom(roomInfor)
+      .postRoom(formData)
       .then((res) => {
         message.success('Thêm phòng thành công');
         handleOnSuccess();
@@ -52,14 +60,11 @@ function AddRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccess }) {
         message.error('Thêm phòng thất bại');
         console.log(err);
       });
-
-      roomService.postImage(imageData).then(res => {
-        message.success("Thêm ảnh thành công");
-      }).catch(err => {
-        message.err('Thêm ảnh thất bại');
-        console.log(err);
-      })
   };
+
+  const handleUpload = ({file, fileList}) => {
+    setImage(file);
+  }
 
   const [serviceList, setserviceList] = useState([]);
   useEffect(() => {
@@ -173,11 +178,8 @@ function AddRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccess }) {
                   <Upload 
                   action={"http:localhost:3000"} 
                   listType="picture-card"
-                  beforeUpload={(file) => {
-                    console.log(file);
-                    return false;
-                  }}
-                  multiple
+                  beforeUpload={(file) => {return false;}}
+                  onChange={handleUpload}
                   >
                     <div>
                       <PlusOutlined />

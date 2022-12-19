@@ -29,11 +29,11 @@ const hoaDonController = {
     try {
       const hoadon = await new HoaDon(req.body).save()
 
-      // TODO: hoi lai tin thanh
       await new ChiTietHoaDon({
         MaHD: hoadon._id,
-      }).save()
-
+        MaPhong: hoadon.MaPhong,
+      }).save();
+      
       return res.status(200).json(hoadon)
     } catch (err) {
       return res.status(500).json(err.message)

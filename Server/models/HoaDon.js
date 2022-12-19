@@ -39,23 +39,7 @@ const hoaDonSchema = new Schema({
     type: Schema.Types.ObjectId,
     required: true,
     ref: 'khachhang',
-  },
-  MaTaiKhoan: {
-    type: Schema.Types.ObjectId,
-    required: true,
-    ref: 'taikhoan',
-  },
-  MaNhanVien: {
-    type: Schema.Types.ObjectId,
-    required: true,
-    ref: 'nhanvien',
-  },
-  MaChiTietHoaDon: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'chitiethoadon',
-    },
-  ],
+  }
 })
 
 module.exports = mongoose.model('hoadon', hoaDonSchema)

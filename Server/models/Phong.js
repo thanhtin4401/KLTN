@@ -24,10 +24,6 @@ const phongSchema = new Schema(
       type: Number,
       required: true,
     },
-    GiaPhong: {
-      type: Number,
-      required: true,
-    },
     HinhAnh: [hinhAnhSchema],
     MoTa: {
       type: String,
@@ -38,20 +34,18 @@ const phongSchema = new Schema(
       default: 0,
     },
     // ================== REFERENCES =====================
-    MaLoaiPhong: {
-      type: Schema.Types.ObjectId,
+    TenLoaiPhong: {
+      type: String,
       ref: 'loaiphong',
     },
+    TenDichVu: [{
+      type: String,
+      ref: 'dichvu',
+    }],
     MaKhachSan: {
       type: Schema.Types.ObjectId,
       ref: 'khachsan',
-    },
-    MaDichVuPhong: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'dichvuphong',
-      },
-    ],
+    }
   },
   { timestamps: true },
 )

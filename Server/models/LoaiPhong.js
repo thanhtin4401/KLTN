@@ -5,6 +5,7 @@ const loaiPhongSchema = new Schema({
   TenLoaiPhong: {
     type: String,
     required: true,
+    unique: true,
   },
   GiaThueTheoNgay: {
     type: Number,

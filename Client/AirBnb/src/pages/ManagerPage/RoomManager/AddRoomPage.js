@@ -170,7 +170,15 @@ function AddRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccess }) {
                     },
                   ]}
                 >
-                  <Upload action="" listType="picture-card">
+                  <Upload 
+                  action={"http:localhost:3000"} 
+                  listType="picture-card"
+                  beforeUpload={(file) => {
+                    console.log(file);
+                    return false;
+                  }}
+                  multiple
+                  >
                     <div>
                       <PlusOutlined />
                       <div style={{ marginTop: 8 }}>Upload</div>

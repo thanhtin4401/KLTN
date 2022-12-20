@@ -35,11 +35,14 @@ function AddRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccess }) {
       SoLuongPhong: values.SoLuongPhong,
       TrangThai: false,
       MaKhachSan: params.hotelId,
+      DichVu: values.Checkbox,
+      LoaiPhong: values.LoaiPhong,
     };
 
     const imageData = {
-      "image[]": values.HinhAnh.fileList,
-    }
+      'image[]': values.HinhAnh.fileList,
+    };
+    console.log('roomInfor', roomInfor);
 
     roomService
       .postRoom(roomInfor)
@@ -53,14 +56,17 @@ function AddRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccess }) {
         console.log(err);
       });
 
-      roomService.postImage(imageData).then(res => {
-        message.success("Thêm ảnh thành công");
-      }).catch(err => {
+    roomService
+      .postImage(imageData)
+      .then((res) => {
+        message.success('Thêm ảnh thành công');
+      })
+      .catch((err) => {
         message.err('Thêm ảnh thất bại');
         console.log(err);
-      })
+      });
   };
-
+  const [listTypeRoom, setListTypeRoom] = useState([]);
   const [serviceList, setserviceList] = useState([]);
   useEffect(() => {
     serviceRoomSv
@@ -71,7 +77,41 @@ function AddRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccess }) {
       .catch((err) => {
         console.log(err);
       });
+    roomService
+      .getAllTypeRoom()
+      .then((res) => {
+        setListTypeRoom(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
+
+  const handleMapTypeRoom = () => {
+    return listTypeRoom.map((item) => {
+      return (
+        <Select.Option className="text-black" value={item.TenLoaiPhong}>
+          {item.TenLoaiPhong}
+        </Select.Option>
+      );
+    });
+  };
+  const handleMapService = () => {
+    return serviceList.map((item) => {
+      return (
+        <Checkbox
+          className="checkbox-add-room"
+          value={item?.TenDichVu}
+          style={{
+            lineHeight: '32px',
+          }}
+        >
+          {item.TenDichVu}
+        </Checkbox>
+      );
+    });
+  };
+  console.log('serviceList', serviceList);
   const onFinishFailed = (errorInfo) => {};
 
   const { t } = useTranslation();
@@ -233,6 +273,16 @@ function AddRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccess }) {
                   "
                     placeholder={t('Số lượng khách')}
                   />
+                </Form.Item>
+                <p className="">{t('Loại phòng')}</p>
+                <Form.Item name="LoaiPhong">
+                  <Select size="large">{handleMapTypeRoom()}</Select>
+                </Form.Item>
+                <p className="">{t('Dịch vụ')}</p>
+                <Form.Item name="Checkbox">
+                  <Checkbox.Group>
+                    <div className=" flex flex-wrap">{handleMapService()}</div>
+                  </Checkbox.Group>
                 </Form.Item>
               </div>
             </div>

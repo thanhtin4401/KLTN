@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import { PlusOutlined } from '@ant-design/icons';
 import {
   Button,
   Modal,
@@ -12,6 +12,7 @@ import {
   InputNumber,
   Checkbox,
   message,
+  Upload,
 } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../../../redux/auth/authSlice';
@@ -20,30 +21,26 @@ import moment from 'moment';
 import './AddRoomPage.scss';
 import { locationService } from '../../../services/locationService';
 import { roomService } from '../../../services/RoomService';
+import { serviceRoomSv } from '../../../services/serviceRoomSv';
 function UpdateRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccessUpdate, roomInfor, ID }) {
   const [form] = Form.useForm();
   const [roomApi, setRoomApi] = useState({});
   const [checkInfor, setCheckInfor] = useState([]);
   const { TextArea } = Input;
+  const [listTypeRoom, setListTypeRoom] = useState([]);
+  const [serviceList, setserviceList] = useState([]);
   const onFinish = (values) => {
     const infor = {
-      tenPhong: values.tenPhong,
-      khach: values.khach,
-      phongNgu: values.phongNgu,
-      giuong: values.giuong,
-      moTa: values.moTa,
-      phongTam: values.phongTam,
-      giaTien: values.giaTien,
-      mayGiac: values.checkbox.indexOf('mayGiac') >= 1 ? true : false,
-      banLa: values.checkbox.indexOf('banLa') >= 1 ? true : false,
-      tivi: values.checkbox.indexOf('tivi') >= 1 ? true : false,
-      wifi: values.checkbox.indexOf('wifi') >= 1 ? true : false,
-      bep: values.checkbox.indexOf('bep') >= 1 ? true : false,
-      doXe: values.checkbox.indexOf('doXe') >= 1 ? true : false,
-      hoBoi: values.checkbox.indexOf('hoBoi') >= 1 ? true : false,
-      banUi: values.checkbox.indexOf('banUi') >= 1 ? true : false,
-      maViTri: values.maViTri,
-      hinhAnh: values.hinhAnh,
+      TenPhong: values.TenPhong,
+      GiaPhong: values.GiaTien,
+      MoTa: values.MoTa,
+      SoLuongGiuong: values.SoLuongGiuong,
+      SoLuongKhach: values.SoLuongKhach,
+      SoLuongPhong: values.SoLuongPhong,
+      TrangThai: false,
+      MaKhachSan: params.hotelId,
+      DichVu: values.Checkbox,
+      LoaiPhong: values.LoaiPhong,
     };
 
     roomService
@@ -60,40 +57,72 @@ function UpdateRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccessUpdate, ro
       });
   };
   useEffect(() => {
-    locationService
-      .getLocation(ID)
+    roomService
+      .getDetailRoom(ID)
       .then((res) => {
-        setRoomApi(res.data.content);
+        setRoomApi(res.data);
       })
       .catch((err) => {
-        // message.error(err.response.data.content);
+        console.log(err);
+      });
+  }, []);
+  useEffect(() => {
+    serviceRoomSv
+      .getALlService()
+      .then((res) => {
+        setserviceList(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    roomService
+      .getAllTypeRoom()
+      .then((res) => {
+        setListTypeRoom(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }, []);
 
+  const handleMapTypeRoom = () => {
+    return listTypeRoom.map((item) => {
+      return (
+        <Select.Option className="text-black" value={item.TenLoaiPhong}>
+          {item.TenLoaiPhong}
+        </Select.Option>
+      );
+    });
+  };
+  const handleMapService = () => {
+    return serviceList.map((item) => {
+      return (
+        <Checkbox
+          className="checkbox-add-room"
+          value={item.TenDichVu}
+          style={{
+            lineHeight: '32px',
+          }}
+        >
+          {item.TenDichVu}
+        </Checkbox>
+      );
+    });
+  };
+  console.log('roomApi', roomApi);
   useEffect(() => {
-    const checkInfor = [
-      roomInfor.mayGiac ? 'mayGiac' : '',
-      roomInfor.banLa ? 'banLa' : '',
-      roomInfor.tivi ? 'tivi' : '',
-      roomInfor.wifi ? 'wifi' : '',
-      roomInfor.bep ? 'bep' : '',
-      roomInfor.doXe ? 'doXe' : '',
-      roomInfor.hoBoi ? 'hoBoi' : '',
-      roomInfor.banUi ? 'banUi' : '',
-    ];
     roomApi &&
       form.setFieldsValue({
-        tenPhong: roomInfor.tenPhong,
-        Khach: roomInfor.khach,
-        phongNgu: roomInfor.phongNgu,
-        giuong: roomInfor.giuong,
-        moTa: roomInfor.moTa,
-        phongTam: roomInfor.phongTam,
-        giaTien: roomInfor.giaTien,
-        mayGiac: 'mayGiac',
-        checkbox: checkInfor,
-        maViTri: roomInfor.maViTri,
-        hinhAnh: roomInfor.hinhAnh,
+        TenPhong: roomApi.phong?.TenPhong,
+        GiaPhong: roomApi.phong?.GiaTien,
+        MoTa: roomApi.phong?.MoTa,
+        SoLuongGiuong: roomApi.phong?.SoLuongGiuong,
+        SoLuongKhach: roomApi.phong?.SoLuongKhach,
+        SoLuongPhong: roomApi.phong?.SoLuongPhong,
+        TrangThai: false,
+        // MaKhachSan: params.hotelId,
+        Checkbox: roomApi.phong?.DichVu,
+        LoaiPhong: roomApi.phong?.LoaiPhong,
       });
   }, [form, roomApi, roomInfor]);
   const [imgSRC, setimgSRC] = useState([]);
@@ -159,10 +188,10 @@ function UpdateRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccessUpdate, ro
             <div className="flex w-full justify-between">
               <div className="w-2/4 pr-6 border-r-[1px]">
                 <h2 className="font-[600] text-[1rem] text-[#1c305e] ">Thông tin chung</h2>
-                <p className="">{t('Location')}</p>
+                <p className="">{t('Tên phòng')}</p>
                 <Form.Item
                   className="mb-4"
-                  name="tenPhong"
+                  name="TenPhong"
                   rules={[
                     {
                       required: true,
@@ -176,24 +205,11 @@ function UpdateRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccessUpdate, ro
                     placeholder="Tên phòng"
                   />
                 </Form.Item>
-                <p className="">{t('Vị Trí')}</p>
-                <Form.Item
-                  className="mb-4"
-                  wrapperCol={{ sm: 24 }}
-                  style={{ width: '100%', borderRadius: 'none', marginRight: 0 }}
-                  name="maViTri"
-                >
-                  <Select className="w-full dropdowregister " placeholder={t('Vị Trí')}>
-                    {locationList.map((item) => {
-                      return <Select.Option value={item.id}>{item.tenViTri}</Select.Option>;
-                    })}
-                  </Select>
-                </Form.Item>
 
                 <p className="">{t('Mô tả')}</p>
                 <Form.Item
                   className="mb-4"
-                  name="moTa"
+                  name="MoTa"
                   rules={[
                     {
                       required: true,
@@ -210,7 +226,7 @@ function UpdateRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccessUpdate, ro
                 <p className="">{t('Price')}</p>
                 <Form.Item
                   className="mb-4"
-                  name="giaTien"
+                  name="GiaPhong"
                   rules={[
                     {
                       required: true,
@@ -228,7 +244,7 @@ function UpdateRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccessUpdate, ro
                 <p className="">{t('Hinh anh')}</p>
                 <Form.Item
                   className="mb-4"
-                  name="hinhAnh"
+                  name="HinhAnh"
                   rules={[
                     {
                       required: true,
@@ -236,176 +252,80 @@ function UpdateRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccessUpdate, ro
                     },
                   ]}
                 >
-                  <Input
-                    style={{ width: '100%' }}
-                    className="input border px-[14px] py-[14px] rounded-[0.5rem] 
-                  "
-                    placeholder={t('Link hinh anh')}
-                  />
+                  <Upload action="" listType="picture-card">
+                    <div>
+                      <PlusOutlined />
+                      <div style={{ marginTop: 8 }}>Upload</div>
+                    </div>
+                  </Upload>
                 </Form.Item>
               </div>
               <div className="w-2/4 pl-6">
                 <h2 className="font-[600] text-[1rem] text-[#1c305e] ">Thông tin bổ xung</h2>
-                <Form.Item name="checkbox">
+                <p className="">{t('Số lượng giường')}</p>
+                <Form.Item
+                  className="mb-4"
+                  name="SoLuongGiuong"
+                  rules={[
+                    {
+                      required: true,
+                      message: t('Hãy nhập số lượng giường'),
+                    },
+                  ]}
+                >
+                  <Input
+                    style={{ width: '100%' }}
+                    className="input border px-[14px] py-[14px] rounded-[0.5rem] 
+                  "
+                    placeholder={t('Số giường')}
+                  />
+                </Form.Item>
+                <p className="">{t('Số lượng phòng')}</p>
+                <Form.Item
+                  className="mb-4"
+                  name="SoLuongPhong"
+                  rules={[
+                    {
+                      required: true,
+                      message: t('Hãy nhập số lượng phòng'),
+                    },
+                  ]}
+                >
+                  <Input
+                    style={{ width: '100%' }}
+                    className="input border px-[14px] py-[14px] rounded-[0.5rem] 
+                  "
+                    placeholder={t('Số lượng phòng')}
+                  />
+                </Form.Item>
+                <p className="">{t('Số lượng khách')}</p>
+                <Form.Item
+                  className="mb-4"
+                  name="SoLuongKhach"
+                  rules={[
+                    {
+                      required: true,
+                      message: t('Hãy nhập số lượng khách'),
+                    },
+                  ]}
+                >
+                  <Input
+                    style={{ width: '100%' }}
+                    className="input border px-[14px] py-[14px] rounded-[0.5rem] 
+                  "
+                    placeholder={t('Số lượng khách')}
+                  />
+                </Form.Item>
+                <p className="">{t('Loại phòng')}</p>
+                <Form.Item name="LoaiPhong">
+                  <Select size="large">{handleMapTypeRoom()}</Select>
+                </Form.Item>
+                <p className="">{t('Dịch vụ')}</p>
+                <Form.Item name="Checkbox">
                   <Checkbox.Group>
-                    <div className="flex flex-col">
-                      <Checkbox
-                        className="checkbox-add-room"
-                        value="mayGiac"
-                        style={{
-                          lineHeight: '32px',
-                        }}
-                      >
-                        Máy giặc
-                      </Checkbox>
-                      <Checkbox
-                        className="checkbox-add-room"
-                        value="banLa"
-                        style={{
-                          lineHeight: '32px',
-                        }}
-                      >
-                        Bàn là
-                      </Checkbox>
-                      <Checkbox
-                        className="checkbox-add-room"
-                        value="tivi"
-                        style={{
-                          lineHeight: '32px',
-                        }}
-                      >
-                        Tivi
-                      </Checkbox>
-                      <Checkbox
-                        className="checkbox-add-room"
-                        value="wifi"
-                        style={{
-                          lineHeight: '32px',
-                        }}
-                      >
-                        Wifi
-                      </Checkbox>
-                      <Checkbox
-                        className="checkbox-add-room"
-                        value="bep"
-                        style={{
-                          lineHeight: '32px',
-                        }}
-                      >
-                        Bếp
-                      </Checkbox>
-                      <Checkbox
-                        className="checkbox-add-room"
-                        value="doXe"
-                        style={{
-                          lineHeight: '32px',
-                        }}
-                      >
-                        Đỗ xe
-                      </Checkbox>
-                      <Checkbox
-                        className="checkbox-add-room"
-                        value="hoBoi"
-                        style={{
-                          lineHeight: '32px',
-                        }}
-                      >
-                        Hồ bơi
-                      </Checkbox>
-                      <Checkbox
-                        className="checkbox-add-room"
-                        value="banUi"
-                        style={{
-                          lineHeight: '32px',
-                        }}
-                      >
-                        Bàn Ủi
-                      </Checkbox>
-                    </div>
+                    <div className=" flex flex-wrap">{handleMapService()}</div>
                   </Checkbox.Group>
                 </Form.Item>
-                <h2 className="font-[600] text-[1rem] text-[#1c305e] ">Số lượng</h2>
-
-                <div className="w-full">
-                  <p className="">{t('Phòng ngũ')}</p>
-                  <Form.Item
-                    className="mb-4 w-full"
-                    name="phongNgu"
-                    rules={[
-                      {
-                        required: true,
-                        message: t('Please input your Guest Number!'),
-                      },
-                    ]}
-                  >
-                    <InputNumber
-                      className="border py-[14] rounded-[0.5rem]"
-                      min={1}
-                      max={10}
-                      // defaultValue={1}
-                    />
-                  </Form.Item>
-                </div>
-                <div className="w-full">
-                  <p className="">{t('Giường')}</p>
-                  <Form.Item
-                    className="mb-4 w-full"
-                    name="giuong"
-                    rules={[
-                      {
-                        required: true,
-                        message: t('Please input your Guest Number!'),
-                      },
-                    ]}
-                  >
-                    <InputNumber
-                      className="border py-[14] rounded-[0.5rem]"
-                      min={1}
-                      max={10}
-                      // defaultValue={1}
-                    />
-                  </Form.Item>
-                </div>
-                <div className="w-full">
-                  <p className="">{t('Phòng tắm')}</p>
-                  <Form.Item
-                    className="mb-4 w-full"
-                    name="phongTam"
-                    rules={[
-                      {
-                        required: true,
-                        message: t('Please input your Guest Number!'),
-                      },
-                    ]}
-                  >
-                    <InputNumber
-                      className="border py-[14] rounded-[0.5rem]"
-                      min={1}
-                      max={10}
-                      // defaultValue={1}
-                    />
-                  </Form.Item>
-                </div>
-                <div className="w-full">
-                  <p className="">{t('Số lượng khách')}</p>
-                  <Form.Item
-                    className="mb-4 w-full"
-                    name="Khach"
-                    rules={[
-                      {
-                        required: true,
-                        message: t('Please input your Guest Number!'),
-                      },
-                    ]}
-                  >
-                    <InputNumber
-                      className="border py-[14] rounded-[0.5rem]"
-                      min={1}
-                      max={10}
-                      // defaultValue={1}
-                    />
-                  </Form.Item>
-                </div>
               </div>
             </div>
             <Form.Item>

@@ -4,6 +4,7 @@ const TaiKhoan = require('../models/TaiKhoan')
 const dotenv = require('dotenv')
 dotenv.config()
 var jwt = require('jsonwebtoken')
+const KhachHang = require('../models/KhachHang')
 
 const imageBasePath = "img/taikhoan/";
 
@@ -28,6 +29,10 @@ const authController = {
         HinhAnh: req.body.HinhAnh,
         QuyenHang: req.body.QuyenHang,
       }).save()
+
+      const kh = new KhachHang();
+      kh.MaTaiKhoan = taiKhoan._id;
+      await kh.save();
 
       return res.status(200).json(taiKhoan)
     } catch (err) {

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,kBAAkB,CAAC;EACf,kBAAkB,EAAE,IAAI;CAC3B;;AAED,AAAA,kBAAkB,AAAA,mBAAmB,CAAC;EAClC,OAAO,EAAE,IAAI;CAChB;;AAED,AAAA,kBAAkB,CAAC;EACf,kBAAkB,EAAE,IAAI;CAC3B;;AAED,AAAA,kBAAkB,AAAA,mBAAmB,CAAC;EAClC,OAAO,EAAE,IAAI;CAChB;;AAED,AAAA,sBAAsB,CAAC;EACnB,eAAe,EAAE,YAAY;CAChC",
+    "sources": [
+        "../Client/AirBnb/src/pages/HomePage/TabsHeader.scss"
+    ],
+    "names": [],
+    "file": "TabsHeader.css"
+}

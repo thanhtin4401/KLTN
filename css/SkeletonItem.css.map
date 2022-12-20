@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,SAAS,CAAC;EACN,OAAO,EAAE,EAAE;EACX,SAAS,EAAE,6CAA6C;CAC3D;;AAED,AACI,SADK,AACJ,cAAc,CAAC;EACZ,MAAM,EAAE,MAAM;CACjB;;AAGL,UAAU,CAAV,gBAAU;EACN,EAAE;IACE,gBAAgB,EAAE,OAAkB;;EAExC,IAAI;IACA,gBAAgB,EAAE,OAAkB",
+    "sources": [
+        "../Client/AirBnb/src/components/Skeleton/SkeletonItem.scss"
+    ],
+    "names": [],
+    "file": "SkeletonItem.css"
+}

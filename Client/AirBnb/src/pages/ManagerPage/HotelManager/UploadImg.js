@@ -9,7 +9,6 @@ import { locationService } from '../../../services/locationService';
 import { roomService } from '../../../services/RoomService';
 const UploadImgRoom = ({ ID, imgRoom, handleOnSuccess }) => {
   const dispatch = useDispatch();
-  console.log('imgRoom', imgRoom);
   const [hinhAnh, sethinhAnh] = useState({});
   const [imgSRC, setimgSRC] = useState('');
   const [file, setfile] = useState({});
@@ -51,15 +50,15 @@ const UploadImgRoom = ({ ID, imgRoom, handleOnSuccess }) => {
       };
     }
   };
-  console.log('imgRoom', `localhost:8000/"${imgRoom[0].url}`);
+  console.log("imgRoom",imgRoom)
   return (
     <>
       <div className="space-5 flex relative">
         <img
           className="w-full h-[100px] rounded-[0.5rem] object-cover"
           src={
-            imgRoom[0].url
-              ? `http://localhost:8000/${imgRoom[0].url} `
+            imgRoom
+              ? imgRoom
               : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYk517l_JVMrV2jf042ozAGKNehKJjjEHyQtS7bB3PUp_UUWofpG8qdylOOOgmjuxHzB4&usqp=CAU'
           }
         />

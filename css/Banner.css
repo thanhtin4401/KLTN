@@ -1,0 +1,5 @@
+.overlay {
+  background: -webkit-gradient(linear, right top, left top, from(rgba(0, 212, 255, 0)), color-stop(70%, black));
+  background: linear-gradient(270deg, rgba(0, 212, 255, 0) 0%, black 70%);
+}
+/*# sourceMappingURL=Banner.css.map */

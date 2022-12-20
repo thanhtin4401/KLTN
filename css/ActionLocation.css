@@ -1,0 +1,35 @@
+.modal-confirm-delete .ant-modal-header {
+  border-radius: 1rem 1rem 0rem 0rem;
+  background-color: #1c305e;
+}
+
+.modal-confirm-delete .ant-modal-header .ant-modal-title {
+  color: white;
+}
+
+.modal-confirm-delete .ant-modal-content {
+  border-radius: 1rem;
+}
+
+.modal-confirm-delete .ant-modal-footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.modal-confirm-delete .ant-modal-footer .ant-btn.ant-btn-default {
+  color: black;
+}
+
+.modal-confirm-delete .ant-modal-footer .ant-btn.ant-btn-primary {
+  background-color: #1c305e;
+}
+
+.modal-confirm-delete .ant-btn {
+  width: unset;
+  padding: 0 1rem;
+}
+/*# sourceMappingURL=ActionLocation.css.map */

@@ -1,0 +1,28 @@
+.skeleton {
+  opacity: .7;
+  -webkit-animation: skeleton-loading 1s linear infinite alternate;
+          animation: skeleton-loading 1s linear infinite alternate;
+}
+
+.skeleton.skeleton-text {
+  height: 1.5rem;
+}
+
+@-webkit-keyframes skeleton-loading {
+  0% {
+    background-color: #a3b8c2;
+  }
+  100% {
+    background-color: #f0f3f5;
+  }
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-color: #a3b8c2;
+  }
+  100% {
+    background-color: #f0f3f5;
+  }
+}
+/*# sourceMappingURL=SkeletonItem.css.map */

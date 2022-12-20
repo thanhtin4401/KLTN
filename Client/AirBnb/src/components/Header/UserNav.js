@@ -31,14 +31,14 @@ export default function UserNav({ bg }) {
     setisUser(user);
   }, [user]);
   useEffect(() => {
-    userService
-      .getUser(user?.user.id)
-      .then((res) => {
-        setUserAPI(res.data.content);
-      })
-      .catch((err) => {
-        message.error(err.response.data);
-      });
+    // userService
+    //   .getUser(user?.user.id)
+    //   .then((res) => {
+    //     setUserAPI(res.data.content);
+    //   })
+    //   .catch((err) => {
+    //     message.error(err.response.data);
+    //   });
   }, []);
   const navigate = useNavigate();
 
@@ -152,7 +152,7 @@ export default function UserNav({ bg }) {
                   to="/Profile-person"
                   className="hover:text-black font-[700] transition duration-100 text-[#1c305e] text-left overflow-hidden w-full"
                 >
-                  {t('Hello ') + ' ' + userAPI?.name}
+                  {t('Hello ') + ' ' + userAPI?.TaiKhoan}
                 </Link>
               ) : (
                 <Link

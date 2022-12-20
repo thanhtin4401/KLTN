@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "../Client/AirBnb/src/components/PopupLogin/PopupLogin.scss"
+    ],
+    "names": [],
+    "file": "PopupLogin.css"
+}

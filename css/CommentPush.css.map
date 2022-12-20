@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,cAAc,CAAC;EACX,KAAK,EAAE,IAAI,CAAA,UAAU;CACxB",
+    "sources": [
+        "../Client/AirBnb/src/components/Comment/CommentPush.scss"
+    ],
+    "names": [],
+    "file": "CommentPush.css"
+}

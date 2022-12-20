@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "../Client/AirBnb/src/components/Footer/FooterMobile.scss"
+    ],
+    "names": [],
+    "file": "FooterMobile.css"
+}

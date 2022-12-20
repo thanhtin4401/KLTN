@@ -26,7 +26,9 @@ const khachSanSchema = new Schema({
     type: String,
     required: true,
   },
-  HinhAnh: [hinhAnhSchema],
+  HinhAnh: {
+    type: String,
+  },
   MoTa: {
     type: String,
     default: false,
@@ -35,19 +37,7 @@ const khachSanSchema = new Schema({
   MaKhuVuc: {
     type: Schema.Types.ObjectId,
     ref: 'khuvuc',
-  },
-  MaPhong: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'phong',
-    },
-  ],
-  MaChiTietHoaDon: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'chitiethoadon',
-    },
-  ],
+  }
 })
 
 module.exports = mongoose.model('khachsan', khachSanSchema)

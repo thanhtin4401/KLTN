@@ -1,0 +1,45 @@
+.profilepage-input.ant-input {
+  width: 100% !important;
+}
+
+.profilepage-input.ant-picker {
+  width: 100%;
+  padding: 14px;
+  border-radius: 0.5rem;
+}
+
+.modalUploadImg .ant-modal-header {
+  border-radius: 1rem 1rem 0rem 0rem;
+  background-color: #1c305e;
+}
+
+.modalUploadImg .ant-modal-header .ant-modal-title {
+  color: white;
+}
+
+.modalUploadImg .ant-modal-content {
+  border-radius: 1rem;
+}
+
+.modalUploadImg .ant-modal-footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.modalUploadImg .ant-modal-footer .ant-btn.ant-btn-default {
+  color: black;
+}
+
+.modalUploadImg .ant-modal-footer .ant-btn.ant-btn-primary {
+  background-color: #1c305e;
+}
+
+.modalUploadImg .ant-btn {
+  width: unset;
+  padding: 0 1rem;
+}
+/*# sourceMappingURL=ProfilePage.modul.css.map */

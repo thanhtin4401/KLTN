@@ -19,7 +19,7 @@ function CardItem({ roomInfor }) {
   };
   return (
     <Link
-      to={`/detail-room/${roomInfor.id}`}
+      to={`/Hotel/${roomInfor._id}`}
       className="relative text-black hover:text-black bg-white rounded-[2rem]"
     >
       <div className="">
@@ -38,32 +38,12 @@ function CardItem({ roomInfor }) {
         >
           <SwiperSlide className=" min-h-[260px] rounded-[0.8rem] object-cover h-[270px] w-full">
             <img
-              src={`${roomInfor.data?.img1}`}
+              src={`${roomInfor.HinhAnh}`}
               alt=""
               className="rounded-[0.8rem] min-h-[260px] h-full object-cover max-h-full "
             />
           </SwiperSlide>
-          <SwiperSlide className=" min-h-[260px] rounded-[0.8rem] object-cover h-[270px] w-full">
-            <img
-              src={`${roomInfor.data?.img2}`}
-              alt=""
-              className="rounded-[0.8rem] object-cover max-h-full"
-            />
-          </SwiperSlide>
-          <SwiperSlide className=" min-h-[260px] rounded-[0.8rem] object-cover h-[270px] w-full">
-            <img
-              src={`${roomInfor.data?.img3}`}
-              alt=""
-              className="rounded-[0.8rem] object-cover max-h-full"
-            />
-          </SwiperSlide>
-          <SwiperSlide className=" min-h-[260px] rounded-[0.8rem] object-cover h-[270px] w-full">
-            <img
-              src={`${roomInfor.data?.img4}`}
-              alt=""
-              className="rounded-[0.8rem] object-cover w-full"
-            />
-          </SwiperSlide>
+          
         </Swiper>
       </div>
       <svg
@@ -89,7 +69,7 @@ function CardItem({ roomInfor }) {
 
       <div className="mt-[8px]">
         <div className="w-full flex justify-between">
-          <h1 className="text-[1rem] font-[500]">{roomInfor.tenPhong}</h1>
+          <h1 className="text-[1rem] font-[500]">{roomInfor.TenKhachSan}</h1>
           <div className="flex justify-center items-center">
             <FaStar size="0.8rem" className="mr-2" />
             <span className=" text-[1rem] font-[300]">5.0</span>
@@ -100,7 +80,7 @@ function CardItem({ roomInfor }) {
         </p>
         <p className="text-[0.8rem] text-left text-[black] opacity-60">Oct 2-9</p>
         <div className="flex items-center">
-          <p className="text-[0.9rem] mr-2 font-[500] text-[black] ">${roomInfor.giaTien}</p>
+          <p className="text-[0.9rem] mr-2 font-[500] text-[black] ">${roomInfor.MucGiaPhong}</p>
           <span className="font-300 text-[0.8rem] font-[400] text-[black]">{t('/night')}</span>
         </div>
       </div>

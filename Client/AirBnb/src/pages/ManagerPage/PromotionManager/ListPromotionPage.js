@@ -66,7 +66,6 @@ const ListPromotionPage = () => {
   const [searchPromotion, setsearchPromotion] = useState(null);
   const onSearchPromotion = (value) => {
     setsearchPromotion(value);
-    console.log(value);
   };
   const [dataPromotion, setDataPromotion] = useState([]);
   useEffect(() => {

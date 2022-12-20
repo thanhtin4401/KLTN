@@ -8,8 +8,7 @@ const storage = multer.diskStorage({
     callback(null, "assets/img/phong");
   },
   filename: (req, file, callback) => {
-    console.log(file);
-    callback(null, Date.now() + file.name);
+    callback(null, Date.now() + file.originalname);
   },
 });
 
@@ -20,15 +19,21 @@ router.get("/:id", phongController.getRoomById);
 
 router.post(
   "/",
+  upload.single("image"),
   middlewareController.verifyTokenAndAminAuth,
   phongController.createRoom
 );
 
-router.post('/image/create', upload.single("image"), middlewareController.verifyTokenAndAminAuth, phongController.uploadImages);
+router.post(
+  '/image/create', 
+  upload.single("image"),
+  middlewareController.verifyTokenAndAminAuth, 
+  phongController.uploadImages
+);
 
 router.put(
   "/:id",
-  upload.array("images"),
+  upload.array("image[]"),
   middlewareController.verifyTokenAndAminAuth,
   phongController.updateRoom
 );

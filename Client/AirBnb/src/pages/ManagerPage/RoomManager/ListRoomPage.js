@@ -41,17 +41,17 @@ function RoomManager() {
   }
   const columns = [
     {
-      title: 'ID',
+      title: 'STT',
       width: 100,
-      dataIndex: 'id',
+      dataIndex: 'ID',
       key: 'ID',
       fixed: 'left',
-      width: 50,
     },
     {
       title: t('Picture'),
       dataIndex: 'hinhAnh',
       key: '3',
+      width: 300,
     },
     {
       title: t('Room Name'),
@@ -133,9 +133,11 @@ function RoomManager() {
     roomService
       .getALlRoom(hotelId)
       .then((res) => {
+        console.log('res.data', res.data);
         let roomList = res.data.phong.map((room, index) => {
           return {
             key: index,
+            ID: index,
             ...room,
             TrangThai: `${room.TranThai ? 'Đã đặt' : 'Còn trống'}`,
             hinhAnh: (
@@ -144,6 +146,7 @@ function RoomManager() {
                 imgRoom={room.HinhAnh}
                 key={index}
                 ID={room._id}
+                className="w-[40px] h-[40px]"
               />
             ),
             action: (
@@ -175,6 +178,7 @@ function RoomManager() {
             let roomList = res.data.phong.map((room, index) => {
               return {
                 key: index,
+                ID: index,
                 ...room,
                 TrangThai: `${room.TranThai ? 'Đã đặt' : 'Còn trống'}`,
                 hinhAnh: (

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "../Client/AirBnb/src/pages/MessagePage/MessagePage.scss"
+    ],
+    "names": [],
+    "file": "MessagePage.css"
+}

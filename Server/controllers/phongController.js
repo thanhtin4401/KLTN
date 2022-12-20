@@ -38,19 +38,24 @@ const roomController = {
     try {
       const phong = new Phong(req.body);
 
+      if (req.file) {
+        phong.HinhAnh = {
+            url: imageBasePath + req.file.filename,
+            filename: req.file.path,
+        } 
+      }
+
       await phong.save();
 
+      // Add dichvu to phong
       const dichVu = await DichVu.find({
         TenDichVu: { $in: req.body.TenDichVu },
       });
       dichVu.forEach(async (dv) => {
-        const dvp = await new DichVuPhong({
+        await new DichVuPhong({
           MaDichVu: dv._id,
           MaPhong: phong._id,
         }).save();
-
-        await dv.updateOne({ $push: { MaDichVuPhong: dvp._id } });
-        await phong.updateOne({ $push: { MaDichVuPhong: dvp._id } });
       });
 
       await KhachSan.findByIdAndUpdate(phong.MaKhachSan, {
@@ -64,7 +69,10 @@ const roomController = {
   },
 
   uploadImages: async(req, res) => {
-    return res.status(200).json(req.body.image);
+    if (!req.files) {
+      return res.status(403).json("Failed to upload files");
+    }
+    return res.status(200).json({message: "Upload image successfully", images: req.body.image});
   },
 
   updateRoom: async (req, res, next) => {

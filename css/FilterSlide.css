@@ -1,0 +1,290 @@
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  font-size: 18px;
+  background: #fff;
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.filter .swiper-button-prev {
+  background-color: white;
+  opacity: 1;
+  color: black !important;
+  padding: 0;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 50rem;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+          box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  left: 0;
+}
+
+.filter .swiper-button-prev:hover::after {
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  scale: inherit;
+  width: 34px;
+  height: 34px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+          box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.filter .swiper-button-next {
+  background-color: white;
+  color: black !important;
+  opacity: 1;
+  padding: 0;
+  z-index: 10 !important;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 2rem;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  right: 0;
+}
+
+.filter .swiper-button-next:hover::after {
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  scale: inherit;
+  width: 34px;
+  height: 34px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+          box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.filter .swiper-pagination {
+  display: none;
+}
+
+.swiper-button-prev.swiper-button-disabled {
+  display: none !important;
+}
+
+.filter .swiper-wrapper .swiper-slide img {
+  width: 24px;
+  height: 24px;
+}
+
+.filter .swiper-wrapper .swiper-slide {
+  border-bottom: 4px solid white;
+  opacity: 0.7;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 1rem 0;
+}
+
+.filter .swiper-wrapper .swiper-slide:hover {
+  opacity: 1;
+  border-bottom: 2px solid rgba(128, 128, 128, 0.845);
+}
+
+.filter .swiper-wrapper .swiper-slide:active {
+  opacity: 1;
+  border-bottom: 2px solid rgba(128, 128, 128, 0.845);
+}
+
+.swiper-pagination-bullet-active {
+  background-color: white !important;
+}
+
+.filter .swiper-button-next::before {
+  content: '';
+  position: absolute;
+  height: 4rem;
+  right: -10px;
+  width: 50px;
+  z-index: -1;
+  background: black;
+  background: -webkit-gradient(linear, right top, left top, color-stop(70%, white), to(rgba(0, 212, 255, 0)));
+  background: linear-gradient(270deg, white 70%, rgba(0, 212, 255, 0) 100%);
+}
+
+.filter .swiper-button-prev::before {
+  content: '';
+  position: absolute;
+  height: 4rem;
+  left: -10px;
+  width: 50px;
+  z-index: -1;
+  background: black;
+  background: -webkit-gradient(linear, left top, right top, color-stop(70%, white), to(rgba(0, 212, 255, 0)));
+  background: linear-gradient(90deg, white 70%, rgba(0, 212, 255, 0) 100%);
+}
+
+.filter .swiper-button-prev:after {
+  font-size: 0.7rem !important;
+  font-weight: bold;
+  width: 24px;
+  height: 24px;
+  border-radius: 2rem;
+  border: 1px solid rgba(0, 0, 0, 0.447);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: white;
+}
+
+.filter .swiper-button-next:after {
+  font-size: 0.7rem !important;
+  width: 24px;
+  height: 24px;
+  border-radius: 2rem;
+  border: 1px solid rgba(0, 0, 0, 0.447);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: white;
+}
+
+@media only screen and (max-width: 1023px) {
+  .filter .swiper-button-next {
+    display: none !important;
+  }
+  .filter .swiper-button-prev {
+    display: none !important;
+  }
+}
+
+.filter-popup .ant-modal-header {
+  border-radius: 1rem 1rem 0rem 0rem;
+  background-color: white;
+}
+
+.filter-popup .ant-modal-header .ant-modal-title {
+  color: black;
+  text-align: center;
+}
+
+.filter-popup .ant-modal-content {
+  border-radius: 1rem;
+}
+
+.filter-popup .ant-modal-footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.filter-popup .ant-modal-footer .ant-btn.ant-btn-default {
+  color: black;
+}
+
+.filter-popup .ant-modal-footer .ant-btn.ant-btn-primary {
+  background-color: #1c305e;
+}
+
+.filter-popup .ant-btn {
+  width: unset;
+  padding: 0 1rem;
+}
+
+.tag-item {
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+}
+
+input[type='radio'] {
+  display: none;
+}
+
+.tag-content {
+  opacity: 0.4;
+  background-color: white;
+  color: black;
+  padding: 6px 20px !important;
+  border-radius: 5rem;
+  display: block;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.tag-content:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+input[type='radio']:checked ~ span {
+  opacity: 1;
+  background-color: black;
+  color: white;
+}
+
+.price-input {
+  border: none;
+  width: 100%;
+}
+
+.price-input .ant-input-number-handler-wrap {
+  display: none;
+}
+
+.price-input .ant-input-number-input-wrap {
+  width: 100%;
+}
+
+.price-input .ant-input-number-input-wrap .ant-input-number-input {
+  padding: 0;
+  width: 100%;
+}
+
+.ant-slider:hover .ant-slider-track {
+  background-color: #1c305e;
+}
+
+.ant-slider-track {
+  background-color: #1c305e9e;
+}
+
+.ant-slider-handle {
+  border: solid 2px #1c305e;
+}
+
+.ant-slider:hover .ant-slider-handle:not(.ant-tooltip-open) {
+  border-color: #1c305e;
+}
+/*# sourceMappingURL=FilterSlide.css.map */

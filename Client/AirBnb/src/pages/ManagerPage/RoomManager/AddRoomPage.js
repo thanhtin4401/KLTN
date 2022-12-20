@@ -24,28 +24,33 @@ import { useParams } from 'react-router-dom';
 function AddRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccess }) {
   const { TextArea } = Input;
   const params = useParams();
+  const [image, setImage] = useState({});
 
   const onFinish = (values) => {
-    const roomInfor = {
-      TenPhong: values.TenPhong,
-      GiaPhong: values.GiaTien,
-      MoTa: values.MoTa,
-      SoLuongGiuong: values.SoLuongGiuong,
-      SoLuongKhach: values.SoLuongKhach,
-      SoLuongPhong: values.SoLuongPhong,
-      TrangThai: false,
-      MaKhachSan: params.hotelId,
-      DichVu: values.Checkbox,
-      LoaiPhong: values.LoaiPhong,
-    };
+    // const roomInfor = {
+    //   TenPhong: values.TenPhong,
+    //   GiaPhong: values.GiaTien,
+    //   MoTa: values.MoTa,
+    //   SoLuongGiuong: values.SoLuongGiuong,
+    //   SoLuongKhach: values.SoLuongKhach,
+    //   SoLuongPhong: values.SoLuongPhong,
+    //   TrangThai: false,
+    //   MaKhachSan: params.hotelId,
+    // };
 
-    const imageData = {
-      'image[]': values.HinhAnh.fileList,
-    };
-    console.log('roomInfor', roomInfor);
+    const formData = new FormData();
+    formData.append('TenPhong', values.TenPhong);
+    // formData.append('GiaPhong', values.GiaTien);
+    formData.append('MoTa', values.MoTa);
+    formData.append('SoLuongGiuong', values.SoLuongGiuong);
+    formData.append('SoLuongKhach', values.SoLuongKhach);
+    formData.append('SoLuongPhong', values.SoLuongPhong);
+    formData.append('TrangThai', false);
+    formData.append('MaKhachSan', params.hotelId);
+    formData.append('image', image);
 
     roomService
-      .postRoom(roomInfor)
+      .postRoom(formData)
       .then((res) => {
         message.success('Thêm phòng thành công');
         handleOnSuccess();
@@ -55,16 +60,10 @@ function AddRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccess }) {
         message.error('Thêm phòng thất bại');
         console.log(err);
       });
+  };
 
-    roomService
-      .postImage(imageData)
-      .then((res) => {
-        message.success('Thêm ảnh thành công');
-      })
-      .catch((err) => {
-        message.err('Thêm ảnh thất bại');
-        console.log(err);
-      });
+  const handleUpload = ({ file, fileList }) => {
+    setImage(file);
   };
   const [listTypeRoom, setListTypeRoom] = useState([]);
   const [serviceList, setserviceList] = useState([]);
@@ -86,7 +85,7 @@ function AddRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccess }) {
         console.log(err);
       });
   }, []);
-
+  console.log('listTypeRoom', listTypeRoom);
   const handleMapTypeRoom = () => {
     return listTypeRoom.map((item) => {
       return (
@@ -181,24 +180,6 @@ function AddRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccess }) {
                   />
                 </Form.Item>
 
-                <p className="">{t('Price')}</p>
-                <Form.Item
-                  className="mb-4"
-                  name="GiaTien"
-                  rules={[
-                    {
-                      required: true,
-                      message: t('Please input your image!'),
-                    },
-                  ]}
-                >
-                  <Input
-                    style={{ width: '100%' }}
-                    className="input border px-[14px] py-[14px] rounded-[0.5rem] 
-                  "
-                    placeholder={t('Price')}
-                  />
-                </Form.Item>
                 <p className="">{t('Hinh anh')}</p>
                 <Form.Item
                   className="mb-4"
@@ -210,7 +191,14 @@ function AddRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccess }) {
                     },
                   ]}
                 >
-                  <Upload action="" listType="picture-card">
+                  <Upload
+                    action={'http:localhost:3000'}
+                    listType="picture-card"
+                    beforeUpload={(file) => {
+                      return false;
+                    }}
+                    onChange={handleUpload}
+                  >
                     <div>
                       <PlusOutlined />
                       <div style={{ marginTop: 8 }}>Upload</div>

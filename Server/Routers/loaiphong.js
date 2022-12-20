@@ -3,7 +3,7 @@ const middlewareController = require('../controllers/middlewareController')
 const router = require('express').Router()
 
 router.get(
-  '/loaiphong',
+  '/',
   middlewareController.verifyTokenAndAminAuth,
   loaiPhongController.getAllTypeRooms,
 )

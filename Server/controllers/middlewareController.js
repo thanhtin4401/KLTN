@@ -33,5 +33,25 @@ const middlewareController = {
       })
     })
   },
+
+  verifyTokenAndUserAuth: (req, res, next) => {
+    middlewareController.verifyToken(req, res, () => {
+      const token = req.headers['token']
+
+      jwt.verify(token, 'Thanhtin4401', async (err, tokenInfo) => {
+        if (err) return res.status(401).json("You're not authenticated")
+        const user = await TaiKhoan.findById(tokenInfo.id)
+
+        if (user.QuyenHang === 'user') {
+          next()
+        } else {
+          res.status(403).json({
+            message: "You're not allowed to do this action",
+            user: user,
+          })
+        }
+      })
+    })
+  },
 }
 module.exports = middlewareController

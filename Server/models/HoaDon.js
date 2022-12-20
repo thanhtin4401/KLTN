@@ -26,6 +26,11 @@ const hoaDonSchema = new Schema({
     type: Number,
     required: true,
   },
+  TrangThai: {
+    type: Boolean,
+    // Huy: 0, Da Thanh Toan: 1
+    default: 1,
+  },
   // ================ REFERENCES =============================
   MaPhong: {
     type: Schema.Types.ObjectId,
@@ -39,23 +44,7 @@ const hoaDonSchema = new Schema({
     type: Schema.Types.ObjectId,
     required: true,
     ref: 'khachhang',
-  },
-  MaTaiKhoan: {
-    type: Schema.Types.ObjectId,
-    required: true,
-    ref: 'taikhoan',
-  },
-  MaNhanVien: {
-    type: Schema.Types.ObjectId,
-    required: true,
-    ref: 'nhanvien',
-  },
-  MaChiTietHoaDon: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'chitiethoadon',
-    },
-  ],
+  }
 })
 
 module.exports = mongoose.model('hoadon', hoaDonSchema)

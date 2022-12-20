@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "../Client/AirBnb/src/pages/SearchPage/SearchPage.modul.scss"
+    ],
+    "names": [],
+    "file": "SearchPage.modul.css"
+}

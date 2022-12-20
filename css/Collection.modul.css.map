@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "../Client/AirBnb/src/components/Collection/Collection.modul.scss"
+    ],
+    "names": [],
+    "file": "Collection.modul.css"
+}

@@ -54,7 +54,7 @@ export default function Routers() {
           <Route path="/Wishlist" element={<Wishlists />}></Route>
           <Route path="/TripMobile" element={<InfoTripMobilePage />}></Route>
           <Route path="/PopUpModal" element={<PopUpModal />}></Route>
-          <Route path="/RoomPage" element={<RoomPages />}></Route>
+          <Route path="/Hotel/:hotelId" element={<RoomPages />}></Route>
         </Route>
         <Route path="/Detail-Room" element={<DetailPageLayout />}>
           <Route path="/Detail-Room/:roomId" element={<DetailRoomPage />}></Route>

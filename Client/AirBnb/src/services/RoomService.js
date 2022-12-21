@@ -43,4 +43,8 @@ export let roomService = {
   getAllTypeRoom: () => {
     return httpsKLTN.get(`/api/loaiphong`);
   },
+
+  putRoom: (id, data) => {
+    return formDataRequest.put(`/api/phong/${id}`, data);
+  },
 };

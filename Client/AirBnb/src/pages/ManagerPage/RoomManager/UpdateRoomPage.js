@@ -22,6 +22,7 @@ import './AddRoomPage.scss';
 import { locationService } from '../../../services/locationService';
 import { roomService } from '../../../services/RoomService';
 import { serviceRoomSv } from '../../../services/serviceRoomSv';
+import { useParams } from 'react-router-dom';
 function UpdateRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccessUpdate, roomInfor, ID }) {
   const [form] = Form.useForm();
   const [roomApi, setRoomApi] = useState({});
@@ -29,22 +30,32 @@ function UpdateRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccessUpdate, ro
   const { TextArea } = Input;
   const [listTypeRoom, setListTypeRoom] = useState([]);
   const [serviceList, setserviceList] = useState([]);
+  const { hotelId } = useParams();
   const onFinish = (values) => {
-    const infor = {
-      TenPhong: values.TenPhong,
-      GiaPhong: values.GiaTien,
-      MoTa: values.MoTa,
-      SoLuongGiuong: values.SoLuongGiuong,
-      SoLuongKhach: values.SoLuongKhach,
-      SoLuongPhong: values.SoLuongPhong,
-      TrangThai: false,
-      MaKhachSan: params.hotelId,
-      DichVu: values.Checkbox,
-      LoaiPhong: values.LoaiPhong,
-    };
+    // const infor = {
+    //   TenPhong: values.TenPhong,
+    //   GiaPhong: values.GiaTien,
+    //   MoTa: values.MoTa,
+    //   SoLuongGiuong: values.SoLuongGiuong,
+    //   SoLuongKhach: values.SoLuongKhach,
+    //   SoLuongPhong: values.SoLuongPhong,
+    //   TrangThai: false,
+    //   MaKhachSan: hotelId,
+    //   DichVu: values?.Checkbox,
+    //   LoaiPhong: values.LoaiPhong,
+    // };
+
+    const formData = new FormData();
+    formData.append('TenPhong', values.TenPhong);
+    formData.append('MoTa', values.MoTa);
+    formData.append('SoLuongGiuong', values.SoLuongGiuong);
+    formData.append('SoLuongKhach', values.SoLuongKhach);
+    formData.append('SoLuongPhong', values.SoLuongPhong);
+    formData.append('TrangThai', false);
+    formData.append('MaKhachSan', hotelId);
 
     roomService
-      .putRoom(ID, infor)
+      .putRoom(ID, formData)
       .then((res) => {
         message.success('cap nhat thanh cong');
         handleOnSuccessUpdate();
@@ -88,8 +99,8 @@ function UpdateRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccessUpdate, ro
   const handleMapTypeRoom = () => {
     return listTypeRoom.map((item) => {
       return (
-        <Select.Option className="text-black" value={item.TenLoaiPhong}>
-          {item.TenLoaiPhong}
+        <Select.Option className="text-black" value={item?.TenLoaiPhong}>
+          {item?.TenLoaiPhong}
         </Select.Option>
       );
     });
@@ -99,17 +110,17 @@ function UpdateRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccessUpdate, ro
       return (
         <Checkbox
           className="checkbox-add-room"
-          value={item.TenDichVu}
+          value={item?.TenDichVu}
           style={{
             lineHeight: '32px',
           }}
         >
-          {item.TenDichVu}
+          {item?.TenDichVu}
         </Checkbox>
       );
     });
   };
-  console.log('roomApi', roomApi);
+
   useEffect(() => {
     roomApi &&
       form.setFieldsValue({
@@ -121,7 +132,7 @@ function UpdateRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccessUpdate, ro
         SoLuongPhong: roomApi.phong?.SoLuongPhong,
         TrangThai: false,
         // MaKhachSan: params.hotelId,
-        Checkbox: roomApi.phong?.DichVu,
+        Checkbox: roomApi.phong?.TenDichVu,
         LoaiPhong: roomApi.phong?.LoaiPhong,
       });
   }, [form, roomApi, roomInfor]);
@@ -223,25 +234,6 @@ function UpdateRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccessUpdate, ro
                     placeholder="Mô tả"
                   />
                 </Form.Item>
-
-                <p className="">{t('Hinh anh')}</p>
-                <Form.Item
-                  className="mb-4"
-                  name="HinhAnh"
-                  rules={[
-                    {
-                      required: true,
-                      message: t('Please input your image!'),
-                    },
-                  ]}
-                >
-                  <Upload action="" listType="picture-card">
-                    <div>
-                      <PlusOutlined />
-                      <div style={{ marginTop: 8 }}>Upload</div>
-                    </div>
-                  </Upload>
-                </Form.Item>
               </div>
               <div className="w-2/4 pl-6">
                 <h2 className="font-[600] text-[1rem] text-[#1c305e] ">Thông tin bổ xung</h2>
@@ -301,7 +293,9 @@ function UpdateRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccessUpdate, ro
                 </Form.Item>
                 <p className="">{t('Loại phòng')}</p>
                 <Form.Item name="LoaiPhong">
-                  <Select size="large">{handleMapTypeRoom()}</Select>
+                  <Select size="large" defaultValue={roomApi.phong?.TenLoaiPhong}>
+                    {handleMapTypeRoom()}
+                  </Select>
                 </Form.Item>
                 <p className="">{t('Dịch vụ')}</p>
                 <Form.Item name="Checkbox">

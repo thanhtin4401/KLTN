@@ -25,6 +25,11 @@
         padding: 0 1rem;
     }
 }
-input[type=radio]:checked ~ span{
-background-color: unset!important;
+
+input[type=radio]:checked~span {
+    background-color: unset!important;
+}
+
+.calendarWrap {
+    z-index: 20!important;
 }

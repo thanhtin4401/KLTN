@@ -11,7 +11,7 @@ import { localStorageService } from '../../services/localStorageService';
 import useFormItemStatus from 'antd/lib/form/hooks/useFormItemStatus';
 import { useDispatch, useSelector } from 'react-redux';
 import { bookingRoom } from '../../redux/room/roomBooking';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { roomService } from '../../services/RoomService';
@@ -87,7 +87,8 @@ function TotalReserce({ mobile, handleIsReserve, isReserve, desktop, roomId, tot
     setValueRadio(e.target.value);
   };
   const [valuesPTTT, setvaluesPTTT] = useState('');
-  console.log(valuesPTTT);
+
+  const TaiKhoan = localStorageService.get('USER').TaiKhoan;
   const handleOk = () => {
     setIsModalOpen(false);
     const bookRoom = {
@@ -100,9 +101,10 @@ function TotalReserce({ mobile, handleIsReserve, isReserve, desktop, roomId, tot
       NgayTra: dateBooking.endDate,
       PTTT: valueRadio,
       SoLuongKhach: guets,
-      // MaPhong:
+      MaPhong: roomId,
       MaKhuyenMai: valuesPTTT,
-      // MaKhachHang
+      TaiKhoan: TaiKhoan,
+      TongTien: total,
     };
     console.log('bookRoom', bookRoom);
     // roomService
@@ -441,16 +443,16 @@ function TotalReserce({ mobile, handleIsReserve, isReserve, desktop, roomId, tot
               value={valueRadio}
               defaultValue={1}
             >
-              <Radio value={1} className="text-[1rem]">
+              <Radio value={'Ví điện tử'} className="text-[1rem]">
                 Thanh toán thông qua ví điện tử (Momo, viettelpay,...)
               </Radio>
-              <Radio value={2} className="text-[1rem]">
+              <Radio value={'Chuyển khoản'} className="text-[1rem]">
                 Thanh toán thông qua chuyển khoản ngân hàng
               </Radio>
-              <Radio value={3} className="text-[1rem]">
+              <Radio value={'Tiền mặt'} className="text-[1rem]">
                 Thanh toán thông qua tiền mặt tại quầy
               </Radio>
-              <Radio value={4} className="text-[1rem]">
+              <Radio value={'Visa'} className="text-[1rem]">
                 Thanh toán thông qua Visa
               </Radio>
             </Radio.Group>
@@ -461,8 +463,10 @@ function TotalReserce({ mobile, handleIsReserve, isReserve, desktop, roomId, tot
         <p className="my-2 flex justify-between w-full pr-[12px]">{t('Nhập mã Khuyến mãi')} </p>
         <Input
           value={valuesPTTT}
-          onChange={(e) => setvaluesPTTT(e.target.valuesPTTT)}
-          className="rounded-[0.5rem] border-black"
+          onChange={(e) => {
+            setvaluesPTTT(e.target.value);
+          }}
+          className="rounded-[0.5rem] border-black z-10"
           size={'large'}
           placeholder="Nhập mã khuyến mãi"
         />

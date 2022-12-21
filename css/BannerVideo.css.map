@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,iBAAiB,CAAC;EACd,UAAU,EAAE,gDAAgD;EAC5D,UAAU,EAAE,GAAG,CAAC,GAAG,CAAC,GAAG,CAAC,mBAAmB;EAC3C,aAAa,EAAE,GAAG;CACrB",
+    "sources": [
+        "../Client/AirBnb/src/components/Banner/BannerVideo.scss"
+    ],
+    "names": [],
+    "file": "BannerVideo.css"
+}

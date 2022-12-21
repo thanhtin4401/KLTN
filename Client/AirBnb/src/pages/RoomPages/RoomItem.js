@@ -1,11 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-function RoomItem() {
+function RoomItem({ roomInfor }) {
+  console.log(roomInfor?.HinhAnh?.url)
   return (
     <div className="w-full sm:flex mb:flex-col p-4 border rounded-[0.2rem] mb-2">
       <div className="mb:w-full sm:w-3/12 border">
         <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/TMA_logo_2022.jpg/800px-TMA_logo_2022.jpg"
+         src={`http://localhost:8000/${roomInfor?.HinhAnh?.url}`}
           alt=""
           className="w-full object-cover h-full"
         />
@@ -14,7 +16,9 @@ function RoomItem() {
         <div className="w-full">
           <div className="sm:flex mb:flex-sol w-full">
             <div className="mb:w-full sm:w-8/12">
-              <h1 className="mb-[0.1rem] text-[#0c3466] text-[1.3rem] font-[700]">Hotel Jane 1</h1>
+              <h1 className="mb-[0.1rem] text-[#0c3466] text-[1.3rem] font-[700]">
+                {roomInfor.TenPhong}
+              </h1>
               <h2 className="mb-[0.1rem] text-black text-[0.9rem]">500m from center</h2>
               <p className="mb-[0.1rem] text-white text-[0.9rem] inline-block p-[0.1rem] rounded-[0.2rem] bg-[#8dc63b]">
                 Free airport taxi
@@ -29,10 +33,14 @@ function RoomItem() {
             </div>
             <div className="mb-[0.1rem] mb:w-full sm:w-4/12 mb:text-left sm:text-right">
               <h1 className="mb-[0.1rem] text-[#0c1827] text-[1.2rem] font-[700] ">$200</h1>
-              <h2 className="mb-[0.1rem] text-[0.9rem]">Inclides taxes and fees</h2>
-              <button className="mb-[0.1rem] p-2 bg-[#0c3466] text-white rounded-[0.2rem] hover:opacity-70 transition-all">
+              <h2 className="mb-[1rem] text-[0.9rem] ">Inclides taxes and fees</h2>
+              <Link
+                to={`/Detail-Room/${roomInfor._id}`}
+                className="mb-[0.1rem] p-2 bg-[#0c3466] text-white rounded-[0.2rem] hover:opacity-70 transition-all mt-2"
+              >
+                {' '}
                 See avallabillty
-              </button>
+              </Link>
             </div>
           </div>
         </div>

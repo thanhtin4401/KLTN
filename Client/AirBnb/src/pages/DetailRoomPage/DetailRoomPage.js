@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Comment from '../../components/Comment/Comment';
+
 import Map from '../../components/Map/Map';
 import RateStarReviewService from '../../components/RateStarReviewService/RateStarReviewService';
 import './DetailRoomPage.scss';
@@ -18,18 +18,17 @@ import TotalReserce from './TotalReserce';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCommentUser } from '../../redux/comment/commentSlice';
 import { useSelect } from '@material-tailwind/react';
-import CommentPush from '../../components/Comment/CommentPush';
 
 import { detailInfoRoom } from '../../redux/room/roomBooking';
 import SkeletonDetail from '../../components/Skeleton/SkeletonDetail';
 import { getRoomList } from '../../redux/room/roomList';
 import { useTranslation } from 'react-i18next';
+import { roomService } from '../../services/RoomService';
 function DetailRoomPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const allComment = useSelector((state) => state.comment.allComment);
-  const commentSuccess = useSelector((state) => state.comment.commentSuccess);
+
   const roomDetailInfo = useSelector((state) => state.room.bookingRoom.roomDetail);
   const isFetching = useSelector((state) => state.room.bookingRoom.isfetching);
   const price = useSelector((state) => state.room.bookingRoom.price);
@@ -57,13 +56,27 @@ function DetailRoomPage() {
   useEffect(() => {
     renderRoomItem(roomId);
   }, [allRoom]);
+  const [detailRoomInfo, setDetailRoomInfo] = useState([]);
   useEffect(() => {
     dispatch(getRoomList());
     dispatch(detailInfoRoom(roomId));
     dispatch(getCommentUser(roomId));
-
     setTotal(price);
+    let isCancelled = false;
+    roomService
+      .getDetailRoom(roomId)
+      .then((res) => {
+        if (!isCancelled) {
+          setDetailRoomInfo(res.data);
+        }
+      })
+      .catch((err) => {});
+    return () => {
+      isCancelled = true;
+    };
   }, []);
+  useEffect(() => {}, [detailRoomInfo]);
+
   useEffect(() => {
     setTotal(price);
     renderRoomItem(roomId);
@@ -72,34 +85,20 @@ function DetailRoomPage() {
   useEffect(() => {
     dispatch(getRoomList());
     dispatch(detailInfoRoom(roomId));
-    dispatch(getCommentUser(roomId));
+    // dispatch(getCommentUser(roomId));
     renderRoomItem(roomId);
 
     setTotal(price);
   }, [roomId]);
-  const handleRenderComment = () => {
-    return allComment?.map((item, index) => {
-      return <Comment data={item} key={index} />;
-    });
-  };
-  const handleRenderCommentMobile = () => {
-    return allComment?.map((item, index) => {
-      return (
-        <SwiperSlide key={index}>
-          <Comment data={item} />
-        </SwiperSlide>
-      );
-    });
-  };
-  useEffect(() => {
-    dispatch(getCommentUser(roomId));
-    renderRoomItem(roomId);
-  }, [roomId, commentSuccess]);
 
+  useEffect(() => {
+    renderRoomItem(roomId);
+  }, [roomId]);
+  console.log('detailRoomInfo', detailRoomInfo);
   return (
     <>
       <div className="container mx-auto pb-5 mb:pt-[0px] sm:pt-[0px] md:pt-[6rem]">
-        {isFetching ? (
+        {!isFetching ? (
           <SkeletonDetail />
         ) : (
           <>
@@ -175,61 +174,12 @@ function DetailRoomPage() {
             >
               <SwiperSlide className=" bg-black">
                 <img
-                  src={`${
-                    imgRoomList
-                      ? imgRoomList[0]?.data?.img1
-                        ? imgRoomList[0]?.data?.img1
-                        : 'https://usbforwindows.com/storage/img/images_3/function_set_default_image_when_image_not_present.png'
-                      : 'https://usbforwindows.com/storage/img/images_3/function_set_default_image_when_image_not_present.png'
-                  }`}
-                  alt=""
-                />
-              </SwiperSlide>
-              <SwiperSlide className=" bg-black">
-                <img
-                  src={`${
-                    imgRoomList
-                      ? imgRoomList[0]?.data?.img2
-                        ? imgRoomList[0]?.data?.img2
-                        : 'https://usbforwindows.com/storage/img/images_3/function_set_default_image_when_image_not_present.png'
-                      : 'https://usbforwindows.com/storage/img/images_3/function_set_default_image_when_image_not_present.png'
-                  }`}
-                  alt=""
-                />
-              </SwiperSlide>
-              <SwiperSlide className=" bg-black">
-                <img
-                  src={`${
-                    imgRoomList
-                      ? imgRoomList[0]?.data?.img3
-                        ? imgRoomList[0]?.data?.img3
-                        : 'https://usbforwindows.com/storage/img/images_3/function_set_default_image_when_image_not_present.png'
-                      : 'https://usbforwindows.com/storage/img/images_3/function_set_default_image_when_image_not_present.png'
-                  }`}
-                  alt=""
-                />
-              </SwiperSlide>
-              <SwiperSlide className=" bg-black">
-                <img
-                  src={`${
-                    imgRoomList
-                      ? imgRoomList[0]?.data?.img4
-                        ? imgRoomList[0]?.data?.img4
-                        : 'https://usbforwindows.com/storage/img/images_3/function_set_default_image_when_image_not_present.png'
-                      : 'https://usbforwindows.com/storage/img/images_3/function_set_default_image_when_image_not_present.png'
-                  }`}
-                  alt=""
-                />
-              </SwiperSlide>
-              <SwiperSlide className=" bg-black">
-                <img
-                  src={`${
-                    imgRoomList
-                      ? imgRoomList[0]?.data?.img4
-                        ? imgRoomList[0]?.data?.img4
-                        : 'https://usbforwindows.com/storage/img/images_3/function_set_default_image_when_image_not_present.png'
-                      : 'https://usbforwindows.com/storage/img/images_3/function_set_default_image_when_image_not_present.png'
-                  }`}
+                  src={`http://localhost:8000/${detailRoomInfo?.phong?.HinhAnh?.url}`}
+                  // src={`${
+                  //   detailRoomInfo.HinhAnh?.url
+                  //     ? `http://localhost:8000/${detailRoomInfo?.HinhAnh?.url}`
+                  //     : 'https://usbforwindows.com/storage/img/images_3/function_set_default_image_when_image_not_present.png'
+                  // }`}
                   alt=""
                 />
               </SwiperSlide>
@@ -277,63 +227,10 @@ function DetailRoomPage() {
               </div>
             </div>
             <div className="image mb-2 mb:hidden sm:hidden md:block">
-              <div className="grid grid-cols-4 grid-rows-2 gap-4 h-[350px]">
+              <div className="w-full h-[350px]">
                 <img
                   className="rounded-[0.5rem] h-full w-full row-span-2 col-span-2 object-cover"
-                  src={`${
-                    imgRoomList
-                      ? imgRoomList[0]?.data?.img1
-                        ? imgRoomList[0]?.data?.img1
-                        : 'https://usbforwindows.com/storage/img/images_3/function_set_default_image_when_image_not_present.png'
-                      : 'https://usbforwindows.com/storage/img/images_3/function_set_default_image_when_image_not_present.png'
-                  }`}
-                  alt=""
-                />
-                <img
-                  className="rounded-[0.5rem] h-full w-full object-cover"
-                  src={`${
-                    imgRoomList
-                      ? imgRoomList[0]?.data?.img2
-                        ? imgRoomList[0]?.data?.img2
-                        : 'https://usbforwindows.com/storage/img/images_3/function_set_default_image_when_image_not_present.png'
-                      : 'https://usbforwindows.com/storage/img/images_3/function_set_default_image_when_image_not_present.png'
-                  }`}
-                  alt=""
-                />
-                <img
-                  className="rounded-[0.5rem] h-full w-full object-cover"
-                  src={`${
-                    imgRoomList
-                      ? imgRoomList[0]?.data?.img3
-                        ? imgRoomList[0]?.data?.img4
-                        : 'https://usbforwindows.com/storage/img/images_3/function_set_default_image_when_image_not_present.png'
-                      : 'https://usbforwindows.com/storage/img/images_3/function_set_default_image_when_image_not_present.png'
-                  }`}
-                  alt=""
-                />
-                <div className="overflow-hidden col-span-1">
-                  <img
-                    className="rounded-[0.5rem] h-full w-full object-cover col-span-1"
-                    src={`${
-                      imgRoomList
-                        ? imgRoomList[0]?.data?.img4
-                          ? imgRoomList[0]?.data?.img4
-                          : 'https://usbforwindows.com/storage/img/images_3/function_set_default_image_when_image_not_present.png'
-                        : 'https://usbforwindows.com/storage/img/images_3/function_set_default_image_when_image_not_present.png'
-                    }`}
-                    alt=""
-                  />
-                </div>
-
-                <img
-                  className="rounded-[0.5rem] h-full w-full object-cover"
-                  src={`${
-                    imgRoomList
-                      ? imgRoomList[0]?.data?.img5
-                        ? imgRoomList[0]?.data?.img5
-                        : 'https://usbforwindows.com/storage/img/images_3/function_set_default_image_when_image_not_present.png'
-                      : 'https://usbforwindows.com/storage/img/images_3/function_set_default_image_when_image_not_present.png'
-                  }`}
+                  src={`http://localhost:8000/${detailRoomInfo?.phong?.HinhAnh?.url}`}
                   alt=""
                 />
               </div>
@@ -542,7 +439,7 @@ function DetailRoomPage() {
               </div>
 
               <div className="md:hidden w-full">
-                <Swiper
+                {/* <Swiper
                   slidesPerView={2}
                   spaceBetween={20}
                   pagination={{
@@ -551,14 +448,12 @@ function DetailRoomPage() {
                   className="mySwiper md:hidden comment-detail"
                 >
                   {handleRenderCommentMobile()}
-                </Swiper>
+                </Swiper> */}
               </div>
               <div className="mb:hidden sm:hidden md:grid  comment w-full grid-cols-2 gap-y-4  gap-x-16 ">
-                {handleRenderComment()}
+                {/* {handleRenderComment()} */}
               </div>
-              <div className="w-full mt-6">
-                <CommentPush roomId={roomId} />
-              </div>
+              <div className="w-full mt-6">{/* <CommentPush roomId={roomId} /> */}</div>
             </div>
             <div className="reviews"></div>
             <div className="map w-full mt-5">

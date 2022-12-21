@@ -2,7 +2,7 @@ import { useSelect, Search } from '@material-tailwind/react';
 import React, { useEffect, koutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Table, Input, Button, Tag, message } from 'antd';
-import { getSearchUser, getUserList } from '../../../redux/manager/user';
+import { getSearchPromotion, getUserList } from '../../../redux/manager/user';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import './ListPromotionPage.scss';
@@ -11,6 +11,7 @@ import ActionPromotion from './ActionPromotion';
 import { setDate } from 'date-fns';
 
 import { promotionService } from '../../../services/promotionService';
+import moment from 'moment';
 const ListPromotionPage = () => {
   const isDeleteSuccess = useSelector((state) => state.manager.user.isDeleteSuccess);
   const isUpdateSuccess = useSelector((state) => state.manager.user.isUpdateSuccess);
@@ -40,11 +41,15 @@ const ListPromotionPage = () => {
       title: t('Ngày bắt đầu'),
       dataIndex: 'NgayBatDau',
       key: 'NgayBatDau',
+      render: (_, record, index) => <div>{moment(record.NgayBatDau).format('dd / mm / yyyy')}</div>,
     },
     {
       title: t('Ngày kết thúc'),
       dataIndex: 'NgayKetThuc',
       key: 'NgayKetThuc',
+      render: (_, record, index) => (
+        <div>{moment(record.NgayKetThuc).format('dd / mm / yyyy')}</div>
+      ),
     },
     {
       title: t('Mô tả'),
@@ -58,9 +63,9 @@ const ListPromotionPage = () => {
     },
   ];
   const { Search } = Input;
-  const [searchUser, setsearchUser] = useState(null);
-  const onSearchUser = (value) => {
-    setsearchUser(value);
+  const [searchPromotion, setsearchPromotion] = useState(null);
+  const onSearchPromotion = (value) => {
+    setsearchPromotion(value);
   };
   const [dataPromotion, setDataPromotion] = useState([]);
   useEffect(() => {
@@ -117,7 +122,7 @@ const ListPromotionPage = () => {
       });
   };
   useEffect(() => {
-    if (searchUser == '' || searchUser == null) {
+    if (searchPromotion == '' || searchPromotion == null) {
       let fetchListPromotion = () => {
         promotionService
           .getAllPromotion()
@@ -175,7 +180,7 @@ const ListPromotionPage = () => {
 
       fetchListPromotion();
     }
-  }, [searchUser, isDeleteSuccess, isRegisterAccountSuccess, isUpdateSuccess]);
+  }, [searchPromotion, isDeleteSuccess, isRegisterAccountSuccess, isUpdateSuccess]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleShowModal = () => {
@@ -191,7 +196,7 @@ const ListPromotionPage = () => {
         <div className="flex items-center mb-2">
           <Search
             placeholder={t('Tìm mã khuyến mãi')}
-            onSearch={onSearchUser}
+            onSearch={onSearchPromotion}
             enterButton
             className="search-manager"
           />

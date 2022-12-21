@@ -1,0 +1,28 @@
+.btn_addRoom {
+  background-color: black !important;
+  width: unset !important;
+}
+
+.search-room {
+  width: unset !important;
+}
+
+.search-room .ant-input-wrapper input {
+  width: 100% !important;
+  border-radius: 0 !important;
+}
+
+.search-room .ant-input-wrapper .ant-input-group-addon {
+  background-color: black;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.search-room .ant-input-wrapper .ant-input-group-addon button {
+  background-color: black;
+  font-size: 20px;
+  line-height: 0;
+}
+/*# sourceMappingURL=ListRoomPage.css.map */

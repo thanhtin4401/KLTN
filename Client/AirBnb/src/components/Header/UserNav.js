@@ -31,14 +31,14 @@ export default function UserNav({ bg }) {
     setisUser(user);
   }, [user]);
   useEffect(() => {
-    userService
-      .getUser(user?.user.id)
-      .then((res) => {
-        setUserAPI(res.data.content);
-      })
-      .catch((err) => {
-        message.error(err.response.data);
-      });
+    // userService
+    //   .getUser(user?.user.id)
+    //   .then((res) => {
+    //     setUserAPI(res.data.content);
+    //   })
+    //   .catch((err) => {
+    //     message.error(err.response.data);
+    //   });
   }, []);
   const navigate = useNavigate();
 
@@ -152,7 +152,7 @@ export default function UserNav({ bg }) {
                   to="/Profile-person"
                   className="hover:text-black font-[700] transition duration-100 text-[#1c305e] text-left overflow-hidden w-full"
                 >
-                  {t('Hello ') + ' ' + userAPI?.name}
+                  {t('Hello ') + ' ' + userAPI?.TaiKhoan}
                 </Link>
               ) : (
                 <Link
@@ -163,7 +163,7 @@ export default function UserNav({ bg }) {
                 </Link>
               )}
             </li>
-            {user?.user?.role == 'USER' ? (
+            {user?.QuyenHang == 'USER' ? (
               <Link
                 onClick={() => {
                   closeDropDown();
@@ -179,22 +179,7 @@ export default function UserNav({ bg }) {
             ) : (
               ''
             )}
-            {user?.user?.role == 'ADMIN' ? (
-              <Link
-                onClick={() => {
-                  closeDropDown();
-                }}
-                to="/Manager/user"
-              >
-                <li className="dropdownItem  hover:bg-gray-200 transition duration-300">
-                  <p className="w-full block h-full text-left hover:text-black transition duration-100">
-                    {'Quản lý'}
-                  </p>
-                </li>
-              </Link>
-            ) : (
-              ''
-            )}
+
             <li className="dropdownItem  hover:bg-gray-200 transition duration-300">
               {isUser ? (
                 <button

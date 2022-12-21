@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "../Client/AirBnb/src/components/Comment/Comment.scss"
+    ],
+    "names": [],
+    "file": "Comment.css"
+}

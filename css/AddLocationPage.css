@@ -1,0 +1,36 @@
+.modal_add-location .ant-modal-header {
+  border-radius: 1rem 1rem 0rem 0rem;
+  background-color: #1c305e;
+}
+
+.modal_add-location .ant-modal-header .ant-modal-title {
+  color: white;
+}
+
+.modal_add-location .ant-modal-content {
+  border-radius: 1rem;
+}
+
+.modal_add-location .ant-modal-footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.modal_add-location .ant-modal-footer .ant-btn.ant-btn-default {
+  color: black;
+}
+
+.modal_add-location .ant-modal-footer .ant-btn.ant-btn-primary {
+  background-color: #1c305e;
+  display: none !important;
+}
+
+.modal_add-location .ant-btn {
+  width: unset;
+  padding: 0 1rem;
+}
+/*# sourceMappingURL=AddLocationPage.css.map */

@@ -15,10 +15,12 @@ import Collection from '../../components/Collection/Collection';
 import LiveAnyway from './LiveAnyway';
 import { dataIMG } from '../../Data/Data';
 import { useTranslation } from 'react-i18next';
+import { getHotelList } from '../../redux/hotel/hotelSlice';
 function HomePage() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const allRoom = useSelector((state) => state.room.listRoom.allRoom);
+  const allHotle = useSelector((state) => state.hotel.listHotel.allHotel);
   const isfetching = useSelector((state) => state.room.listRoom.isfetching);
   const allLocation = useSelector((state) => state.room.listLocation.allLocation);
   const [openShadowFilter, setopenShadowFilter] = useState(false);
@@ -28,8 +30,9 @@ function HomePage() {
     setQueyFilter(data);
   };
   useEffect(() => {
-    dispatch(getRoomList());
-    dispatch(getLocationList());
+    // dispatch(getRoomList());
+    dispatch(getHotelList());
+    // dispatch(getLocationList());
   }, []);
   useEffect(() => {
     const temp = allRoom;
@@ -46,12 +49,17 @@ function HomePage() {
   useEffect(() => {
     setNewRoom(allRoom);
   }, [allRoom]);
+  // const renderRoomItem = () => {
+  //   let room = newRoom?.map((item, index) => {
+  //     return { ...item, data: dataIMG[index] };
+  //   });
+  //   return room?.slice(0, 15).map((roomInfor, index) => {
+  //     return <CardItem key={index} roomInfor={roomInfor} />;
+  //   });
+  // };
   const renderRoomItem = () => {
-    let room = newRoom?.map((item, index) => {
-      return { ...item, data: dataIMG[index] };
-    });
-    return room?.slice(0, 15).map((roomInfor, index) => {
-      return <CardItem key={index} roomInfor={roomInfor} />;
+    return allHotle.map((item, index) => {
+      return <CardItem key={index} roomInfor={item} />;
     });
   };
 
@@ -203,7 +211,7 @@ function HomePage() {
         </div>
       </div>
 
-      <div className="container mb-10 m-auto mt-10 grid mb:grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-6 gap-6 ">
+      <div className="container mb-10 m-auto mt-10 grid mb:grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-6 ">
         {isfetching ? <SkeletonItem /> : renderRoomItem()}
       </div>
       <div className="mb:w-full sm:w-full lg:container mx-auto">

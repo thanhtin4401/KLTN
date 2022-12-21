@@ -124,7 +124,7 @@ function ListHotelManager() {
     hotelService
       .getAllHotel()
       .then((res) => {
-        console.log(res);
+        console.log("res",res);
         let hotelList = res.data.map((hotel, index) => {
           return {
             key: index,

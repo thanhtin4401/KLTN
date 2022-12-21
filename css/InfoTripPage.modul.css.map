@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "../Client/AirBnb/src/pages/InfoTripPage/InfoTripPage.modul.scss"
+    ],
+    "names": [],
+    "file": "InfoTripPage.modul.css"
+}

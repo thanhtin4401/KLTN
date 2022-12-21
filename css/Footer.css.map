@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,cAAc,CAAC;EACX,QAAQ,EAAE,cAAc;EACxB,QAAQ,EAAE,KAAK,CAAA,UAAU;EACzB,MAAM,EAAE,GAAG;EACX,OAAO,EAAE,EAAE;EACX,gBAAgB,EAAE,KAAK;EACvB,UAAU,EAAE,GAAG,CAAC,KAAK,CAAC,0BAA0B;CACnD",
+    "sources": [
+        "../Client/AirBnb/src/components/Footer/Footer.scss"
+    ],
+    "names": [],
+    "file": "Footer.css"
+}

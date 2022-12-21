@@ -6,7 +6,7 @@ import DateRangeComp from './DateRangeComp';
 import './DetailRoomPage.scss';
 import './TotalReserce.scss';
 import './DetailRoomPage';
-import { Button, Modal, notification } from 'antd';
+import { Button, Input, Modal, notification, Radio } from 'antd';
 import { localStorageService } from '../../services/localStorageService';
 import useFormItemStatus from 'antd/lib/form/hooks/useFormItemStatus';
 import { useDispatch, useSelector } from 'react-redux';
@@ -81,25 +81,39 @@ function TotalReserce({ mobile, handleIsReserve, isReserve, desktop, roomId, tot
   const handleCancelLogin = () => {
     setIsModalOpenLogin(false);
   };
+  const [valueRadio, setValueRadio] = useState(1);
+  const onChange = (e) => {
+    console.log('radio checked', e.target.value);
+    setValueRadio(e.target.value);
+  };
+  const [valuesPTTT, setvaluesPTTT] = useState('');
+  console.log(valuesPTTT);
   const handleOk = () => {
     setIsModalOpen(false);
     const bookRoom = {
-      maPhong: roomId.roomId,
-      ngayDen: dateBooking.startDate,
-      ngayDi: dateBooking.endDate,
-      soLuongKhach: guets,
-      maNguoiDung: localStorageService.get('USER').user.id,
+      // maPhong: roomId.roomId,
+      // ngayDen: dateBooking.startDate,
+      // ngayDi: dateBooking.endDate,
+      // soLuongKhach: guets,
+      // maNguoiDung: localStorageService.get('USER').user.id,
+      NgayThue: dateBooking.startDate,
+      NgayTra: dateBooking.endDate,
+      PTTT: valueRadio,
+      SoLuongKhach: guets,
+      // MaPhong:
+      MaKhuyenMai: valuesPTTT,
+      // MaKhachHang
     };
-
-    roomService
-      .bookingRoom(bookRoom)
-      .then((res) => {
-        openNotificationWithIcon('success', 'Hoàn tất', 'Bạn đã đặt chuyến đi thành công!');
-        setIsOpenModal(false);
-      })
-      .catch((err) => {
-        openNotificationWithIcon('error', 'Thất bại', `${err.response.data.content}`);
-      });
+    console.log('bookRoom', bookRoom);
+    // roomService
+    //   .bookingRoom(bookRoom)
+    //   .then((res) => {
+    //     openNotificationWithIcon('success', 'Hoàn tất', 'Bạn đã đặt chuyến đi thành công!');
+    //     setIsOpenModal(false);
+    //   })
+    //   .catch((err) => {
+    //     openNotificationWithIcon('error', 'Thất bại', `${err.response.data.content}`);
+    //   });
   };
 
   const handleCancel = () => {
@@ -399,7 +413,7 @@ function TotalReserce({ mobile, handleIsReserve, isReserve, desktop, roomId, tot
           }}
           className="my-4 flex justify-between w-full pr-[12px]"
         >
-          {t('CANCELLATIONPOLICES')}{' '}
+          {t('Hình thức thanh toán')}{' '}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -417,33 +431,41 @@ function TotalReserce({ mobile, handleIsReserve, isReserve, desktop, roomId, tot
           } w-full border-black border rounded-lg`}
         >
           <div className="flex justify-between p-[12px] items-center border-b-[1px] border-black">
-            <p className="font-[300] text-[1rem]">{t('Non-refunable')}</p>
-            <input
-              type="radio"
-              name="refund"
-              value="non-refund"
-              className="w-[32px] h-[32px] rounded-[5rem]"
-            />
+            <p className="font-[600] text-[1rem]">{t('Hình thức thanh toán')}</p>
           </div>
-          <div className="flex justify-between p-[12px] items-center ">
-            <p className="font-[300] text-[1rem] w-[90%]">
-              {t('Non-refunable')}
-              <br />
-              <span className="text-[0.8rem] opacity-70 block font-[300]">
-                {t(
-                  'Free cancellation before 22 Jun. Cancel before check-in on 23 Jun for a partial refund.'
-                )}
-              </span>
-            </p>
-
-            <input
-              type="radio"
-              name="refund"
-              value="refund"
-              className="w-[32px] h-[32px] rounded-[5rem]"
-            />
+          <div className="flex  flex-col p-[12px]">
+            <Radio.Group
+              name="radiogroup"
+              className="flex flex-col"
+              onChange={onChange}
+              value={valueRadio}
+              defaultValue={1}
+            >
+              <Radio value={1} className="text-[1rem]">
+                Thanh toán thông qua ví điện tử (Momo, viettelpay,...)
+              </Radio>
+              <Radio value={2} className="text-[1rem]">
+                Thanh toán thông qua chuyển khoản ngân hàng
+              </Radio>
+              <Radio value={3} className="text-[1rem]">
+                Thanh toán thông qua tiền mặt tại quầy
+              </Radio>
+              <Radio value={4} className="text-[1rem]">
+                Thanh toán thông qua Visa
+              </Radio>
+            </Radio.Group>
           </div>
         </div>
+      </div>
+      <div className="mb-4">
+        <p className="my-2 flex justify-between w-full pr-[12px]">{t('Nhập mã Khuyến mãi')} </p>
+        <Input
+          value={valuesPTTT}
+          onChange={(e) => setvaluesPTTT(e.target.valuesPTTT)}
+          className="rounded-[0.5rem] border-black"
+          size={'large'}
+          placeholder="Nhập mã khuyến mãi"
+        />
       </div>
       <button
         className="flex bg-[#1c305e] mb-[0.75rem] py-[0.75rem] justify-center font-bold text-[1.1rem] text-white w-full rounded-[8px] "

@@ -26,7 +26,9 @@ const khachSanSchema = new Schema({
     type: String,
     required: true,
   },
-  HinhAnh: [hinhAnhSchema],
+  HinhAnh: {
+    type: String,
+  },
   MoTa: {
     type: String,
     default: false,

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Button, Modal, Form, Input, Select, DatePicker, Col, Row } from 'antd';
+import { Button, Modal, Form, Input, Select, DatePicker, Col, Row, message } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../../../redux/auth/authSlice';
 import { useTranslation } from 'react-i18next';
@@ -8,6 +8,7 @@ import moment from 'moment';
 import './AddPromotionPage.scss';
 import { promotionService } from '../../../services/promotionService';
 import { localStorageService } from '../../../services/localStorageService';
+
 function AddUserPage({ setIsModalOpen, isModalOpen, handleOnSuccess }) {
   const dispatch = useDispatch();
 

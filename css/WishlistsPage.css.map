@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "../Client/AirBnb/src/pages/WishlistsPage/WishlistsPage.scss"
+    ],
+    "names": [],
+    "file": "WishlistsPage.css"
+}

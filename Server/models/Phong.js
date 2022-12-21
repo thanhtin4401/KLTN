@@ -40,7 +40,7 @@ const phongSchema = new Schema(
       ref: 'loaiphong',
     },
     TenDichVu: [{
-      type: String,
+      type: Schema.Types.String,
       ref: 'dichvu',
     }],
     MaKhachSan: {

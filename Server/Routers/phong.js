@@ -24,13 +24,6 @@ router.post(
   phongController.createRoom
 );
 
-router.post(
-  '/image/create', 
-  upload.single("image"),
-  middlewareController.verifyTokenAndAminAuth, 
-  phongController.uploadImages
-);
-
 router.put(
   "/:id",
   upload.single("image"),

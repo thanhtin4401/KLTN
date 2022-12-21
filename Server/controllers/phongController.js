@@ -46,6 +46,11 @@ const roomController = {
         } 
       }
 
+
+      req.body.DichVu?.split(',').forEach(dichVu => {
+        phong.TenDichVu.push(dichVu);
+      })
+
       await phong.save();
 
       // Add dichvu to phong
@@ -79,10 +84,10 @@ const roomController = {
       
       let error = undefined;
       await fs.unlink(updatedRoom.HinhAnh.filename)
-      .then(() => {console.log("Delete old image successfully!")})
+      .then(() => {console.log(__filename + ": delete old image successfully!")})
       .catch(err => {error = err;});
 
-      if (error) {        
+      if (error) {
         return res.status(403).json({message: err.message});
       }
 
@@ -130,6 +135,10 @@ const roomController = {
       await KhachSan.findByIdAndUpdate(phong.MaKhachSan, {
         $pull: { rooms: req.params.id },
       });
+
+      await fs.unlink(phong.HinhAnh.filename)
+      .then(() => {console.log("Delete image successfully!")})
+      .catch(err => {console.log(err.message)});
 
       await phong.delete();
 

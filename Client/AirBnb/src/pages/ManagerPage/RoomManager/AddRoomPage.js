@@ -35,6 +35,9 @@ function AddRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccess }) {
     formData.append('SoLuongPhong', values.SoLuongPhong);
     formData.append('TrangThai', false);
     formData.append('MaKhachSan', params.hotelId);
+    formData.append('DichVu', values.TenDichVu);
+    formData.append('TenLoaiPhong', values.LoaiPhong);
+
     formData.append('image', image);
 
     roomService
@@ -258,7 +261,7 @@ function AddRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccess }) {
                   <Select size="large">{handleMapTypeRoom()}</Select>
                 </Form.Item>
                 <p className="">{t('Dịch vụ')}</p>
-                <Form.Item name="Checkbox">
+                <Form.Item name="TenDichVu">
                   <Checkbox.Group>
                     <div className=" flex flex-wrap">{handleMapService()}</div>
                   </Checkbox.Group>

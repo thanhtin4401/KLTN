@@ -46,7 +46,6 @@ const roomController = {
         } 
       }
 
-
       req.body.DichVu?.split(',').forEach(dichVu => {
         phong.TenDichVu.push(dichVu);
       })
@@ -78,17 +77,24 @@ const roomController = {
     try {
       const updatedRoom = await Phong.findByIdAndUpdate(
         req.params.id,
-        { $set: req.body.Phong },
+        { $set: req.body },
         { new: true }
       );
       
-      let error = true;
-      await fs.unlink(updatedRoom.HinhAnh.filename)
-      .then(() => {console.log(__filename + ": delete old image successfully!")})
-      .catch(err => {error = err;});
+      updatedRoom.TenDichVu = new Array();
+      req.body.DichVu?.split(',').forEach(dichVu => {
+        updatedRoom.TenDichVu.push(dichVu);
+      })
+
+      let error = false;
+      if (req.file) {
+        await fs.unlink(updatedRoom.HinhAnh.filename)
+        .then(() => {console.log(__filename + ": delete old image successfully!")})
+        .catch((err) => {error = err;});
+      }
 
       if (error) {
-        return res.status(403).json({message: err.message});
+        return res.status(403).json({message: error.message});
       }
 
       if (req.file) {

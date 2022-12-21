@@ -30,21 +30,10 @@ function UpdateRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccessUpdate, ro
   const { TextArea } = Input;
   const [listTypeRoom, setListTypeRoom] = useState([]);
   const [serviceList, setserviceList] = useState([]);
+  const [image, setImage] = useState({});
   const { hotelId } = useParams();
-  const onFinish = (values) => {
-    // const infor = {
-    //   TenPhong: values.TenPhong,
-    //   GiaPhong: values.GiaTien,
-    //   MoTa: values.MoTa,
-    //   SoLuongGiuong: values.SoLuongGiuong,
-    //   SoLuongKhach: values.SoLuongKhach,
-    //   SoLuongPhong: values.SoLuongPhong,
-    //   TrangThai: false,
-    //   MaKhachSan: hotelId,
-    //   DichVu: values?.Checkbox,
-    //   LoaiPhong: values.LoaiPhong,
-    // };
 
+  const onFinish = (values) => {
     const formData = new FormData();
     formData.append('TenPhong', values.TenPhong);
     formData.append('MoTa', values.MoTa);
@@ -53,6 +42,9 @@ function UpdateRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccessUpdate, ro
     formData.append('SoLuongPhong', values.SoLuongPhong);
     formData.append('TrangThai', false);
     formData.append('MaKhachSan', hotelId);
+    formData.append('DichVu', values.TenDichVu);
+    formData.append('TenLoaiPhong', values.LoaiPhong);
+    formData.append('image', image);
 
     roomService
       .putRoom(ID, formData)
@@ -145,6 +137,10 @@ function UpdateRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccessUpdate, ro
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+  
+  const handleUpload = ({ file, fileList }) => {
+    setImage(file);
+  };
   const handleChangeFile = async (e) => {
     let file = e.target.files[0];
     if (
@@ -235,6 +231,32 @@ function UpdateRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccessUpdate, ro
                   />
                 </Form.Item>
               </div>
+              
+              <p className="">{t('Hinh anh')}</p>
+                <Form.Item
+                  className="mb-4"
+                  name="HinhAnh"
+                  rules={[
+                    {
+                      required: true,
+                      message: t('Please input your image!'),
+                    },
+                  ]}
+                >
+                  <Upload
+                    action={'http:localhost:3000'}
+                    listType="picture-card"
+                    beforeUpload={(file) => {
+                      return false;
+                    }}
+                    onChange={handleUpload}
+                  >
+                    <div>
+                      <PlusOutlined />
+                      <div style={{ marginTop: 8 }}>Upload</div>
+                    </div>
+                  </Upload>
+                </Form.Item>
               <div className="w-2/4 pl-6">
                 <h2 className="font-[600] text-[1rem] text-[#1c305e] ">Thông tin bổ xung</h2>
                 <p className="">{t('Số lượng giường')}</p>
@@ -298,7 +320,7 @@ function UpdateRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccessUpdate, ro
                   </Select>
                 </Form.Item>
                 <p className="">{t('Dịch vụ')}</p>
-                <Form.Item name="Checkbox">
+                <Form.Item name="TenDichVu">
                   <Checkbox.Group>
                     <div className=" flex flex-wrap">{handleMapService()}</div>
                   </Checkbox.Group>

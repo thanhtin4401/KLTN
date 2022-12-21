@@ -25,3 +25,6 @@
         padding: 0 1rem;
     }
 }
+input[type=radio]:checked ~ span{
+background-color: unset!important;
+}

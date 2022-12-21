@@ -27,20 +27,8 @@ function AddRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccess }) {
   const [image, setImage] = useState({});
 
   const onFinish = (values) => {
-    // const roomInfor = {
-    //   TenPhong: values.TenPhong,
-    //   GiaPhong: values.GiaTien,
-    //   MoTa: values.MoTa,
-    //   SoLuongGiuong: values.SoLuongGiuong,
-    //   SoLuongKhach: values.SoLuongKhach,
-    //   SoLuongPhong: values.SoLuongPhong,
-    //   TrangThai: false,
-    //   MaKhachSan: params.hotelId,
-    // };
-
     const formData = new FormData();
     formData.append('TenPhong', values.TenPhong);
-    // formData.append('GiaPhong', values.GiaTien);
     formData.append('MoTa', values.MoTa);
     formData.append('SoLuongGiuong', values.SoLuongGiuong);
     formData.append('SoLuongKhach', values.SoLuongKhach);
@@ -68,24 +56,27 @@ function AddRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccess }) {
   const [listTypeRoom, setListTypeRoom] = useState([]);
   const [serviceList, setserviceList] = useState([]);
   useEffect(() => {
-    serviceRoomSv
-      .getALlService()
-      .then((res) => {
-        setserviceList(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
     roomService
       .getAllTypeRoom()
       .then((res) => {
+        console.log('res', res);
         setListTypeRoom(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
+
+    serviceRoomSv
+      .getALlService()
+      .then((res) => {
+        console.log('res', res);
+        setserviceList(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
-  console.log('listTypeRoom', listTypeRoom);
+
   const handleMapTypeRoom = () => {
     return listTypeRoom.map((item) => {
       return (
@@ -110,7 +101,7 @@ function AddRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccess }) {
       );
     });
   };
-  console.log('serviceList', serviceList);
+
   const onFinishFailed = (errorInfo) => {};
 
   const { t } = useTranslation();

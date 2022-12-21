@@ -62,13 +62,21 @@ function DetailRoomPage() {
     dispatch(detailInfoRoom(roomId));
     dispatch(getCommentUser(roomId));
     setTotal(price);
+    let isCancelled = false;
     roomService
       .getDetailRoom(roomId)
       .then((res) => {
-        setDetailRoomInfo(res.data);
+        if (!isCancelled) {
+          setDetailRoomInfo(res.data);
+        }
       })
       .catch((err) => {});
+    return () => {
+      isCancelled = true;
+    };
   }, []);
+  useEffect(() => {}, [detailRoomInfo]);
+
   useEffect(() => {
     setTotal(price);
     renderRoomItem(roomId);
@@ -82,25 +90,11 @@ function DetailRoomPage() {
 
     setTotal(price);
   }, [roomId]);
-  // const handleRenderComment = () => {
-  //   return allComment?.map((item, index) => {
-  //     return <Comment data={item} key={index} />;
-  //   });
-  // };
-  // const handleRenderCommentMobile = () => {
-  //   return allComment?.map((item, index) => {
-  //     return (
-  //       <SwiperSlide key={index}>
-  //         <Comment data={item} />
-  //       </SwiperSlide>
-  //     );
-  //   });
-  // };
+
   useEffect(() => {
-    // dispatch(getCommentUser(roomId));
     renderRoomItem(roomId);
   }, [roomId]);
-
+  console.log('detailRoomInfo', detailRoomInfo);
   return (
     <>
       <div className="container mx-auto pb-5 mb:pt-[0px] sm:pt-[0px] md:pt-[6rem]">
@@ -180,62 +174,15 @@ function DetailRoomPage() {
             >
               <SwiperSlide className=" bg-black">
                 <img
-                  src={`${
-                    detailRoomInfo?.HinhAnh?.url
-                      ? `http://localhost:8000/${detailRoomInfo?.HinhAnh?.url}`
-                      : 'https://usbforwindows.com/storage/img/images_3/function_set_default_image_when_image_not_present.png'
-                  }`}
+                  src={`http://localhost:8000/${detailRoomInfo?.phong?.HinhAnh?.url}`}
+                  // src={`${
+                  //   detailRoomInfo.HinhAnh?.url
+                  //     ? `http://localhost:8000/${detailRoomInfo?.HinhAnh?.url}`
+                  //     : 'https://usbforwindows.com/storage/img/images_3/function_set_default_image_when_image_not_present.png'
+                  // }`}
                   alt=""
                 />
               </SwiperSlide>
-              {/* <SwiperSlide className=" bg-black">
-                <img
-                  src={`${
-                    imgRoomList
-                      ? imgRoomList[0]?.data?.img2
-                        ? imgRoomList[0]?.data?.img2
-                        : 'https://usbforwindows.com/storage/img/images_3/function_set_default_image_when_image_not_present.png'
-                      : 'https://usbforwindows.com/storage/img/images_3/function_set_default_image_when_image_not_present.png'
-                  }`}
-                  alt=""
-                />
-              </SwiperSlide>
-              <SwiperSlide className=" bg-black">
-                <img
-                  src={`${
-                    imgRoomList
-                      ? imgRoomList[0]?.data?.img3
-                        ? imgRoomList[0]?.data?.img3
-                        : 'https://usbforwindows.com/storage/img/images_3/function_set_default_image_when_image_not_present.png'
-                      : 'https://usbforwindows.com/storage/img/images_3/function_set_default_image_when_image_not_present.png'
-                  }`}
-                  alt=""
-                />
-              </SwiperSlide>
-              <SwiperSlide className=" bg-black">
-                <img
-                  src={`${
-                    imgRoomList
-                      ? imgRoomList[0]?.data?.img4
-                        ? imgRoomList[0]?.data?.img4
-                        : 'https://usbforwindows.com/storage/img/images_3/function_set_default_image_when_image_not_present.png'
-                      : 'https://usbforwindows.com/storage/img/images_3/function_set_default_image_when_image_not_present.png'
-                  }`}
-                  alt=""
-                />
-              </SwiperSlide>
-              <SwiperSlide className=" bg-black">
-                <img
-                  src={`${
-                    imgRoomList
-                      ? imgRoomList[0]?.data?.img4
-                        ? imgRoomList[0]?.data?.img4
-                        : 'https://usbforwindows.com/storage/img/images_3/function_set_default_image_when_image_not_present.png'
-                      : 'https://usbforwindows.com/storage/img/images_3/function_set_default_image_when_image_not_present.png'
-                  }`}
-                  alt=""
-                />
-              </SwiperSlide> */}
             </Swiper>
             <div className="header mb-[2rem]">
               <h1 className="text-[1.625rem] font-[500]">{roomDetailInfo?.tenPhong}</h1>
@@ -283,13 +230,7 @@ function DetailRoomPage() {
               <div className="w-full h-[350px]">
                 <img
                   className="rounded-[0.5rem] h-full w-full row-span-2 col-span-2 object-cover"
-                  src={`${
-                    imgRoomList
-                      ? imgRoomList[0]?.data?.img1
-                        ? imgRoomList[0]?.data?.img1
-                        : 'https://usbforwindows.com/storage/img/images_3/function_set_default_image_when_image_not_present.png'
-                      : 'https://usbforwindows.com/storage/img/images_3/function_set_default_image_when_image_not_present.png'
-                  }`}
+                  src={`http://localhost:8000/${detailRoomInfo?.phong?.HinhAnh?.url}`}
                   alt=""
                 />
               </div>

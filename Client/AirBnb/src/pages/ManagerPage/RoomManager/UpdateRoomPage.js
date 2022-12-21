@@ -125,6 +125,7 @@ function UpdateRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccessUpdate, ro
         LoaiPhong: roomApi.phong?.LoaiPhong,
       });
   }, [form, roomApi, roomInfor]);
+  console.log('roomApi', roomApi);
   const [imgSRC, setimgSRC] = useState([]);
   const onFinishFailed = (errorInfo) => {};
 
@@ -223,24 +224,6 @@ function UpdateRoomPage({ setIsModalOpen, isModalOpen, handleOnSuccessUpdate, ro
                   />
                 </Form.Item>
 
-                <p className="">{t('Price')}</p>
-                <Form.Item
-                  className="mb-4"
-                  name="GiaPhong"
-                  rules={[
-                    {
-                      required: true,
-                      message: t('Please input your image!'),
-                    },
-                  ]}
-                >
-                  <Input
-                    style={{ width: '100%' }}
-                    className="input border px-[14px] py-[14px] rounded-[0.5rem] 
-                  "
-                    placeholder={t('Price')}
-                  />
-                </Form.Item>
                 <p className="">{t('Hinh anh')}</p>
                 <Form.Item
                   className="mb-4"

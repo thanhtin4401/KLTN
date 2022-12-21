@@ -1,6 +1,6 @@
 const ChiTietHoaDon = require('../models/ChiTietHoaDon')
 const HoaDon = require('../models/HoaDon')
-const KhachSan = require('../models/KhachSan')
+const Phong = require('../models/Phong')
 
 const hoaDonController = {
   getAllBills: async (req, res, next) => {
@@ -27,13 +27,16 @@ const hoaDonController = {
 
   createBill: async (req, res) => {
     try {
-      const hoadon = await new HoaDon(req.body).save()
+      const hoadon = await new HoaDon(req.body).save();
 
       await new ChiTietHoaDon({
         MaHD: hoadon._id,
         MaPhong: hoadon.MaPhong,
       }).save();
       
+      // Change room status to be reserved
+      await Phong.findByIdAndUpdate(hoadon.MaPhong, {TrangThai: 1});      
+
       return res.status(200).json(hoadon)
     } catch (err) {
       return res.status(500).json(err.message)
@@ -51,24 +54,18 @@ const hoaDonController = {
     }
   },
 
-  deleteBill: async (req, res) => {
+  cancelBill: async (req, res) => {
     try {
-      const hoadon = await HoaDon.findById(req.params.id)
+      const hoaDonId = req.params.id;
 
-      await ChiTietHoaDon.find({ MaHD: hoadon._id }, (err, arr) => {
-        if (err) {
-          return res.status(300).json(err.message)
-        }
+      await HoaDon.findByIdAndUpdate(hoaDonId, 
+      {
+        TrangThai: 0,
+      })
 
-        arr.forEach(async (element) => {
-          await KhachSan.find({ MaChiTietHoaDon: element._id }).deleteMany()
-        })
-      }).deleteMany()
+      await Phong.findByIdAndUpdate(hoaDonId, {TrangThai: 0});
 
-      // Update Huy hoa don
-      await hoadon.updateOne({TrangThai: 0});
-
-      return res.status(200).json('Delete successfully')
+      return res.status(200).json('Cancel bill successfully')
     } catch (err) {
       return res.status(403).json(err.message)
     }

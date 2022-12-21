@@ -82,7 +82,7 @@ const roomController = {
         { new: true }
       );
       
-      let error = undefined;
+      let error = true;
       await fs.unlink(updatedRoom.HinhAnh.filename)
       .then(() => {console.log(__filename + ": delete old image successfully!")})
       .catch(err => {error = err;});
@@ -136,9 +136,11 @@ const roomController = {
         $pull: { rooms: req.params.id },
       });
 
-      await fs.unlink(phong.HinhAnh.filename)
-      .then(() => {console.log("Delete image successfully!")})
-      .catch(err => {console.log(err.message)});
+      if (req.file) {
+        await fs.unlink(phong.HinhAnh.filename)
+        .then(() => {console.log("Delete image successfully!")})
+        .catch(err => {console.log(err.message)});
+      }
 
       await phong.delete();
 

@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css';
-import { DateRange } from 'react-date-range';
 import DateRangeComp from './DateRangeComp';
 import './DetailRoomPage.scss';
 import './TotalReserce.scss';
 import './DetailRoomPage';
-import { Button, Input, Modal, notification, Radio } from 'antd';
+import {  Input, message, Modal, notification, Radio } from 'antd';
 import { localStorageService } from '../../services/localStorageService';
-import useFormItemStatus from 'antd/lib/form/hooks/useFormItemStatus';
-import { useDispatch, useSelector } from 'react-redux';
-import { bookingRoom } from '../../redux/room/roomBooking';
+import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { roomService } from '../../services/RoomService';
+import { billServices } from '../../services/billService';
+
 function TotalReserce({ mobile, handleIsReserve, isReserve, desktop, roomId, total, setTotal }) {
   const { t } = useTranslation();
   const isBookingSuccess = useSelector((state) => state.room.bookingRoom.isBookingSuccess);
@@ -29,38 +27,37 @@ function TotalReserce({ mobile, handleIsReserve, isReserve, desktop, roomId, tot
   const [children, setChildren] = useState(0);
   const [adults, setAdults] = useState(1);
   const [infants, setInfants] = useState(0);
-  const [guets, setGuets] = useState(1);
+  const [guests, setGuets] = useState(1);
   const [dateBooking, setDateBooking] = useState([]);
   const [openDateRange, setOpenDateRange] = useState(false);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const handlePlus = (name) => {
     if (name == 'children') {
       setChildren(children + 1);
-      setGuets(guets + 1);
+      setGuets(guests + 1);
       setTotal(total + 50);
     } else if (name == 'adults') {
       setAdults(adults + 1);
       setTotal(total + 100);
-      setGuets(guets + 1);
+      setGuets(guests + 1);
     } else if (name == 'infants') {
       setInfants(infants + 1);
-      setGuets(guets + 1);
+      setGuets(guests + 1);
       setTotal(total + 10);
     }
   };
   const handleMinus = (name) => {
     if (name == 'children') {
       setChildren(children - 1);
-      setGuets(guets - 1);
+      setGuets(guests - 1);
       setTotal(total - 50);
     } else if (name == 'adults') {
       setAdults(adults - 1);
-      setGuets(guets - 1);
+      setGuets(guests - 1);
       setTotal(total - 100);
     } else if (name == 'infants') {
       setInfants(infants - 1);
-      setGuets(guets - 1);
+      setGuets(guests - 1);
       setTotal(total - 10);
     }
   };
@@ -89,33 +86,26 @@ function TotalReserce({ mobile, handleIsReserve, isReserve, desktop, roomId, tot
   const [valuesPTTT, setvaluesPTTT] = useState('');
 
   const TaiKhoan = localStorageService.get('USER').TaiKhoan;
-  const handleOk = () => {
-    setIsModalOpen(false);
+  const handleOk = () => {    
     const bookRoom = {
-      // maPhong: roomId.roomId,
-      // ngayDen: dateBooking.startDate,
-      // ngayDi: dateBooking.endDate,
-      // soLuongKhach: guets,
-      // maNguoiDung: localStorageService.get('USER').user.id,
       NgayThue: dateBooking.startDate,
       NgayTra: dateBooking.endDate,
       PTTT: valueRadio,
-      SoLuongKhach: guets,
+      SoLuongKhach: guests,
       MaPhong: roomId,
-      MaKhuyenMai: valuesPTTT,
+      MaKhuyenMai: valuesPTTT || null,
       TaiKhoan: TaiKhoan,
-      TongTien: total,
+      TongGiaTien: total,
     };
-    console.log('bookRoom', bookRoom);
-    // roomService
-    //   .bookingRoom(bookRoom)
-    //   .then((res) => {
-    //     openNotificationWithIcon('success', 'Hoàn tất', 'Bạn đã đặt chuyến đi thành công!');
-    //     setIsOpenModal(false);
-    //   })
-    //   .catch((err) => {
-    //     openNotificationWithIcon('error', 'Thất bại', `${err.response.data.content}`);
-    //   });
+
+    billServices.createBill(bookRoom)
+    .then(res => {
+      message.success("Dat phong thanh cong");
+      setIsModalOpen(false);
+    })
+    .catch(res => {
+      message.error("Dat phong that bai");
+    })
   };
 
   const handleCancel = () => {
@@ -214,7 +204,7 @@ function TotalReserce({ mobile, handleIsReserve, isReserve, desktop, roomId, tot
             <div className="">
               <h2 className="font-[400] text-[1rem]">{t('GUESTS')}</h2>
               <p className="font-[300] text-[1rem] mt-1">
-                {guets} {t('guests')}
+                {guests} {t('guests')}
               </p>
             </div>
             <svg
@@ -494,7 +484,7 @@ function TotalReserce({ mobile, handleIsReserve, isReserve, desktop, roomId, tot
           </div>
           <div className="flex items-center justify-between w-full">
             <span className="font-[600] text-[1rem] ">{t('Number of Guests')}:</span>
-            <span className="font-[600] text-[1rem]">{guets}</span>
+            <span className="font-[600] text-[1rem]">{guests}</span>
           </div>
           <div className="flex items-center justify-between w-full">
             <span className="font-[300] text-[0.8rem] ">{t('Children')}:</span>

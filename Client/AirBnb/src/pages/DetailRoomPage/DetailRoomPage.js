@@ -94,7 +94,6 @@ function DetailRoomPage() {
   useEffect(() => {
     renderRoomItem(roomId);
   }, [roomId]);
-  console.log('detailRoomInfo', detailRoomInfo);
   return (
     <>
       <div className="container mx-auto pb-5 mb:pt-[0px] sm:pt-[0px] md:pt-[6rem]">

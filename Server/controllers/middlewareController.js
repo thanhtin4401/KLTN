@@ -39,7 +39,8 @@ const middlewareController = {
       const token = req.headers['token']
 
       jwt.verify(token, 'Thanhtin4401', async (err, tokenInfo) => {
-        if (err) return res.status(401).json("You're not authenticated")
+        if (err) return res.status(401).json({info: "You're not authenticated", message: err})
+
         const user = await TaiKhoan.findById(tokenInfo.id)
 
         if (user.QuyenHang === 'user') {

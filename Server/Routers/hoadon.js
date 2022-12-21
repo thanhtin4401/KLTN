@@ -18,10 +18,10 @@ router.put(
   hoaDonController.updateBill,
 )
 
-router.delete(
-  '/:id',
-  middlewareController.verifyTokenAndAminAuth,
-  hoaDonController.deleteBill,
+router.put(
+  '/:id/huy',
+  middlewareController.verifyTokenAndUserAuth,
+  hoaDonController.cancelBill,
 )
 
 module.exports = router

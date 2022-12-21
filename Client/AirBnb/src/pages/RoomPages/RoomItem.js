@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function RoomItem({ roomInfor }) {
-  console.log(roomInfor?.HinhAnh?.url)
   return (
     <div className="w-full sm:flex mb:flex-col p-4 border rounded-[0.2rem] mb-2">
       <div className="mb:w-full sm:w-3/12 border">

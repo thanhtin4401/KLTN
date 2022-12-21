@@ -33,13 +33,6 @@ const taiKhoanSchema = new Schema(
       minlength: 3,
       default: 'user',
     },
-    // ====================== REFERENCES ============================
-    MaHoaDon: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'hoadon',
-      },
-    ],
   },
   {
     timestamps: true,

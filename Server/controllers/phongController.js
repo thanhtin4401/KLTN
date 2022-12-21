@@ -3,6 +3,7 @@ const KhachSan = require("../models/KhachSan");
 const DichVu = require("../models/DichVu");
 const DichVuPhong = require("../models/DichVuPhong");
 const LoaiPhong = require("../models/LoaiPhong");
+const fs = require('fs').promises;
 
 const imageBasePath = "img/phong/";
 
@@ -68,13 +69,6 @@ const roomController = {
     }
   },
 
-  uploadImages: async(req, res) => {
-    if (!req.files) {
-      return res.status(403).json("Failed to upload files");
-    }
-    return res.status(200).json({message: "Upload image successfully", images: req.body.image});
-  },
-
   updateRoom: async (req, res, next) => {
     try {
       const updatedRoom = await Phong.findByIdAndUpdate(
@@ -82,6 +76,24 @@ const roomController = {
         { $set: req.body.Phong },
         { new: true }
       );
+      
+      let error = undefined;
+      await fs.unlink(updatedRoom.HinhAnh.filename)
+      .then(() => {console.log("Delete old image successfully!")})
+      .catch(err => {error = err;});
+
+      if (error) {        
+        return res.status(403).json({message: err.message});
+      }
+
+      if (req.file) {
+        updatedRoom.HinhAnh = {
+            url: imageBasePath + req.file.filename,
+            filename: req.file.path,
+        } 
+      }
+
+      await updatedRoom.save();
 
       return res.status(200).json(updatedRoom);
     } catch (err) {

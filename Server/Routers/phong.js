@@ -33,7 +33,7 @@ router.post(
 
 router.put(
   "/:id",
-  upload.array("image[]"),
+  upload.single("image"),
   middlewareController.verifyTokenAndAminAuth,
   phongController.updateRoom
 );
